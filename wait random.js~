@@ -13,6 +13,10 @@
 		}, wait*1000);
 	};
 
+	ext.power = function(base, exponent) {
+		return Math.pow(base,exponent);	
+	};
+
 	var descriptor = {
 		blocks: [
 			['w', 'wait for random time', 'wait_random'],
