@@ -19,8 +19,9 @@
 
 	var descriptor = {
 		blocks: [
-			 ['w', 'wait for random time', 'wait_random'],
-			 ['r', '%n ^ %n', 'power', 2, 3],
+			['w', 'wait for random time', 'wait_random'],
+			['r', '%n ^ %n', 'power', 2, 3]
+			
 		]
 	};
 
