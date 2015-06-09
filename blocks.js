@@ -58,5 +58,5 @@
 			]
 	};
 
-	ScratchExtensions.register('Sample extension', descriptor, ext);
+	ScratchExtensions.register('Practise Extensions', descriptor, ext);
 })({});
