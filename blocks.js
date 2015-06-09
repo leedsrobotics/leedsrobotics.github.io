@@ -52,7 +52,7 @@
 		blocks: [
 			 ['w', 'wait for random time', 'wait_random'],
 			 ['r', '%n ^ %n', 'power', 2, 3],
-			 ['R', 'current temperature in city %s', 'get_temp', 'Boston, MA'],
+			 ['R', 'current temperature in city %s', 'get_temp', 'Leeds, UK'],
 			 ['', 'run alarm after %n seconds', 'set_alarm', '2'],
 			 ['h', 'when alarm goes off', 'when_alarm'],
 			]
