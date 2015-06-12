@@ -71,6 +71,7 @@
 		if (alarm_went_off === true)
 		{
 			alarm_went_off = false;
+			alert("ALARM");
 			return true;
 		}
 		return false;
