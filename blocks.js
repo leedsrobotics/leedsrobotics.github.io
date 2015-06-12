@@ -82,6 +82,6 @@
 			]
 	};
 
-        var hid_info = {type: 'hid', vendor: 0x045e, product: 0x00cb};
+        var hid_info = {type: 'hid', vendor: 0x192f, product: 0x0416};
 	ScratchExtensions.register('Practise Extensions', descriptor, ext, hid_info);
 })({});
