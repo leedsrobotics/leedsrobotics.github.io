@@ -6,6 +6,35 @@
 	{
 		return {status:2, msg: 'Ready'};
 	};
+	
+	var poller = null;
+	ext._deviceConnected = function(dev) 
+	{
+	        if(device) return;
+	        
+	        device = dev;
+	        device.open();
+	        
+	        alert("Device Connected");
+	        poller = setInterval(function() { rawData = device.read(); }, 20);
+	        
+	}; 
+	
+	ext._deviceRemoved = function(dev)
+	{
+	        if(device != dev) return;
+	        if(poller) poller = clearInterval(poller);
+	        device = null;
+	        alert("Device Disconnected");
+	};
+	
+	ext._shutdown = function()
+	{
+	        if(poller) poller = clearInterval(poller);
+	        if(device) device.close();
+	        device = null;
+	        alert("Extension Shutting Down");
+	};
 
 	ext.wait_random = function(callback) 
 	{
@@ -58,5 +87,6 @@
 			]
 	};
 
-	ScratchExtensions.register('Practise Extensions', descriptor, ext);
+        var hid_info = {type: 'hid', vendor: 0x045e, product: 0x00cb};
+	ScratchExtensions.register('Practise Extensions', descriptor, ext, hid_info);
 })({});
