@@ -8,30 +8,28 @@
 	};
 	
 	var poller = null;
-	ext._deviceConnected = function(dev) 
-	{
-	        if(device) return;
-	        
-	        device = dev;
-	        device.open();
-	        
-	        poller = setInterval(function() { rawData = device.read(); }, 20);
-	        
-	}; 
+        ext._deviceConnected = function(dev) {
+                if(device) return;
+
+                device = dev;
+                device.open();
+
+                poller = setInterval(function() {
+                        rawData = device.read();
+                }, 20);
+        };
 	
-	ext._deviceRemoved = function(dev)
-	{
-	        if(device != dev) return;
-	        if(poller) poller = clearInterval(poller);
-	        device = null;
-	};
+	ext._deviceRemoved = function(dev) {
+                if(device != dev) return;
+                if(poller) poller = clearInterval(poller);
+                device = null;
+        };
 	
-	ext._shutdown = function()
-	{
-	        if(poller) poller = clearInterval(poller);
-	        if(device) device.close();
-	        device = null;
-	};
+	ext._shutdown = function() {
+                if(poller) poller = clearInterval(poller);
+                if(device) device.close();
+                device = null;
+        }
 
 	ext.wait_random = function(callback) 
 	{
