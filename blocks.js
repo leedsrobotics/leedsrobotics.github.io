@@ -15,7 +15,6 @@
 	        device = dev;
 	        device.open();
 	        
-	        alert("Device Connected");
 	        poller = setInterval(function() { rawData = device.read(); }, 20);
 	        
 	}; 
@@ -25,7 +24,6 @@
 	        if(device != dev) return;
 	        if(poller) poller = clearInterval(poller);
 	        device = null;
-	        alert("Device Disconnected");
 	};
 	
 	ext._shutdown = function()
@@ -33,7 +31,6 @@
 	        if(poller) poller = clearInterval(poller);
 	        if(device) device.close();
 	        device = null;
-	        alert("Extension Shutting Down");
 	};
 
 	ext.wait_random = function(callback) 
