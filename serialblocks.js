@@ -17,25 +17,10 @@
                 }
         };
 	
-	ext._deviceRemoved = function(dev) 
-	{
-	        /**
-	         * Closes device connection on device removal
-	         */
-	         
-                if(device != dev) return;
-                if(poller) poller = clearInterval(poller);
-                device = null;
-        };
-	
 	ext._shutdown = function() {
 	        /**
 	         * Shuts down connected devices on extension shutdown
 	         */
-	         
-                if(poller) poller = clearInterval(poller);
-                if(device) device.close();
-                device = null;
         }
 
 	ext.wait_random = function(callback) 
