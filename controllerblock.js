@@ -65,7 +65,7 @@ new (function() {
             case 'rightX': retval = convertByteStr(input[16] + input[17]); break;
             case 'rightY': retval = -convertByteStr(input[18] + input[19]); break;
         }
-
+        //
         // If it's hardly off center then treat it as centered
         if(Math.abs(retval) < 0.1) retval = 0;
 
