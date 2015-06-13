@@ -72,5 +72,5 @@ new (function() {
             joystickPart: ['leftX', 'leftY', 'rightX', 'rightY']
         }
     };
-    ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x054c, product:0x0268});
+    ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x045e, product:0x028e});
 })();
