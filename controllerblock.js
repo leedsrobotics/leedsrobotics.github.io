@@ -51,6 +51,14 @@ new (function() {
     function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
     ext.readJoystick = function(name) {
         var retval = null;
+        alert(input[12]);
+        alert(input[13]);
+        alert(input[14]);
+        alert(input[15]);
+        alert(input[16]);
+        alert(input[17]);
+        alert(input[18]);
+        alert(input[19]);
         switch(name) {
             case 'leftX': retval = convertByteStr(input[12] + input[13]); break;
             case 'leftY': retval = -convertByteStr(input[14] + input[15]); break;
