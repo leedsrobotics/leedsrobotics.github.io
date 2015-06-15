@@ -50,16 +50,11 @@ new (function() {
     // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
     function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
     ext.readJoystick = function() {
-        var a = "he";
-        var b = "llo";
-        alert(a+b);
-        alert(b+a);
-        alert(typeof a);
         alert(typeof input);
         var int32View = new Int32Array(input);
         for (var i = 0; i < int32View.length; i++) {
             int32View[i] = i * 2;
-            alert(int32View[i]);
+            alert(int32View[i].toString());
         }
         
         //var retval = null;
