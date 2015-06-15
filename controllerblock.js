@@ -50,29 +50,14 @@ new (function() {
 
     // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
     function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
-    ext.readJoystick = function(name) {
-        var retval = null;
-        switch(name) {
-            case 'leftX': retval = convertByteStr(input[12] + input[13]); break;
-            case 'leftY': retval = -convertByteStr(input[14] + input[15]); break;
-            case 'rightX': retval = convertByteStr(input[16] + input[17]); break;
-            case 'rightY': retval = -convertByteStr(input[18] + input[19]); break;
-        }
-        //
-        // If it's hardly off center then treat it as centered
-        alert(retval);
-        if(Math.abs(retval) < 0.1) retval = 0;
-
-        return retval.toFixed(2);
+    ext.readJoystick = function() {
+        alert("Hello");
     }
 
     var descriptor = {
         blocks: [
-            ['r', 'get joystick %m.joystickPart', 'readJoystick', 'leftX']
-        ],
-        menus: {
-            joystickPart: ['leftX', 'leftY', 'rightX', 'rightY']
-        }
+            ['', 'Print Joystick State', 'readJoystick']
+        ]
     };
     ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x045e, product:0x028e});
 })();
