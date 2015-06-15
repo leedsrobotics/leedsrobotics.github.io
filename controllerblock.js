@@ -52,10 +52,16 @@ new (function() {
     ext.readJoystick = function() {
         var a = "he";
         var b = "llo";
-        console.log(a+b);
-        console.log(b+a);
-        console.log(typeof a);
-        console.log(typeof input);
+        alert(a+b);
+        alert(b+a);
+        alert(typeof a);
+        alert(typeof input);
+        var int32View = new Int32Array(input);
+        for (var i = 0; i < int32View.length; i++) {
+            int32View[i] = i * 2;
+            alert(int32View[i]);
+        }
+        
         //var retval = null;
         //var controls = '';
         //for(i = 0; i < input.length; ++i)
