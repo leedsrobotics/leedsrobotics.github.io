@@ -54,7 +54,7 @@ new (function() {
         var b = "llo";
         alert(a+b);
         alert(b+a);
-        alert(123);
+        alert("123");
         //var retval = null;
         //var controls = '';
         //for(i = 0; i < input.length; ++i)
