@@ -54,7 +54,7 @@ new (function() {
         var int32View = new Int32Array(input);
         for (var i = 0; i < int32View.length; i++) {
             int32View[i] = i * 2;
-            alert(int32View[i].toString());
+            alert(typeof int32View[i]);
         }
         
         //var retval = null;
