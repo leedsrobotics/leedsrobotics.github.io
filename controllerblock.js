@@ -52,7 +52,6 @@ new (function() {
     ext.readJoystick = function() {
         var a = "he";
         var b = "llo";
-        var c = convertByteStr(input[0]).toString();
         alert(a+b);
         alert(b+a);
         alert(typeof a);
