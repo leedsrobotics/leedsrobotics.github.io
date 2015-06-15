@@ -52,10 +52,10 @@ new (function() {
     ext.readJoystick = function() {
         var a = "he";
         var b = "llo";
-        var c = 123;
+        var c = convertByteStr(input[0]).toString();
         alert(a+b);
         alert(b+a);
-        alert(convertByteStr(input[0]).toString());
+        alert(typeof a);
         //var retval = null;
         //var controls = '';
         //for(i = 0; i < input.length; ++i)
