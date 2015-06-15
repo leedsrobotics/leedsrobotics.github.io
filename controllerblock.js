@@ -51,10 +51,11 @@ new (function() {
     function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
     ext.readJoystick = function() {
         alert(typeof input);
-        var int32View = new Int32Array(input);
+        var buffer = new ArrayBuffer(16);
+        var int32View = new Int32Array(buffer);
         for (var i = 0; i < int32View.length; i++) {
             int32View[i] = i * 2;
-            alert(typeof int32View[i]);
+            alert(int32View[i].toString());
         }
         
         //var retval = null;
