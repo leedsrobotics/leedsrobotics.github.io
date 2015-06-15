@@ -51,12 +51,12 @@ new (function() {
     function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
     ext.readJoystick = function() {
         alert("Running");
-        var retval = null;
-        var controls = '';
-        for(i = 0; i < input.length; ++i)
-        {
-            controls += convertByteStr(input[i]);
-        }
+        //var retval = null;
+        //var controls = '';
+        //for(i = 0; i < input.length; ++i)
+        //{
+        //    controls += convertByteStr(input[i]);
+        //}
         //
         // If it's hardly off center then treat it as centered
         // if(Math.abs(retval) < 0.1) retval = 0;
