@@ -55,7 +55,7 @@ new (function() {
         var c = 123;
         alert(a+b);
         alert(b+a);
-        alert(c.toString());
+        alert(convertByteStr(input[0]).toString());
         //var retval = null;
         //var controls = '';
         //for(i = 0; i < input.length; ++i)
