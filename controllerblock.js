@@ -11,6 +11,7 @@ new (function() {
     var ext = this;
 
     ext._deviceConnected = function(dev) {
+        alert("Hello");
         if(device) return;
 
         device = dev;
