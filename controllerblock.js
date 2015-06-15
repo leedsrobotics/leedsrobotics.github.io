@@ -11,7 +11,6 @@ new (function() {
     var ext = this;
 
     ext._deviceConnected = function(dev) {
-        alert("Hello");
         if(device) return;
 
         device = dev;
@@ -51,13 +50,13 @@ new (function() {
     // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
     function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
     ext.readJoystick = function() {
+        alert("Running");
         var retval = null;
         var controls = '';
         for(i = 0; i < input.length; ++i)
         {
             controls += convertByteStr(input[i]);
         }
-        alert(controls);
         //
         // If it's hardly off center then treat it as centered
         // if(Math.abs(retval) < 0.1) retval = 0;
