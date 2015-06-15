@@ -51,7 +51,9 @@ new (function() {
     function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
     ext.readJoystick = function() {
         alert(typeof input);
-        //alert(input.constructor);
+        var a = input.constructor;
+        alert(typeof a);
+        alert(a.toString());
         var buffer = new ArrayBuffer(48);
         if (buffer.byteLength === 48) {
             alert("Yes, it's 16 bytes.");
