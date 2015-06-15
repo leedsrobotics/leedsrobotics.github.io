@@ -53,6 +53,7 @@ new (function() {
         var a = "he";
         var b = "llo";
         alert(a+b);
+        alert(b+a);
         //var retval = null;
         //var controls = '';
         //for(i = 0; i < input.length; ++i)
