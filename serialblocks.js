@@ -15,6 +15,7 @@
                 {
                         tryNextDevice();
                 }
+                alert("CONNECTED");
         };
 	
 	ext._shutdown = function() {
