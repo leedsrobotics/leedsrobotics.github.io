@@ -73,5 +73,5 @@ new (function() {
             ['', 'Print Joystick State', 'readJoystick']
         ]
     };
-    ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x045e, product:0x028e});
+    ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x045e, product:0x02d1});
 })();
