@@ -9,7 +9,6 @@
 	var potentialDevices = [];
         ext._deviceConnected = function(dev) 
         {
-        	alert("CONNECTED");
                 potentialDevices.push(dev);
                 
                 if(!device)
