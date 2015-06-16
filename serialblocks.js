@@ -73,7 +73,7 @@
   		}
   		else
   		{
-  			alert("Something has been found!");
+  			alert("Serial Device Connected!");
   			console.log(device.constructor.name);
   		}
   	};
