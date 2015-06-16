@@ -57,7 +57,7 @@ new (function() {
         } else {
             alert("Oh no, it's the wrong size!");
         }
-        if (input === null) {
+        if (device.read() === null) {
             alert("Yes, it's emtpy.");
         } else {
             alert("Theres stuff");
