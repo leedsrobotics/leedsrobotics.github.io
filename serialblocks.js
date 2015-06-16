@@ -68,7 +68,7 @@
   		else
   		{
   			alert("Something has been found!");
-  			alert(typeof device);
+  			console.log(device.constructor);
   		}
   	};
 	
