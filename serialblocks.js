@@ -72,10 +72,10 @@
   	};
 	
 	ext._deviceRemoved = function(dev) {
-    		if(device != dev) return;
-    		if(poller) poller = clearInterval(poller);
+    		//if(device != dev) return;
+    		//if(poller) poller = clearInterval(poller);
     		console.log("Device should be null");
-    		device = null;
+    		//device = null;
 	};
 	
 	ext._shutdown = function() {
