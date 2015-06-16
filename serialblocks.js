@@ -81,6 +81,10 @@
   	
   	ext.dataReceived = function()
   	{
+  		var buffer = new ArrayBuffer(1);
+  		var int8View = new Int8Array(buffer);
+  		int8View[0] = "@id";
+  		device.send(int8View.buffer);
   		if(rawData === null)
   		{
   			console.log("rawData is null");
@@ -92,7 +96,7 @@
   		else
   		{
   			console.log("rawData has data!");
-  			for(var i = 0; i < rawData.byteLength; ++i)
+  			for(var i = 0; i < rawData.byteLength; i++)
   			{
   				console.log(rawData[i]);
   			}
