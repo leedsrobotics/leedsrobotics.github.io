@@ -19,7 +19,14 @@
   	
   	ext.serialState = function()
   	{
-  		alert("asd");
+  		if(device === null)
+  		{
+  			alert("No Device Detected");
+  		}
+  		else
+  		{
+  			alert("Something has been found!");
+  		}
   	};
 	
 	ext._shutdown = function() {
