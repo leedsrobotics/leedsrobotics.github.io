@@ -19,12 +19,7 @@
   	
   	ext.serialState = function()
   	{
-  		if(device) {
-  			alert("Connection Confirmed!");
-  		
-  		} else {
-  			alert("No connection found.");
-  		}
+  		alert("asd");
   	};
 	
 	ext._shutdown = function() {
