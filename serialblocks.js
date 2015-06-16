@@ -27,6 +27,7 @@
 
 		device.open({ stopBits: 1, bitRate: 9600, ctsFlowControl: 1 });
         	device.set_receive_handler(function(data) {
+        		console.log("aaa");
             		if(!rawData || rawData.byteLength == 18) rawData = new Uint8Array(data);
             		else rawData = appendBuffer(rawData, data);
 
