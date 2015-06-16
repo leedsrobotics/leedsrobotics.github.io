@@ -1,5 +1,7 @@
 (function(ext) 
 {
+	var device = null;
+	
 	ext._getStatus = function() 
 	{
 	        /** Reports extension status */
