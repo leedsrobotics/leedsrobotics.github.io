@@ -77,6 +77,26 @@
   			console.log(device.constructor.name);
   		}
   	};
+  	
+  	ext.dataReceived = function()
+  	{
+  		if(rawData === null)
+  		{
+  			console.log("rawData is null");
+  		}
+  		else if(rawData.byteLength == 0)
+  		{
+  			console.log("rawData is empty");
+  		}
+  		else
+  		{
+  			console.log("rawData has data!");
+  			for(var i = 0; i < rawData.byteLength; ++i)
+  			{
+  				console.log(rawData[i]);
+  			}
+  		}
+  	}
 	
 	ext._deviceRemoved = function(dev) {
     		//if(device != dev) return;
@@ -93,7 +113,8 @@
 
         // Registers block types, names and corresponding 
 	var descriptor = {
-		blocks: [ ['', 'Print Serial State', 'serialState'] ]
+		blocks: [ ['', 'Print Serial State', 'serialState'],
+			  ['', 'Check data Receival', 'dataReceived']]
 	};
 
         
