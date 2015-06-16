@@ -52,10 +52,13 @@ new (function() {
     ext.readJoystick = function() {
         alert(typeof input);
         var a = input.constructor;
-        alert(typeof a);
-        alert(a.toString());
         var buffer = new ArrayBuffer(48);
         if (buffer.byteLength === 48) {
+            alert("Yes, it's 16 bytes.");
+        } else {
+            alert("Oh no, it's the wrong size!");
+        }
+        if (input.byteLength === 48) {
             alert("Yes, it's 16 bytes.");
         } else {
             alert("Oh no, it's the wrong size!");
