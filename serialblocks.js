@@ -2,6 +2,7 @@
 {
 	var device = null;
 	var rawData = null;
+	var potentialDevices = [];
 	
 	ext._getStatus = function() 
 	{
@@ -9,19 +10,7 @@
 		return {status:2, msg: 'Ready'};
 	};
 	
-	var potentialDevices = [];
-        ext._deviceConnected = function(dev) 
-        {
-                potentialDevices.push(dev);
-                
-                if(!device)
-                {
-                        tryNextDevice();
-                        console.log("Trying");
-                }
-        };
-  	
-  	var poller = null;
+	var poller = null;
     	var watchdog = null;
 	function tryNextDevice() {
         	// If potentialDevices is empty, device will be undefined.
@@ -35,7 +24,7 @@
             		else rawData = appendBuffer(rawData, data);
 
             		if(rawData.byteLength >= 18) {
-                		processData();
+                		alert("IT MOVES!");
             		}
         	});
 
@@ -55,6 +44,20 @@
             		tryNextDevice();
         	}, 250);
     	};
+	
+
+        ext._deviceConnected = function(dev) 
+        {
+                potentialDevices.push(dev);
+                
+                if(!device)
+                {
+                        tryNextDevice();
+                        console.log("Trying");
+                }
+        };
+  	
+  	
   	
   	ext.serialState = function()
   	{
