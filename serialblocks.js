@@ -27,13 +27,10 @@
 
 		device.open({ stopBits: 1, bitRate: 9600, ctsFlowControl: 1 });
         	device.set_receive_handler(function(data) {
-        		console.log("aaa");
-            		if(!rawData || rawData.byteLength == 18) rawData = new Uint8Array(data);
-            		else rawData = appendBuffer(rawData, data);
-
-            		if(rawData.byteLength >= 18) {
-                		alert("IT MOVES!");
-            		}
+        		for(var z = 0; z < data.byteLength; z++)
+        		{
+        			console.log(data[z]);
+        		}
         	});
 
         	var pingCmd = new Uint8Array(1);
@@ -85,6 +82,7 @@
   		var int8View = new Int8Array(buffer);
   		int8View[0] = "@id";
   		device.send(int8View.buffer);
+  		
   		if(rawData === null)
   		{
   			console.log("rawData is null");
