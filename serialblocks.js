@@ -53,7 +53,7 @@
                 if(!device)
                 {
                         tryNextDevice();
-                        console.log("Trying");
+                        console.log("Trying ...");
                 }
         };
   	
@@ -68,6 +68,7 @@
   		else
   		{
   			alert("Something has been found!");
+  			alert(typeof device);
   		}
   	};
 	
