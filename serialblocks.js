@@ -16,6 +16,7 @@
                 if(!device)
                 {
                         tryNextDevice();
+                        alert("Trying");
                 }
         };
   	
