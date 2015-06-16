@@ -45,6 +45,16 @@
       			tryNextDevice();
     		}, 5000);
   	};
+  	
+  	ext.serialState = function()
+  	{
+  		if(device) {
+  			alert("Connection Confirmed!");
+  		
+  		} else {
+  			alert("No connection found.");
+  		}
+  	}
 	
 	ext._shutdown = function() {
 	        /**
@@ -54,7 +64,7 @@
 
         // Registers block types, names and corresponding 
 	var descriptor = {
-		blocks: []
+		blocks: [ ['', 'Print Serial State', 'serialState'] ]
 	};
 
         
