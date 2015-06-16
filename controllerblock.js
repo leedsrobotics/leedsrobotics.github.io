@@ -57,10 +57,10 @@ new (function() {
         } else {
             alert("Oh no, it's the wrong size!");
         }
-        if (input.byteLength === 48) {
-            alert("Yes, it's 16 bytes.");
+        if (input === null) {
+            alert("Yes, it's emtpy.");
         } else {
-            alert("Oh no, it's the wrong size!");
+            alert("Theres stuff");
         }
         var int32View = new Int8Array(buffer);
         for (var i = 0; i < int32View.length; i++) {
