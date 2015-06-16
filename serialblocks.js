@@ -53,7 +53,6 @@
                 if(!device)
                 {
                         tryNextDevice();
-                        console.log("Trying ...");
                 }
         };
   	
@@ -75,6 +74,7 @@
 	ext._deviceRemoved = function(dev) {
     		if(device != dev) return;
     		if(poller) poller = clearInterval(poller);
+    		console.log("Device should be null");
     		device = null;
 	};
 	
