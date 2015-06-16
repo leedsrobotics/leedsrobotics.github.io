@@ -72,6 +72,12 @@
   		}
   	};
 	
+	ext._deviceRemoved = function(dev) {
+    		if(device != dev) return;
+    		if(poller) poller = clearInterval(poller);
+    		device = null;
+	};
+	
 	ext._shutdown = function() {
 	        /**
 	         * Shuts down connected devices on extension shutdown
