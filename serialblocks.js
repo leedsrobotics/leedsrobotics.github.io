@@ -1,6 +1,6 @@
 (function(ext) 
 {
-	var device = 1;
+	var device = null;
 	
 	ext._getStatus = function() 
 	{
@@ -16,7 +16,7 @@
                 if(!device)
                 {
                         tryNextDevice();
-                        alert("Trying");
+                        console.log("Trying");
                 }
         };
   	
