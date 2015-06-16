@@ -80,9 +80,8 @@
   	ext.dataReceived = function()
   	{
   		var buffer = new ArrayBuffer(1);
-  		var int8View = new Int8Array(buffer);
-  		int8View[0] = "@id";
-  		device.send(int8View.buffer);
+  		buffer[0] = "@id";
+  		device.send(buffer);
   		
   		if(rawData === null)
   		{
