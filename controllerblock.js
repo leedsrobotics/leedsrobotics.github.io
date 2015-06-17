@@ -50,7 +50,7 @@ new (function() {
     // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
     function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
     ext.readJoystick = function() {
-        alert(typeof input);
+        console.log(input.constructor.name);
         var buffer = new ArrayBuffer(48);
         if (buffer.byteLength === 48) {
             alert("Yes, it's 16 bytes.");
