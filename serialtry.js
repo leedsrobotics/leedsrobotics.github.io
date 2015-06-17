@@ -25,17 +25,17 @@
   	else
   	{
   	  alert("Serial Device Connected!");
-  		console.log(device.constructor.name);
+  	  console.log(device.constructor.name);
   	}
   };
   	
   ext.idRequest = function()
   {
     var buffer = new ArrayBuffer(3);
-  	buffer[0] = "@";
-  	buffer[1] = "i";
-  	buffer[2] = "d";
-  	device.send(buffer);
+    buffer[0] = "@";
+    buffer[1] = "i";
+    buffer[2] = "d";
+    device.send(buffer);
   }
 	
 	ext._shutdown = function() 
@@ -48,8 +48,8 @@
   // Registers block types, names and corresponding 
 	var descriptor = {
 		blocks: [ ['', 'Print Serial State', 'serialState'],
-			        ['', 'Request ID', 'idRequest'],
-			      ]
+			  ['', 'Request ID', 'idRequest'],
+			]
 	};
 
         
