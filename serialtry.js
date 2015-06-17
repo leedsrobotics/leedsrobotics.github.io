@@ -11,7 +11,7 @@
   ext._deviceConnected = function(dev) 
   {
     potentialDevices.push(dev);
-    if (device === undefined) {
+    if (device === undefined && dev != undefined) {
     	device = dev;
     	console.log(dev);
     	console.log("aaaa");
