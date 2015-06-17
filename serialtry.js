@@ -15,7 +15,6 @@
     	device = dev;
     	console.log(dev);
     	device.open();
-    	device.send(["@"]);
     }
   };
   	
