@@ -14,6 +14,9 @@
     if (device === undefined) {
     	device = dev;
     	console.log(dev);
+    	device.open();
+    	var output = new Uint8Array(["@", "i", "d"]);
+    	device.send(output.buffer);
     }
   };
   	
