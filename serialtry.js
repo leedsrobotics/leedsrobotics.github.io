@@ -26,7 +26,7 @@
 
         device.open({ stopBits: 0, bitRate: 38400, ctsFlowControl: 0 });
         device.set_receive_handler(function(data) {
-            alert("Receiving...");
+            alert("Receiving Data...");
         });
 
     };
