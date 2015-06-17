@@ -48,7 +48,7 @@
   	
   ext.idRequest = function()
   {
-    var buffer = new ArrayBuffer(3);
+    var buffer = new ArrayBuffer(1);
     buffer[0] = "i";
     var view = new Uint8Array(buffer);
     console.log(view.buffer);
