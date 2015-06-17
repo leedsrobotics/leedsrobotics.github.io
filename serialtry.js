@@ -52,8 +52,8 @@
     buffer[0] = "@";
     buffer[1] = "i";
     buffer[2] = "d";
-    device.send(buffer);
-    
+    var view = new Uint8Array(buffer);
+    device.send(view);
   }
 	
 	ext._shutdown = function() 
