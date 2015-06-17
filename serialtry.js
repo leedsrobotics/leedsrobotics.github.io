@@ -15,6 +15,21 @@
             tryNextDevice();
         }
    }
+   
+   var poller = null;
+    var watchdog = null;
+    function tryNextDevice() {
+        // If potentialDevices is empty, device will be undefined.
+        // That will get us back here next time a device is connected.
+        device = potentialDevices.shift();
+        if (!device) return;
+
+        device.open({ stopBits: 0, bitRate: 38400, ctsFlowControl: 0 });
+        device.set_receive_handler(function(data) {
+            alert("Receiving...");
+        });
+
+    };
   	
   	
   	
