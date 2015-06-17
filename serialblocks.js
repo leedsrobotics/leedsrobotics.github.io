@@ -27,6 +27,12 @@
 		console.log("aaaa");
 		device.open({ stopBits: 1, bitRate: 9600, ctsFlowControl: 1 });
 		console.log(device);
+		var msg = new Uint8Array(1);
+        	msg[0] = 1;
+		for(var i =0; i <1000; i++){
+			device.send(msg.buffer);
+			setInterval(function () {}, 500);
+		}
         	device.set_receive_handler(function(data) {
         		alert("Receiving Data ...")
         		for(var z = 0; z < data.byteLength; z++)
