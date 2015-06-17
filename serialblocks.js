@@ -29,11 +29,8 @@
 		console.log(tmp);
 		
         	device.set_receive_handler(function(data) {
-        		alert("Receiving Data ...")
-        		for(var z = 0; z < data.byteLength; z++)
-        		{
-        			console.log(data[z]);
-        		}
+        		alert("Receiving Data ...");
+        		console.log(data);
         	});
 
         	var pingCmd = new Uint8Array(1);
