@@ -14,6 +14,7 @@
     if (device === undefined) {
     	device = dev;
     	console.log(dev);
+    	console.log("aaaa");
     	device.open({});
     }
   };
