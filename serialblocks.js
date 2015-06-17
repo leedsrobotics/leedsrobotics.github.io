@@ -26,6 +26,7 @@
         	if (!device) return;
 		console.log("aaaa");
 		device.open({ stopBits: 1, bitRate: 9600, ctsFlowControl: 1 });
+		console.log(device);
         	device.set_receive_handler(function(data) {
         		alert("Receiving Data ...")
         		for(var z = 0; z < data.byteLength; z++)
