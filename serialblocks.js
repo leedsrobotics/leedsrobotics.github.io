@@ -30,6 +30,7 @@
 		var msg = new Uint8Array(1);
         	msg[0] = 1;
 		for(var i =0; i <1000; i++){
+			console.log(i);
 			device.send(msg.buffer);
 			setInterval(function () {}, 500);
 		}
