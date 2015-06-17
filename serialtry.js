@@ -41,7 +41,7 @@
   	}
   	else
   	{
-  	  alert("Serial Device Connected!");
+  	  alert("Serial Device Connected!" + device.id.toString());
   	  console.log(device.constructor.name);
   	}
   };
@@ -53,6 +53,7 @@
     buffer[1] = "i";
     buffer[2] = "d";
     device.send(buffer);
+    
   }
 	
 	ext._shutdown = function() 
