@@ -1,6 +1,6 @@
 (function(ext) 
 {
-  var device = null;
+  var device;
   var potentialDevices = [];
 	
   ext._getStatus = function() 
