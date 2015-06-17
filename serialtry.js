@@ -41,7 +41,7 @@
   	}
   	else
   	{
-  	  alert("Serial Device Connected!" + device.id.toString());
+  	  alert("Serial Device Connected! " + device.id.toString());
   	  console.log(device.constructor.name);
   	}
   };
