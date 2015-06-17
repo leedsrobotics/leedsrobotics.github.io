@@ -49,7 +49,7 @@
   ext.idRequest = function()
   {
     var view = new Uint8Array(1);
-    view[0] = "@";
+    view[0] = 64;
     console.log(view);
     device.send(view.buffer);
   }
