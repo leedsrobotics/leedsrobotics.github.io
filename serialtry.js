@@ -1,23 +1,20 @@
 (function(ext) 
 {
   var device;
-  var potentialDevices = [];
 	
   ext._getStatus = function() 
   {
     return {status:2, msg: 'Ready'};
   };
 	
-  ext._deviceConnected = function(dev) 
-  {
-    potentialDevices.push(dev);
-    if (device === undefined && dev != undefined) {
-    	device = dev;
-    	console.log(dev);
-    	console.log("aaaa");
-    	device.open({ stopBits: 1, bitRate: 9600, ctsFlowControl: 1 });
-    }
-  };
+  var potentialDevices = [];
+    ext._deviceConnected = function(dev) {
+        potentialDevices.push(dev);
+
+        if (!device) {
+            tryNextDevice();
+        }
+   }
   	
   	
   	
