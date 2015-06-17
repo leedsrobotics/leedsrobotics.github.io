@@ -15,7 +15,7 @@
     	device = dev;
     	console.log(dev);
     	console.log("aaaa");
-    	device.open({});
+    	device.open({ stopBits: 1, bitRate: 9600, ctsFlowControl: 1 });
     }
   };
   	
