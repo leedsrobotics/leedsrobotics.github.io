@@ -48,10 +48,9 @@
   	
   ext.idRequest = function()
   {
-    var buffer = new ArrayBuffer(1);
-    buffer[0] = "i";
-    var view = new Uint8Array(buffer);
-    console.log(view.buffer);
+    var view = new Uint8Array(1);
+    view[0] = "i";
+    console.log(view);
     device.send(view.buffer);
   }
 	
