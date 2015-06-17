@@ -51,6 +51,7 @@
     var buffer = new ArrayBuffer(3);
     buffer[0] = "i";
     var view = new Uint8Array(buffer);
+    console.log(view.buffer);
     device.send(view.buffer);
   }
 	
