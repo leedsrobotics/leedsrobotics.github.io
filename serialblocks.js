@@ -24,7 +24,7 @@
         	// That will get us back here next time a device is connected.
         	device = potentialDevices.shift();
         	if (!device) return;
-
+		console.log("aaaa");
 		device.open({ stopBits: 1, bitRate: 9600, ctsFlowControl: 1 });
         	device.set_receive_handler(function(data) {
         		alert("Receiving Data ...")
