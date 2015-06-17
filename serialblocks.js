@@ -79,8 +79,10 @@
   	
   	ext.dataReceived = function()
   	{
-  		var buffer = new ArrayBuffer(1);
-  		buffer[0] = "@id";
+  		var buffer = new ArrayBuffer(3);
+  		buffer[0] = "@";
+  		buffer[1] = "i";
+  		buffer[2] = "d";
   		device.send(buffer);
   		
   		if(rawData === null)
