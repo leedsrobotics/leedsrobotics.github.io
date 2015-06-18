@@ -66,6 +66,7 @@
   	
   	ext.turning = function(direction)
   	{
+  		console.log(direction);
   		var directionCommand = '@m00';
   		if(direction == 'left')
   		{
@@ -75,7 +76,7 @@
   		{
   			directionCommand = "@m~0";
   		}
-  		
+  		console.log(directionCommand);
   		var view = new Uint8Array(4);
   		
   		for(var x = 0; x < directionCommand.length; x++)
