@@ -51,13 +51,16 @@
   	
   	ext.turnRight = function()
   	{
-  		var commandLeft = "@m~0";
-  		var view = new Uint8Array(4);
+  		var commandLeft = "@id";
   		
-  		for(var x = 0; x < 100; x++)
+  		var view = new Uint8Array(3);
+  		
+  		for(var x = 0; x < commandLeft.length; x++)
   		{
-	  		device.send();
+  			view[i] = commandLeft.charCodeAt(i);
   		}
+  		
+  		device.send(view.buffer);
   	}
 	
 	ext._shutdown = function() 
