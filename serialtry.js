@@ -97,7 +97,7 @@
 	var descriptor = {
 		blocks: [ ['', 'Print Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
-			  ['', 'Send At Symbol', 'sendAtSymbol']
+			  ['', 'Send At Symbol', 'sendAtSymbol'],
 			  [' ', 'Turn %m.directions', 'turning', 'left'],
 			],
 		menus:  {
