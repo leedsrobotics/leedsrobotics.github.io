@@ -57,7 +57,7 @@
   		
   		for(var x = 0; x < commandLeft.length; x++)
   		{
-  			view[0] = commandLeft.charCodeAt(x);
+  			view[x] = commandLeft.charCodeAt(x);
   		}
   		
   		device.send(view.buffer);
