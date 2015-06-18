@@ -1,6 +1,7 @@
 (function(ext) 
 {
 	var device;
+	var dataView = null;
 	
   	ext._getStatus = function() 
   	{
@@ -23,8 +24,9 @@
 
         	device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
         	device.set_receive_handler(function(data) {
+        		dataView = new Uint8Array(data);
         		console.log("Receiving Data...");
-        		console.log(data[0]);
+        		console.log(dataView[0]);
         	});
    	};
   	
