@@ -26,7 +26,7 @@
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
         		console.log("Receiving Data...");
-        		console.log(dataView[0]);
+        		console.log(String.fromCharCode(dataView[0]));
         	});
    	};
   	
