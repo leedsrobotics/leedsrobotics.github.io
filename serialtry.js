@@ -43,14 +43,14 @@
   		}
   	};
   	
-  	ext.idRequest = function()
+  	ext.sendAtSymbol = function()
   	{
     		var view = new Uint8Array(1);
     		view[0] = 64;
     		device.send(view.buffer);
   	}
   	
-  	ext.turnRight = function()
+  	ext.idRequest = function()
   	{
   		var commandLeft = "@id";
   		
@@ -59,6 +59,28 @@
   		for(var x = 0; x < commandLeft.length; x++)
   		{
   			view[x] = commandLeft.charCodeAt(x);
+  		}
+  		
+  		device.send(view.buffer);
+  	}
+  	
+  	ext.turning = function(direction)
+  	{
+  		var directionCommand = '@m00';
+  		if(direction == 'left')
+  		{
+  			directionCommand = "@m0~";
+  		}
+  		else if(direction == 'right')
+  		{
+  			directionCommand = "@m~0";
+  		}
+  		
+  		var view = new Uint8Array(4);
+  		
+  		for(var x = 0; x < directionCommand.length; x++)
+  		{
+  			view[x] = directionCommand.charCodeAt(x);
   		}
   		
   		device.send(view.buffer);
@@ -75,8 +97,12 @@
 	var descriptor = {
 		blocks: [ ['', 'Print Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
-			  ['', 'Turn Right', 'turnRight'],
-			]
+			  ['', 'Send @ Symbol', 'sendAtSymbol']
+			  [' ', 'Turn %m.directions', 'turning', 'left'],
+			],
+		menus:  {
+				directions: ['left', 'right']
+		        }
 	};
 
         
