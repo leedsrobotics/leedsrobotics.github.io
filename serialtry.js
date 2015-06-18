@@ -23,7 +23,7 @@
 
         	device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
         	device.set_receive_handler(function(data) {
-        		alert("Receiving Data...");
+        		console.log("Receiving Data...");
         	});
    	};
   	
@@ -49,6 +49,17 @@
     		console.log(view);
     		device.send(view.buffer);
   	}
+  	
+  	ext.turnRight = function()
+  	{
+  		var commandLeft = "@m~0";
+  		var view = new Uint8Array(4);
+  		
+  		for(var x = 0; x < 100; x++)
+  		{
+	  		device.send();
+  		}
+  	}
 	
 	ext._shutdown = function() 
 	{
@@ -61,6 +72,7 @@
 	var descriptor = {
 		blocks: [ ['', 'Print Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
+			  ['', 'Turn Right', 'turnRight'],
 			]
 	};
 
