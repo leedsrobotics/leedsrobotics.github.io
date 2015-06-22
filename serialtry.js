@@ -133,9 +133,9 @@
   		
   		view[0] = directionCommand.charCodeAt(0);
   		view[1] = directionCommand.charCodeAt(1);
-  		view[2] = 0xFF;
-  		view[3] = 0xFF;
-  		
+  		view[2] = 0x80;
+  		view[3] = 0x80;
+  	
   		
   		
   		device.send(view.buffer);
