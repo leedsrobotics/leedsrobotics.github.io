@@ -87,7 +87,7 @@
   		}
   		else if(direction == 'right')
   		{
-  			view[3] = 0x7F;
+  			view[2] = 0x7F;
   		}
   		
   		device.send(view.buffer);
