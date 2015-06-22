@@ -108,6 +108,22 @@
   		
   		device.send(view.buffer);
   	}
+  	
+  	ext.goForwards = function()
+  	{
+  		var directionCommand = '@m';
+  		console.log(directionCommand);
+  		var view = new Uint8Array(4);
+  		
+  		view[0] = directionCommand.charCodeAt(0);
+  		view[1] = directionCommand.charCodeAt(1);
+  		view[2] = 0x7F;
+  		view[3] = 0x7F;
+  		
+  		
+  		
+  		device.send(view.buffer);
+  	}
 	
 	ext._shutdown = function() 
 	{
@@ -121,8 +137,9 @@
 		blocks: [ ['', 'Print Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
 			  ['', 'Send At Symbol', 'sendAtSymbol'],
+			  ['', 'Go Forwards', 'goForwards'],
 			  [' ', 'Turn %m.directions', 'turning', 'left'],
-			  ['', 'Stop Motors', 'stopMotors']
+			  ['', 'Stop Motors', 'stopMotors'],
 			],
 		menus:  {
 				directions: ['left', 'right']
