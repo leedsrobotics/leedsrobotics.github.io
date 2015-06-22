@@ -68,27 +68,27 @@
   		
   		device.send(view.buffer);
   	}
+
   	
   	ext.turning = function(direction)
   	{
   		console.log(direction);
-  		var directionCommand = '@m00';
+  		var directionCommand = ['@', 'm', 0x00, 0x00];
   		if(direction == 'left')
   		{
-  			directionCommand = "@m0~";
+  			directionCommand = ['@', 'm', 0x00, 0x7F];
   		}
   		else if(direction == 'right')
   		{
-  			directionCommand = "@m~0";
+  			directionCommand = ['@', 'm', 0x7F, 0x00];
   		}
   		console.log(directionCommand);
   		var view = new Uint8Array(4);
   		
-  		for(var x = 0; x < directionCommand.length; x++)
-  		{
-  			view[x] = directionCommand.charCodeAt(x);
-  		}
-  		
+  		view[0] = directionCommand[0].charCodeAt(0);
+  		view[1] = directionCommand[1].charCodeAt(1);
+  		view[2] = String.fromCharCode(directionCommand[2]);
+  		view[3] = String.fromCharCode(directionCommand[3]);
   		console.log(view);
   		
   		device.send(view.buffer);
