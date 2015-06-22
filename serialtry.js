@@ -117,8 +117,8 @@
   		
   		view[0] = directionCommand.charCodeAt(0);
   		view[1] = directionCommand.charCodeAt(1);
-  		view[2] = speed.toString(16);
-  		view[3] = speed.toString(16);
+  		view[2] = speed;
+  		view[3] = speed;
   		
   		console.log(view[2]);
   		console.log(typeof view[2]);
