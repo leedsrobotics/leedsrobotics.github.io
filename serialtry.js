@@ -94,14 +94,14 @@
   	
   	ext.stopMotors = function()
   	{
-  		var directionCommand = '@m00';
+  		var directionCommand = '@m';
   		console.log(directionCommand);
   		var view = new Uint8Array(4);
   		
-  		for(var x = 0; x < directionCommand.length; x++)
-  		{
-  			view[x] = directionCommand.charCodeAt(x);
-  		}
+  		view[0] = directionCommand.charCodeAt(0);
+  		view[1] = directionCommand.charCodeAt(1);
+  		view[2] = 0x7F;
+  		view[3] = 0x7F;
   		
   		device.send(view.buffer);
   	}
