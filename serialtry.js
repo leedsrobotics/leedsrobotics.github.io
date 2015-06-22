@@ -109,24 +109,26 @@
   		device.send(view.buffer);
   	}
   	
-  	ext.goForwards = function(speed)
+  	ext.goForwards = function()
   	{
   		var directionCommand = '@m';
+  		console.log(directionCommand);
   		var view = new Uint8Array(4);
   		
   		view[0] = directionCommand.charCodeAt(0);
   		view[1] = directionCommand.charCodeAt(1);
-  		view[2] = speed.toString(16);
-  		view[3] = speed.toString(16);
+  		view[2] = 0x7F;
+  		view[3] = 0x7F;
   		
   		
   		
   		device.send(view.buffer);
   	}
 	
-	ext.goBackwards = function(speed)
+	ext.goBackwards = function()
   	{
   		var directionCommand = '@m';
+  		console.log(directionCommand);
   		var view = new Uint8Array(4);
   		
   		view[0] = directionCommand.charCodeAt(0);
@@ -150,8 +152,8 @@
 		blocks: [ ['', 'Print Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
 			  ['', 'Send At Symbol', 'sendAtSymbol'],
-			  ['', 'Go Forwards at speed %n', 'goForwards', 127],
-			  ['', 'Go Backwards at speed %n', 'goBackwards', 127],
+			  ['', 'Go Forwards', 'goForwards'],
+			  ['', 'Go Backwards', 'goBackwards'],
 			  [' ', 'Turn %m.directions', 'turning', 'left'],
 			  ['', 'Stop Motors', 'stopMotors'],
 			],
