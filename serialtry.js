@@ -119,6 +119,11 @@
   		view[2] = speed.toString(16);
   		view[3] = speed.toString(16);
   		
+  		console.log(view[2]);
+  		console.log(typeof view[2]);
+  		console.log(view[3]);
+  		console.log(typeof view[3]);
+  		
   		
   		
   		device.send(view.buffer);
