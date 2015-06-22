@@ -72,24 +72,23 @@
   	
   	ext.turning = function(direction)
   	{
-  		console.log(direction);
-  		var directionCommand = ['@', 'm', 0x00, 0x00];
-  		if(direction == 'left')
-  		{
-  			directionCommand = ['@', 'm', 0x00, 0x7F];
-  		}
-  		else if(direction == 'right')
-  		{
-  			directionCommand = ['@', 'm', 0x7F, 0x00];
-  		}
+  		var directionCommand = '@m';
   		console.log(directionCommand);
   		var view = new Uint8Array(4);
   		
-  		view[0] = directionCommand[0].charCodeAt(0);
-  		view[1] = directionCommand[1].charCodeAt(1);
-  		view[2] = String.fromCharCode(directionCommand[2]);
-  		view[3] = String.fromCharCode(directionCommand[3]);
-  		console.log(view);
+  		view[0] = directionCommand.charCodeAt(0);
+  		view[1] = directionCommand.charCodeAt(1);
+  		view[2] = 0x00;
+  		view[3] = 0x00;
+  		
+  		if(direction == 'left')
+  		{
+  			view[3] = 0x7F;
+  		}
+  		else if(direction == 'right')
+  		{
+  			view[3] = 0x7F;
+  		}
   		
   		device.send(view.buffer);
   	}
@@ -104,6 +103,8 @@
   		view[1] = directionCommand.charCodeAt(1);
   		view[2] = 0x00;
   		view[3] = 0x00;
+  		
+  		
   		
   		device.send(view.buffer);
   	}
