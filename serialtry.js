@@ -134,7 +134,7 @@
   		view[0] = directionCommand.charCodeAt(0);
   		view[1] = directionCommand.charCodeAt(1);
   		view[2] = 0xE4|127;
-  		view[3] = 0x80|127;
+  		view[3] = 0xE4|127;
   	
   		
   		
