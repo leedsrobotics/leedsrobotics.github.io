@@ -86,8 +86,8 @@
   		
   		view[0] = directionCommand.charCodeAt(0);
   		view[1] = directionCommand.charCodeAt(1);
-  		view[2] = directionCommand[2];
-  		view[3] = directionCommand[3];
+  		view[2] = String.fromCharCode(directionCommand[2]);
+  		view[3] = String.fromCharCode(directionCommand[3]);
   		console.log(view);
   		
   		device.send(view.buffer);
