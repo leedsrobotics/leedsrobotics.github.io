@@ -135,9 +135,8 @@
   		view[1] = directionCommand.charCodeAt(1);
   		view[2] = 0x80|127;
   		view[3] = 0x80|127;
-  	
   		
-  		
+  		console.log(view);
   		device.send(view.buffer);
   	}
 	
