@@ -28,7 +28,7 @@
         		//console.log(String.fromCharCode(dataView[0]));
         		for(var x = 0; x < dataView.length; x++)
         		{
-        			console.log(String.fromCharCode(dataView[z]));	
+        			console.log(String.fromCharCode(dataView[x]));	
         		}
         	});
    	};
