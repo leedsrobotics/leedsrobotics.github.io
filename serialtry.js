@@ -111,6 +111,7 @@
   	
   	ext.goForwards = function(speed)
   	{
+  		console.log(speed);
   		var directionCommand = '@m';
   		var view = new Uint8Array(4);
   		
