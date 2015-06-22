@@ -91,6 +91,20 @@
   		
   		device.send(view.buffer);
   	}
+  	
+  	ext.stopMotors = function()
+  	{
+  		var directionCommand = '@m00';
+  		console.log(directionCommand);
+  		var view = new Uint8Array(4);
+  		
+  		for(var x = 0; x < directionCommand.length; x++)
+  		{
+  			view[x] = directionCommand.charCodeAt(x);
+  		}
+  		
+  		device.send(view.buffer);
+  	}
 	
 	ext._shutdown = function() 
 	{
@@ -105,6 +119,7 @@
 			  ['', 'Request ID', 'idRequest'],
 			  ['', 'Send At Symbol', 'sendAtSymbol'],
 			  [' ', 'Turn %m.directions', 'turning', 'left'],
+			  ['', 'Stop Motors', 'stopMotors']
 			],
 		menus:  {
 				directions: ['left', 'right']
