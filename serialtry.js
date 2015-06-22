@@ -25,7 +25,11 @@
         	device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
-        		console.log(String.fromCharCode(dataView[0]));
+        		//console.log(String.fromCharCode(dataView[0]));
+        		for(var x = 0; x < dataView.length; x++)
+        		{
+        			console.log(String.fromCharCode(dataView[z]));	
+        		}
         	});
    	};
   	
