@@ -153,7 +153,7 @@
 			  ['', 'Request ID', 'idRequest'],
 			  ['', 'Send At Symbol', 'sendAtSymbol'],
 			  ['', 'Go Forwards', 'goForwards'],
-			  ['', 'Go Backwards', 'goBackward'],
+			  ['', 'Go Backwards', 'goBackwards'],
 			  [' ', 'Turn %m.directions', 'turning', 'left'],
 			  ['', 'Stop Motors', 'stopMotors'],
 			],
