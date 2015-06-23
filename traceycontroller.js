@@ -56,9 +56,11 @@
   	 */
   	ext.serialState = function()
   	{
+  		console.log("checking ...");
   		// If no device detected, alert the user
     		if(device === null)
   		{
+  			console.log("No device");
   	  		alert("No Device Detected");
   		}
   		
