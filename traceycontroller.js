@@ -2,7 +2,7 @@
 {
 	var device; // Declares undefined device
 	var dataView = null; // View to contain received data
-	
+	var state = 'still'; // Current state of device
 	
 	/**
 	 * Return status of the extension
@@ -114,7 +114,11 @@
   			view[3] = 0x80|speed;
   		}
   		
-  		device.send(view.buffer); // Send command
+  		if(state != direction)
+  		{
+  			device.send(view.buffer); // Send command
+  			state = direction;
+  		}
   	}
   	
   	
@@ -133,7 +137,11 @@
   		view[2] = 0x00; // Left motor speed (stops motor)
   		view[3] = 0x00; // Right motor speed (stops motor)
   		
-  		device.send(view.buffer); // Send command
+  		if(state != 'still')
+  		{
+  			device.send(view.buffer); // Send command
+  			state = 'still';
+  		}
   	}
   	
   	
@@ -152,7 +160,11 @@
   		view[2] = speed; // Left motor speed
   		view[3] = speed; // Right motor speed
   		
-  		device.send(view.buffer); // Send command
+  		if(state != 'forwards')
+  		{
+  			device.send(view.buffer); // Send command
+  			state = 'forwards';
+  		}
   	}
 	
 	
@@ -171,7 +183,11 @@
   		view[2] = 0x80|speed; // Left motor speed (reversed)
   		view[3] = 0x80|speed; // Right motor speed (reversed)
   		
-  		device.send(view.buffer); // Send command
+  		if(state != 'backwards')
+  		{
+  			device.send(view.buffer); // Send command
+  			state = 'backwards';
+  		}
   	}
 	
 	
