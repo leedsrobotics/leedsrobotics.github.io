@@ -75,13 +75,31 @@
   	 */
   	ext.idRequest = function()
   	{
-  		var commandLeft = "@id"; // Request ID command definition
+  		var idCommand = "@id"; // Request ID command definition
   		var view = new Uint8Array(3); // View to contain the command being sent
   		
   		// Fill view with the commands individual bits
-  		for(var x = 0; x < commandLeft.length; x++)
+  		for(var x = 0; x < idCommand.length; x++)
   		{
-  			view[x] = commandLeft.charCodeAt(x);
+  			view[x] = idCommand.charCodeAt(x);
+  		}
+  		
+  		device.send(view.buffer); // Send command
+  	}
+  	
+  	
+  	/**
+  	 * Sends ID request to the device
+  	 */
+  	ext.pinStatus = function(pin)
+  	{
+  		var pinCommand = "@ar" + pin; // Request ID command definition
+  		var view = new Uint8Array(5); // View to contain the command being sent
+  		
+  		// Fill view with the commands individual bits
+  		for(var x = 0; x < pinCommand.length; x++)
+  		{
+  			view[x] = pinCommand.charCodeAt(x);
   		}
   		
   		device.send(view.buffer); // Send command
@@ -206,6 +224,7 @@
 			  ['', 'Go Backwards at speed %n', 'goBackwards', 100],
 			  [' ', 'Turn %m.directions at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
+			  ['', 'Get status of pin %s', 'pinStatus']
 			],
 		menus:  {
 				directions: ['left', 'right']
