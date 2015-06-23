@@ -93,7 +93,7 @@
   	 */
   	ext.turning = function(direction, speed)
   	{
-  		if(state != direction)
+  		if(state != direction && speed <= 100 && speed >= 0)
   		{
   			var directionCommand = '@m'; // Motor command definition
   			var view = new Uint8Array(4); // View to contain the command being sent
@@ -151,7 +151,7 @@
 	 */
   	ext.goForwards = function(speed)
   	{
-  		if(state != 'forwards')
+  		if(state != 'forwards' && speed <= 100 && speed >= 0)
   		{
   			var directionCommand = '@m'; // Motor command definition
   			var view = new Uint8Array(4); // View to contain the command being sent
@@ -174,7 +174,7 @@
 	 */
 	ext.goBackwards = function(speed)
   	{
-  		if(state != 'backwards')
+  		if(state != 'backwards' && speed <= 100 && speed >= 0)
   		{
   			var directionCommand = '@m'; // Motor command definition
   			var view = new Uint8Array(4); // View to contain the command being sent
