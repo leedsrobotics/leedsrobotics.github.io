@@ -43,8 +43,8 @@
         		dataView = new Uint8Array(data);
         		for(var x = 0; x < dataView.length; x++)
         		{
-        			console.log(dataview[x]);
-        			console.log(typeof dataview[x]);
+        			console.log(dataView[x]);
+        			console.log(typeof dataView[x]);
         			console.log(String.fromCharCode(dataView[x]));
         			console.log(typeof String.fromCharCode(dataView[x]));
         		}
