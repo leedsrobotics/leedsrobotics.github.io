@@ -44,9 +44,7 @@
         		for(var x = 0; x < dataView.length; x++)
         		{
         			console.log(dataView[x]);
-        			console.log(typeof dataView[x]);
         			console.log(String.fromCharCode(dataView[x]));
-        			console.log(typeof String.fromCharCode(dataView[x]));
         		}
         	});
    	};
