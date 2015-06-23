@@ -193,6 +193,7 @@
 		menus:  {
 				directions: ['left', 'right']
 		        }
+		url: 'http://leedsrobotics.github.io/'
 	};
 
         
