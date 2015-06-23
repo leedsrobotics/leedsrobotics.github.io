@@ -93,29 +93,30 @@
   	 */
   	ext.turning = function(direction, speed)
   	{
-  		var directionCommand = '@m'; // Motor command definition
-  		var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  		// Declare motor command
-  		view[0] = directionCommand.charCodeAt(0);
-  		view[1] = directionCommand.charCodeAt(1);
-  		
-  		// Set right motor full forward and left motor full backwards if left
-  		if(direction == 'left')
-  		{
-  			view[2] = 0x80|speed;
-  			view[3] = speed;
-  		}
-  		
-  		// Set left motor full forward and right motor full backwards if left
-  		else if(direction == 'right')
-  		{
-  			view[2] = speed;
-  			view[3] = 0x80|speed;
-  		}
-  		
   		if(state != direction)
   		{
+  			var directionCommand = '@m'; // Motor command definition
+  			var view = new Uint8Array(4); // View to contain the command being sent
+  		
+  			// Declare motor command
+  			view[0] = directionCommand.charCodeAt(0);
+  			view[1] = directionCommand.charCodeAt(1);
+  		
+  			// Set right motor full forward and left motor full backwards if left
+  			if(direction == 'left')
+  			{
+  				view[2] = 0x80|speed;
+  				view[3] = speed;
+  			}
+  		
+  			// Set left motor full forward and right motor full backwards if left
+  			else if(direction == 'right')
+  			{
+  				view[2] = speed;
+  				view[3] = 0x80|speed;
+  			}
+  		
+  		
   			device.send(view.buffer); // Send command
   			state = direction;
   		}
@@ -127,18 +128,18 @@
   	 */
   	ext.stopMotors = function()
   	{
-  		var directionCommand = '@m'; // Motor command definition
-  		var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  		// Declare motor command
-  		view[0] = directionCommand.charCodeAt(0);
-  		view[1] = directionCommand.charCodeAt(1);
-  		
-  		view[2] = 0x00; // Left motor speed (stops motor)
-  		view[3] = 0x00; // Right motor speed (stops motor)
-  		
   		if(state != 'still')
   		{
+  			var directionCommand = '@m'; // Motor command definition
+  			var view = new Uint8Array(4); // View to contain the command being sent
+  		
+  			// Declare motor command
+  			view[0] = directionCommand.charCodeAt(0);
+  			view[1] = directionCommand.charCodeAt(1);
+  		
+  			view[2] = 0x00; // Left motor speed (stops motor)
+  			view[3] = 0x00; // Right motor speed (stops motor)
+  		
   			device.send(view.buffer); // Send command
   			state = 'still';
   		}
@@ -150,18 +151,18 @@
 	 */
   	ext.goForwards = function(speed)
   	{
-  		var directionCommand = '@m'; // Motor command definition
-  		var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  		// Declare motor command
-  		view[0] = directionCommand.charCodeAt(0);
-  		view[1] = directionCommand.charCodeAt(1);
-  		
-  		view[2] = speed; // Left motor speed
-  		view[3] = speed; // Right motor speed
-  		
   		if(state != 'forwards')
   		{
+  			var directionCommand = '@m'; // Motor command definition
+  			var view = new Uint8Array(4); // View to contain the command being sent
+  		
+  			// Declare motor command
+  			view[0] = directionCommand.charCodeAt(0);
+  			view[1] = directionCommand.charCodeAt(1);
+  		
+  			view[2] = speed; // Left motor speed
+  			view[3] = speed; // Right motor speed
+  		
   			device.send(view.buffer); // Send command
   			state = 'forwards';
   		}
@@ -173,18 +174,18 @@
 	 */
 	ext.goBackwards = function(speed)
   	{
-  		var directionCommand = '@m'; // Motor command definition
-  		var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  		// Declare motor command
-  		view[0] = directionCommand.charCodeAt(0);
-  		view[1] = directionCommand.charCodeAt(1);
-  		
-  		view[2] = 0x80|speed; // Left motor speed (reversed)
-  		view[3] = 0x80|speed; // Right motor speed (reversed)
-  		
   		if(state != 'backwards')
   		{
+  			var directionCommand = '@m'; // Motor command definition
+  			var view = new Uint8Array(4); // View to contain the command being sent
+  		
+  			// Declare motor command
+  			view[0] = directionCommand.charCodeAt(0);
+  			view[1] = directionCommand.charCodeAt(1);
+  		
+  			view[2] = 0x80|speed; // Left motor speed (reversed)
+  			view[3] = 0x80|speed; // Right motor speed (reversed)
+  		
   			device.send(view.buffer); // Send command
   			state = 'backwards';
   		}
