@@ -139,6 +139,7 @@
   			{
   				view[2] = 0x80|speed;
   				view[3] = speed;
+  				previousRightSpeed = speed;
   			}
   		
   			// Set left motor full forward and right motor full backwards if left
@@ -146,6 +147,7 @@
   			{
   				view[2] = speed;
   				view[3] = 0x80|speed;
+  				previousLeftSpeed = speed;
   			}
   		
   			if(view != previousCommand)
@@ -174,6 +176,8 @@
   		
   			view[2] = 0x00; // Left motor speed (stops motor)
   			view[3] = 0x00; // Right motor speed (stops motor)
+  			previousLeftSpeed = speed;
+  			previousRightSpeed = speed;
   			
   			if(view != previousCommand)
   			{
@@ -203,6 +207,8 @@
   			{
   				view[2] = speed; // Left motor speed
   				view[3] = speed; // Right motor speed
+  				previousLeftSpeed = speed;
+  				previousRightSpeed = speed;
   			}
   			else if(direction == 'backwards')
   			{
