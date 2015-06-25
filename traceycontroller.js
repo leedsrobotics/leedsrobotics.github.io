@@ -126,7 +126,7 @@
   		setTimeout(function(){
 	  		expectPinData = false;
   			console.log(pinData);
-  		}, 1000);
+  		}, 500);
   		console.log( ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF) );
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
   		if(analogVal > threshold)
