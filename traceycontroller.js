@@ -220,22 +220,10 @@
   			view[x] = command.charCodeAt(x);
   		}
   		
-  		console.log(seper_params);
-  		if(typeOfParam == 'integer')
+  		for(var y = 0; y < seper_params.length; y++)
   		{
-  			for(var y = 0; y < seper_params.length; y++)
-  			{
-  				view[y + command.length] = parseInt(seper_params[y]);
-  				console.log(seper_params[y]);
-  			}
-  		}
-  		else if(typeOfParam == 'string')
-  		{
-  			for(var y = 0; y < seper_params.length; y++)
-  			{
-  				view[y + command.length] = seper_params[y];
-  				console.log(seper_params[y]);
-  			}
+  			view[y + command.length] = seper_params[y];
+  			console.log(seper_params[y]);
   		}
   		
   		if(view != previousCommand)
@@ -261,12 +249,11 @@
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Get status of pin %s', 'pinStatus'],
-			  ['', 'Send Command %s with parameters %s of type %m.paramTypes', 'sendCustomCommand']
+			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand']
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
 				directions2: ['left', 'right'],
-				paramTypes: ['string', 'integer']
 		        },
 		url: 'http://leedsrobotics.github.io/'
 	};
