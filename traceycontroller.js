@@ -8,6 +8,7 @@
 	var previousLeftSpeed = 0;
 	var expectPinData = false;
 	var pinData = null;
+	var threshold = 900;
 	
 	/**
 	 * Return status of the extension
@@ -127,7 +128,15 @@
   			console.log(pinData);
   		}, 1000);
   		console.log( ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF) );
-  		return ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
+  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
+  		if(analogVal > threshold)
+  		{
+  			return 'black';
+  		}
+  		else
+  		{
+  			return 'white';
+  		}
   	}
 
   	
