@@ -177,10 +177,9 @@
   		
   			view[2] = 0x00; // Left motor speed (stops motor)
   			view[3] = 0x00; // Right motor speed (stops motor)
-  			previousLeftSpeed = speed;
-  			previousRightSpeed = speed;
+  			previousLeftSpeed = 0;
+  			previousRightSpeed = 0;
   			
-  			console.log(view != previousCommand);
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
