@@ -70,7 +70,7 @@
   	{
   		if(!device)
   		{
-  			return "connected";
+  			return "No Serial Device connected";
   		}
   		else
   		{
