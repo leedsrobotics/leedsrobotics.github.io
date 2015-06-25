@@ -168,11 +168,11 @@
   	
   	
   	/**
-	 * Sets motors to spin forwards at a specified speed
+	 * Sets motors to spin either forwards or backwards at a specified speed
 	 */
-  	ext.goForwards = function(speed)
+  	ext.goForwardsOrBackwards = function(direction, speed)
   	{
-  		if(state != 'forwards' && speed <= 100 && speed >= 0)
+  		if(state != direction && speed <= 100 && speed >= 0)
   		{
   			var directionCommand = '@m'; // Motor command definition
   			var view = new Uint8Array(4); // View to contain the command being sent
@@ -181,34 +181,19 @@
   			view[0] = directionCommand.charCodeAt(0);
   			view[1] = directionCommand.charCodeAt(1);
   		
-  			view[2] = speed; // Left motor speed
-  			view[3] = speed; // Right motor speed
-  		
+  			if(direction == 'forward')
+  			{
+  				view[2] = speed; // Left motor speed
+  				view[3] = speed; // Right motor speed
+  			}
+  			else if(direction == 'backwards')
+  			{
+  				view[2] = 0x80|speed; // Left motor speed (reversed)
+  				view[3] = 0x80|speed; // Right motor speed (reversed)
+  			}
+  			
   			device.send(view.buffer); // Send command
   			state = 'forwards';
-  		}
-  	}
-	
-	
-	/**
-	 * Sets motors to reverse at a specified speed
-	 */
-	ext.goBackwards = function(speed)
-  	{
-  		if(state != 'backwards' && speed <= 100 && speed >= 0)
-  		{
-  			var directionCommand = '@m'; // Motor command definition
-  			var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  			// Declare motor command
-  			view[0] = directionCommand.charCodeAt(0);
-  			view[1] = directionCommand.charCodeAt(1);
-  		
-  			view[2] = 0x80|speed; // Left motor speed (reversed)
-  			view[3] = 0x80|speed; // Right motor speed (reversed)
-  		
-  			device.send(view.buffer); // Send command
-  			state = 'backwards';
   		}
   	}
 	
@@ -223,14 +208,14 @@
 	var descriptor = {
 		blocks: [ ['', 'Print Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
-			  ['', 'Go Forwards at speed %n', 'goForwards', 100],
-			  ['', 'Go Backwards at speed %n', 'goBackwards', 100],
-			  [' ', 'Turn %m.directions at speed %n', 'turning', 'left', 100],
+			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
+			  [' ', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Get status of pin %s', 'pinStatus']
 			],
 		menus:  {
-				directions: ['left', 'right']
+				directions1: ['forwards', 'backwards'],
+				directions2: ['left', 'right']
 		        },
 		url: 'http://leedsrobotics.github.io/'
 	};
