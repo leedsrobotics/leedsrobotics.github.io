@@ -165,6 +165,7 @@
   	 */
   	ext.stopMotors = function()
   	{
+  		console.log(state);
   		if(state != 'still')
   		{
   			var directionCommand = '@m'; // Motor command definition
@@ -179,6 +180,7 @@
   			previousLeftSpeed = speed;
   			previousRightSpeed = speed;
   			
+  			console.log(view != previousCommand);
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
