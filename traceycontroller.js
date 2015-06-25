@@ -223,7 +223,7 @@
   	ext.setIndivMotor = function(motor, speed, duration)
   	{
   		console.log('Running ...');
-  		if(state != direction && speed <= 100 && speed >= 0)
+  		if(speed <= 100 && speed >= 0 && duration > 0)
   		{
   			var directionCommand = '@m'; // Motor command definition
   			var view = new Uint8Array(4); // View to contain the command being sent
