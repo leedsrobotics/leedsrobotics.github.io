@@ -196,6 +196,23 @@
   			state = 'forwards';
   		}
   	}
+  	
+  	ext.sendCustomCommand = function(command, params)
+  	{
+  		var seper_params = params.split(" ");
+  		var view = new Uint8Array(command.length + seper_params.length);
+  		
+  		for(var x = 0; x < command.length; x++)
+  		{
+  			view[x] = command.charCodeAt(x);
+  		}
+  		for(var y = command.length; y < command.length + seper_params.length; y++)
+  		{
+  			view[y] = seper_params[y];
+  		}
+  		
+  		device.send(view.buffer);
+  	}
 	
 	
 	/**
@@ -209,9 +226,10 @@
 		blocks: [ ['', 'Print Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
-			  [' ', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
+			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
-			  ['', 'Get status of pin %s', 'pinStatus']
+			  ['', 'Get status of pin %s', 'pinStatus'],
+			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand']
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
