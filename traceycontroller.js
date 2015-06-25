@@ -90,7 +90,7 @@
   			}
   		}, 250)
   		
-    		if(device == null)
+    		if(!device)
   		{
   			console.log("No device");
   	  		alert("No Device Detected");
