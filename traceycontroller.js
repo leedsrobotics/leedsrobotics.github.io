@@ -296,8 +296,14 @@
   		
   		for(var y = 0; y < seper_params.length; y++)
   		{
-  			view[y + command.length] = seper_params[y];
-  			console.log(seper_params[y]);
+  			if(seper_params[y] < 0)
+  			{
+  				view[y + command.length] = 0x80|seper_params[y];
+  			}
+  			else
+  			{
+  				view[y + command.length] = seper_params[y];
+  			}
   		}
   		
   		if(view != previousCommand)
