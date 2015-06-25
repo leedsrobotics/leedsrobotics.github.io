@@ -212,7 +212,6 @@
   			
   			if(view != previousCommand)
   			{
-  				console.log(view);
   				device.send(view.buffer); // Send command
   				state = 'forwards';
   				previousCommand = view;
@@ -223,6 +222,7 @@
   	
   	ext.setIndivMotor = function(motor, speed, duration)
   	{
+  		console.log('Running ...');
   		if(state != direction && speed <= 100 && speed >= 0)
   		{
   			var directionCommand = '@m'; // Motor command definition
@@ -240,17 +240,20 @@
   			}
   			else if(motor == 'right')
   			{
-  				view[2] = previousLeftspeed; // Left motor speed
+  				view[2] = previousLeftSpeed; // Left motor speed
   				view[3] = speed; // Right motor speed
   				previousRightSpeed = speed;
   			}
   			
+  			console.log(view);
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
   				previousCommand = view;
   				
+  				console.log('About to sleep ...');
   				sleep(duration * 1000);
+  				console.log('... Finished sleeping');
   				if(motor == 'left')
   				{
   					view[2] = 0x00; // Left motor speed (stops motor)
@@ -262,6 +265,7 @@
   					view[3] = 0x00; // Right motor speed (stops motor)
   				}
   				
+  				console.log(view);
   				device.send(view.buffer); // Send command
   				previousCommand = view;
   			}
@@ -289,7 +293,6 @@
   		
   		if(view != previousCommand)
   		{
-  			console.log(view);
   			device.send(view.buffer);
   			previousCommand = view;
   		}
