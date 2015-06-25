@@ -92,8 +92,7 @@
   		
     		if(!device)
   		{
-  			console.log("No device");
-  	  		alert("No Device Detected");
+  			alert("No Device!");
   		}
   		
   		// If device found, alert the user
