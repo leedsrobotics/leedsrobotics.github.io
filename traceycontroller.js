@@ -74,7 +74,7 @@
   		}
   		else
   		{
-  	  		var message = device.constructor.name + " connected via " + device.id.toString());
+  	  		var message = device.constructor.name + " connected via " + device.id.toString();
   	  		return message;
   		}
   	};
