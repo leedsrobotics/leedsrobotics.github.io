@@ -181,7 +181,7 @@
   			view[0] = directionCommand.charCodeAt(0);
   			view[1] = directionCommand.charCodeAt(1);
   		
-  			if(direction == 'forward')
+  			if(direction == 'forwards')
   			{
   				view[2] = speed; // Left motor speed
   				view[3] = speed; // Right motor speed
