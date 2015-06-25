@@ -4,6 +4,8 @@
 	var dataView = null; // View to contain received data
 	var state = 'still'; // Current state of device
 	var previousCommand = null;
+	var previousRightSpeed = 0;
+	var previousLeftSpeed = 0;
 	
 	/**
 	 * Return status of the extension
@@ -12,6 +14,14 @@
   	{
     		return {status:2, msg: 'Ready'};
   	};
+  	
+  	
+  	function sleep(miliseconds) 
+  	{
+           var currentTime = new Date().getTime();
+
+           while (currentTime + miliseconds >= new Date().getTime()) {}
+       }
 	
 	
 	/**
@@ -210,6 +220,57 @@
   		}
   	}
   	
+  	
+  	ext.setIndivMotor = function(motor, speed, duration)
+  	{
+  		if(state != direction && speed <= 100 && speed >= 0)
+  		{
+  			var directionCommand = '@m'; // Motor command definition
+  			var view = new Uint8Array(4); // View to contain the command being sent
+  		
+  			// Declare motor command
+  			view[0] = directionCommand.charCodeAt(0);
+  			view[1] = directionCommand.charCodeAt(1);
+  		
+  			if(motor == 'left')
+  			{
+  				view[2] = speed; // Left motor speed
+  				view[3] = previousRightSpeed; // Right motor speed
+  				previousLeftSpeed = speed;
+  			}
+  			else if(motor == 'right')
+  			{
+  				view[2] = previousLeftspeed; // Left motor speed
+  				view[3] = speed; // Right motor speed
+  				previousRightSpeed = speed;
+  			}
+  			
+  			if(view != previousCommand)
+  			{
+  				device.send(view.buffer); // Send command
+  				previousCommand = view;
+  				
+  				sleep(duration * 1000);
+  				if(motor == 'left')
+  				{
+  					view[2] = 0x00; // Left motor speed (stops motor)
+  					view[3] = previousRightSpeed; // Keep right motor speed the same
+  				}
+  				else if(motor == 'right')
+  				{
+  					view[2] = previousLeftSpeed; // Keep left motor speed the same
+  					view[3] = 0x00; // Right motor speed (stops motor)
+  				}
+  				
+  				device.send(view.buffer); // Send command
+  				previousCommand = view;
+  			}
+  			
+  		}
+  		
+  	}
+  	
+  	
   	ext.sendCustomCommand = function(command, params, typeOfParam)
   	{
   		var seper_params = params.split(" ");
@@ -245,10 +306,11 @@
 	var descriptor = {
 		blocks: [ ['', 'Print Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
+			  ['', 'Get status of pin %s', 'pinStatus'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
-			  ['', 'Get status of pin %s', 'pinStatus'],
+			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand']
 			],
 		menus:  {
