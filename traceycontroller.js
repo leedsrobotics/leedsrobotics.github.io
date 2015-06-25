@@ -126,6 +126,7 @@
 	  		expectPinData = false;
   			console.log(pinData);
   		}, 1000);
+  		console.log( ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF) );
   		return ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
   	}
 
