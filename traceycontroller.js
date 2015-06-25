@@ -90,12 +90,10 @@
   			}
   		}, 250)
   		
-    		if(!device)
+  		if(!device)
   		{
-  			alert("No Device!");
+  			console.log("couldnt find anything");
   		}
-  		
-  		// If device found, alert the user
   		else
   		{
   	  		alert("Serial Device Connected! " + device.id.toString());
