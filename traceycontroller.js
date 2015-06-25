@@ -6,9 +6,6 @@
 	var previousCommand = null;
 	var previousRightSpeed = 0;
 	var previousLeftSpeed = 0;
-	var poller = null;
-	var watchdog = null;
-	var receivedData = null;
 	
 	/**
 	 * Return status of the extension
@@ -55,7 +52,6 @@
         	// When data is received from device, convert the data to a readable format and print to console
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
-        		receivedData = data;
         		for(var x = 0; x < dataView.length; x++)
         		{
         			console.log(dataView[x]);
@@ -72,32 +68,14 @@
   	 */
   	ext.serialState = function()
   	{
-  		console.log("checking ...");
-  		// If no device detected, alert the user
-  		var pingCmd = new Uint8Array(3);
-        	pingCmd[0] = '@';
-        	pingCmd[1] = 'i';
-        	pingCmd[2] = 'd';
-        	device.send(pingCmd.buffer);
-  		
-  		setTimeout(function(){
-  			if(receivedData == null)
-  			{
-  				device.set_receive_handler(null);
-            			device.close();
-            			device = null;
-            			tryNextDevice();
-  			}
-  		}, 250)
-  		
   		if(!device)
   		{
-  			console.log("couldnt find anything");
+  			return "connected";
   		}
   		else
   		{
-  	  		alert("Serial Device Connected! " + device.id.toString());
-  	  		console.log(device.constructor.name);
+  	  		var message = device.constructor.name + " connected via " + device.id.toString());
+  	  		return message;
   		}
   	};
   	
@@ -340,7 +318,7 @@
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
-		blocks: [ ['', 'Print Serial State', 'serialState'],
+		blocks: [ ['r', 'Print Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
 			  ['', 'Get status of pin %s', 'pinStatus'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
