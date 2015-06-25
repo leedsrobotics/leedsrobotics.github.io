@@ -3,6 +3,7 @@
 	var device; // Declares undefined device
 	var dataView = null; // View to contain received data
 	var state = 'still'; // Current state of device
+	var previousCommand = null;
 	
 	/**
 	 * Return status of the extension
@@ -137,9 +138,12 @@
   				view[3] = 0x80|speed;
   			}
   		
-  		
-  			device.send(view.buffer); // Send command
-  			state = direction;
+  			if(view != previousCommand)
+  			{
+  				device.send(view.buffer); // Send command
+  				state = direction;
+  				previousCommand = view;
+  			}
   		}
   	}
   	
@@ -160,9 +164,13 @@
   		
   			view[2] = 0x00; // Left motor speed (stops motor)
   			view[3] = 0x00; // Right motor speed (stops motor)
-  		
-  			device.send(view.buffer); // Send command
-  			state = 'still';
+  			
+  			if(view != previousCommand)
+  			{
+  				device.send(view.buffer); // Send command
+  				state = 'still';
+  				previousCommand = view;
+  			}
   		}
   	}
   	
@@ -192,9 +200,13 @@
   				view[3] = 0x80|speed; // Right motor speed (reversed)
   			}
   			
-  			console.log(view);
-  			device.send(view.buffer); // Send command
-  			state = 'forwards';
+  			if(view != previousCommand)
+  			{
+  				console.log(view);
+  				device.send(view.buffer); // Send command
+  				state = 'forwards';
+  				previousCommand = view;
+  			}
   		}
   	}
   	
@@ -226,8 +238,12 @@
   			}
   		}
   		
-  		console.log(view);
-  		device.send(view.buffer);
+  		if(view != previousCommand)
+  		{
+  			console.log(view);
+  			device.send(view.buffer);
+  			previousCommand = view;
+  		}
   	}
 	
 	
