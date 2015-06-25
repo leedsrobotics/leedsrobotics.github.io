@@ -207,11 +207,14 @@
   		{
   			view[x] = command.charCodeAt(x);
   		}
+  		
+  		console.log(seper_params);
   		if(typeOfParam == 'integer')
   		{
   			for(var y = command.length; y < command.length + seper_params.length; y++)
   			{
   				view[y] = parseInt(seper_params[y]);
+  				console.log(seper_params[y]);
   			}
   		}
   		else if(typeOfParam == 'string')
@@ -219,6 +222,7 @@
   			for(var y = command.length; y < command.length + seper_params.length; y++)
   			{
   				view[y] = seper_params[y];
+  				console.log(seper_params[y]);
   			}
   		}
   		
