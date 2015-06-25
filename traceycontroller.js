@@ -6,6 +6,8 @@
 	var previousCommand = null;
 	var previousRightSpeed = 0;
 	var previousLeftSpeed = 0;
+	var expectPinData = false;
+	var pinData = null;
 	
 	/**
 	 * Return status of the extension
@@ -56,6 +58,10 @@
         		{
         			console.log(dataView[x]);
         			console.log(String.fromCharCode(dataView[x]));
+        			if(expectPinData == true)
+        			{
+        				pinData = dataView;
+        			}
         		}
         	});
         	
@@ -112,7 +118,13 @@
   			view[x] = pinCommand.charCodeAt(x);
   		}
   		
+  		expectPinData = true;
   		device.send(view.buffer); // Send command
+  		
+  		setTimeout(function(){ 
+  			expectPinData = false;
+  			return ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
+  		}, 100);
   	}
 
   	
@@ -320,7 +332,7 @@
 	var descriptor = {
 		blocks: [ ['r', 'Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
-			  ['', 'Get status of pin %s', 'pinStatus'],
+			  ['r', 'Get status of pin %s', 'pinStatus'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
