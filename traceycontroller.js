@@ -298,7 +298,7 @@
   		{
   			if(seper_params[y] < 0)
   			{
-  				view[y + command.length] = 0x80|seper_params[y];
+  				view[y + command.length] = 0x80|parseInt(seper_params[y]) * -1;
   			}
   			else
   			{
