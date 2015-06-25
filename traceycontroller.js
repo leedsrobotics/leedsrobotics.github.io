@@ -197,7 +197,7 @@
   		}
   	}
   	
-  	ext.sendCustomCommand = function(command, params)
+  	ext.sendCustomCommand = function(command, params, typeOfParam)
   	{
   		var seper_params = params.split(" ");
   		var view = new Uint8Array(command.length + seper_params.length);
@@ -206,9 +206,19 @@
   		{
   			view[x] = command.charCodeAt(x);
   		}
-  		for(var y = command.length; y < command.length + seper_params.length; y++)
+  		if(typeOfParam == 'integer')
   		{
-  			view[y] = seper_params[y];
+  			for(var y = command.length; y < command.length + seper_params.length; y++)
+  			{
+  				view[y] = parseInt(seper_params[y]);
+  			}
+  		}
+  		else if(typeOfParam == 'string')
+  		{
+  			for(var y = command.length; y < command.length + seper_params.length; y++)
+  			{
+  				view[y] = seper_params[y];
+  			}
   		}
   		
   		device.send(view.buffer);
@@ -229,11 +239,12 @@
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Get status of pin %s', 'pinStatus'],
-			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand']
+			  ['', 'Send Command %s with parameters %s of type %m.paramTypes', 'sendCustomCommand']
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
-				directions2: ['left', 'right']
+				directions2: ['left', 'right'],
+				paramTypes: ['string', 'integer']
 		        },
 		url: 'http://leedsrobotics.github.io/'
 	};
