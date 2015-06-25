@@ -262,13 +262,15 @@
   				console.log('... Finished sleeping');
   				if(motor == 'left')
   				{
-  					view[2] = 0x00; // Left motor speed (stops motor)
+  					view[2] = 0; // Left motor speed (stops motor)
   					view[3] = previousRightSpeed; // Keep right motor speed the same
+  					previousLeftSpeed = 0;
   				}
   				else if(motor == 'right')
   				{
   					view[2] = previousLeftSpeed; // Keep left motor speed the same
-  					view[3] = 0x00; // Right motor speed (stops motor)
+  					view[3] = 0; // Right motor speed (stops motor)
+  					previousRightSpeed = 0;
   				}
   				
   				console.log(view);
