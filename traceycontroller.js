@@ -70,7 +70,7 @@
   	{
   		if(!device)
   		{
-  			return "No Serial Device connected";
+  			return "No Serial Device Connected";
   		}
   		else
   		{
@@ -88,7 +88,7 @@
   		var idCommand = "@id"; // Request ID command definition
   		var view = new Uint8Array(3); // View to contain the command being sent
   		
-  		// Fill view with the commands individual bits
+  		// Fill view with the commands individual bytes
   		for(var x = 0; x < idCommand.length; x++)
   		{
   			view[x] = idCommand.charCodeAt(x);
@@ -106,7 +106,7 @@
   		var pinCommand = "@ar" + pin; // Request ID command definition
   		var view = new Uint8Array(5); // View to contain the command being sent
   		
-  		// Fill view with the commands individual bits
+  		// Fill view with the commands individual bytes
   		for(var x = 0; x < pinCommand.length; x++)
   		{
   			view[x] = pinCommand.charCodeAt(x);
@@ -318,7 +318,7 @@
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
-		blocks: [ ['r', 'Print Serial State', 'serialState'],
+		blocks: [ ['r', 'Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
 			  ['', 'Get status of pin %s', 'pinStatus'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
