@@ -120,9 +120,10 @@
   		
   		expectPinData = true;
   		device.send(view.buffer); // Send command
-  		
+  		console.log(pinData);
   		setTimeout(function(){ 
   			expectPinData = false;
+  			console.log(pinData);
   			return ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
   		}, 100);
   	}
