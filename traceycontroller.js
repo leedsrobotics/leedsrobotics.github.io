@@ -8,6 +8,7 @@
 	var previousLeftSpeed = 0;
 	var poller = null;
 	var watchdog = null;
+	var receivedData = null;
 	
 	/**
 	 * Return status of the extension
@@ -54,6 +55,7 @@
         	// When data is received from device, convert the data to a readable format and print to console
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
+        		receivedData = data;
         		for(var x = 0; x < dataView.length; x++)
         		{
         			console.log(dataView[x]);
@@ -61,22 +63,6 @@
         		}
         	});
         	
-        	// Tell the PicoBoard to send a input data every 50ms
-        	var pingCmd = new Uint8Array(1);
-        	pingCmd[0] = 1;
-        	poller = setInterval(function() {
-            		device.send(pingCmd.buffer);
-        	}, 50);
-        	watchdog = setTimeout(function() {
-            		// This device didn't get good data in time, so give up on it. Clean up and then move on.
-            		// If we get good data then we'll terminate this watchdog.
-            		clearInterval(poller);
-            		poller = null;
-            		device.set_receive_handler(null);
-            		device.close();
-            		device = null;
-            		tryNextDevice();
-        	}, 250);
    	};
   	
   	
@@ -88,7 +74,23 @@
   	{
   		console.log("checking ...");
   		// If no device detected, alert the user
-    		if(device === null)
+  		var pingCmd = new Uint8Array(3);
+        	pingCmd[0] = '@';
+        	pingCmd[1] = 'i';
+        	pingCmd[2] = 'd';
+        	device.send(pingCmd.buffer);
+  		
+  		setTimeout(function(){
+  			if(receivedData == null)
+  			{
+  				device.set_receive_handler(null);
+            			device.close();
+            			device = null;
+            			tryNextDevice();
+  			}
+  		}, 250)
+  		
+    		if(device == null)
   		{
   			console.log("No device");
   	  		alert("No Device Detected");
