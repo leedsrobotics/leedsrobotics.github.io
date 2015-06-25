@@ -192,6 +192,7 @@
   				view[3] = 0x80|speed; // Right motor speed (reversed)
   			}
   			
+  			console.log(view);
   			device.send(view.buffer); // Send command
   			state = 'forwards';
   		}
@@ -221,6 +222,7 @@
   			}
   		}
   		
+  		console.log(view);
   		device.send(view.buffer);
   	}
 	
