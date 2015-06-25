@@ -297,6 +297,7 @@
   				console.log(view);
   				device.send(view.buffer); // Send command
   				previousCommand = view;
+  				state = '';
   			}
   			
   		}
