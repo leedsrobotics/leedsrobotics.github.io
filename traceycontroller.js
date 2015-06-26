@@ -236,6 +236,7 @@
   				view[3] = speed; // Right motor speed
   				previousLeftSpeed = speed;
   				previousRightSpeed = speed;
+  				state = 'forwards';
   			}
   			else if(direction == 'backwards')
   			{
@@ -247,7 +248,6 @@
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
-  				state = 'forwards';
   				previousCommand = view;
   			}
   		}
