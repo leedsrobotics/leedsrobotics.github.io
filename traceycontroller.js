@@ -241,6 +241,7 @@
   			{
   				view[2] = 0x80|speed; // Left motor speed (reversed)
   				view[3] = 0x80|speed; // Right motor speed (reversed)
+  				state =  'backwards';
   			}
   			
   			if(view != previousCommand)
