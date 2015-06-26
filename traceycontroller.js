@@ -59,7 +59,7 @@
         		{
         			console.log(dataView[x]);
         			console.log(String.fromCharCode(dataView[x]));
-        			if(expectPinData == true)
+        			if(expectPinData == true && dataView.length == 2)
         			{
         				pinData = dataView;
         			}
@@ -123,10 +123,14 @@
   		device.send(view.buffer); // Send command
   		console.log(pinData);
   		
-  		setTimeout(function(){
-	  		expectPinData = false;
-  			console.log(pinData);
-  		}, 500);
+  		while(pinData.length != 2)
+  		{
+  			sleep(100);
+  		}
+  		
+	  	expectPinData = false;
+  		console.log(pinData);
+  		
   		console.log( ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF) );
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
   		console.log("THIS VALUE");
