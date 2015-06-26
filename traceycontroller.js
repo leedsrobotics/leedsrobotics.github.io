@@ -127,8 +127,8 @@
 	  		expectPinData = false;
   			console.log(pinData);
   		}, 500);
-  		console.log( ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF) );
-  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
+  		console.log( ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF) );
+  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
   		if(analogVal > threshold)
   		{
   			return 'black';
