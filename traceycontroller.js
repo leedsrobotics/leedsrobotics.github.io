@@ -57,8 +57,9 @@
         		dataView = new Uint8Array(data);
         		for(var x = 0; x < dataView.length; x++)
         		{
+        			console.log('Raw Data:');
         			console.log(dataView[x]);
-        			console.log(String.fromCharCode(dataView[x]));
+        			//console.log(String.fromCharCode(dataView[x]));
         			if(expectPinData == true && dataView.length == 2)
         			{
         				pinData = dataView;
@@ -111,7 +112,7 @@
   	ext.pinStatus = function(pin)
   	{
   		var pinCommand = "@ar"; // Request ID command definition
-  		console.log(pinCommand);
+  		//console.log(pinCommand);
   		var view = new Uint8Array(4); // View to contain the command being sent
   		
   		// Fill view with the commands individual bytes
@@ -121,9 +122,10 @@
   		}
   		view[3] = String.charCodeAt(pin);
   		
+  		console.log(view)
+  		
   		expectPinData = true;
   		device.send(view.buffer); // Send command
-  		console.log(pinData);
   		
   		while(pinData.length != 2)
   		{
@@ -131,11 +133,11 @@
   		}
   		
 	  	expectPinData = false;
-  		console.log(pinData);
   		
-  		console.log( ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF) );
+  		console.log('Pin Data:');
+  		console.log(pinData);
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
-  		console.log("THIS VALUE");
+  		console.log("Analog Val:");
   		console.log(analogVal);
   		pinData = null;
   		if(analogVal > threshold)
