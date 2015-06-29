@@ -127,6 +127,8 @@
   		expectPinData = true;
   		device.send(view.buffer); // Send command
   		
+  		console.log('Sent data!');
+  		
   		while(pinData.length != 2)
   		{
   			sleep(200);
