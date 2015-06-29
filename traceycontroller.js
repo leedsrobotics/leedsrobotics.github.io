@@ -135,8 +135,8 @@
   		{
   			console.log('Waiting ...');
   			console.log(a);
-  			sleep(500);
   			++a;
+  			setTimeout(function(){}, 300);
   		}
   		
 	  	expectPinData = false;
