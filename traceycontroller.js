@@ -138,7 +138,6 @@
   		console.log("THIS VALUE");
   		console.log(analogVal);
   		pinData = null;
-  		return analogVal;
   		if(analogVal > threshold)
   		{
   			return 'black';
