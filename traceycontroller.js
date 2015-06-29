@@ -110,15 +110,16 @@
   	 */
   	ext.pinStatus = function(pin)
   	{
-  		var pinCommand = "@ar" + String.fromCharCode(pin); // Request ID command definition
+  		var pinCommand = "@ar"; // Request ID command definition
   		console.log(pinCommand);
-  		var view = new Uint8Array(5); // View to contain the command being sent
+  		var view = new Uint8Array(4); // View to contain the command being sent
   		
   		// Fill view with the commands individual bytes
   		for(var x = 0; x < pinCommand.length; x++)
   		{
   			view[x] = pinCommand.charCodeAt(x);
   		}
+  		view[3] = String.charCodeAt(pin);
   		
   		expectPinData = true;
   		device.send(view.buffer); // Send command
