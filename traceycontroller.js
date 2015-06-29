@@ -129,9 +129,12 @@
   		
   		console.log('Sent data!');
   		
+  		var a = 0;
   		while(pinData.length != 2)
   		{
-  			sleep(200);
+  			sleep(500);
+  			a = a + 1;
+  			console.log(a);
   		}
   		
 	  	expectPinData = false;
