@@ -137,6 +137,7 @@
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
   		console.log("THIS VALUE");
   		console.log(analogVal);
+  		return analogVal;
   		if(analogVal > threshold)
   		{
   			return 'black';
