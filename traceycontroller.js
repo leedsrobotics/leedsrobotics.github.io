@@ -122,7 +122,7 @@
   		}
   		view[3] = String.charCodeAt(pin);
   		
-  		console.log(view)
+  		console.log(view);
   		
   		expectPinData = true;
   		device.send(view.buffer); // Send command
