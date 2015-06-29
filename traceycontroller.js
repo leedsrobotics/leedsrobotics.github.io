@@ -127,7 +127,7 @@
   		
   		while(pinData.length != 2)
   		{
-  			sleep(100);
+  			sleep(200);
   		}
   		
 	  	expectPinData = false;
