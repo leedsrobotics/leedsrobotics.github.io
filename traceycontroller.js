@@ -129,14 +129,10 @@
   		
   		console.log('Sent data!');
   		
-  		var a = 0;
   		console.log('ENTERING WHILE');
   		while(pinData.length != 2)
   		{
-  			console.log('Waiting ...');
-  			console.log(a);
-  			++a;
-  			setTimeout(function(){}, 300);
+  			sleep(200);
   		}
   		
 	  	expectPinData = false;
