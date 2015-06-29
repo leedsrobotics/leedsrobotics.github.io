@@ -8,7 +8,7 @@
 	var previousLeftSpeed = 0;
 	var expectPinData = false;
 	var pinData = null;
-	var threshold = 900;
+	var threshold = 550;
 	
 	/**
 	 * Return status of the extension
