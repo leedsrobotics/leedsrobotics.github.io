@@ -111,6 +111,7 @@
   	 */
   	ext.pinStatus = function(pin)
   	{
+  		pinData = null;
   		var pinCommand = "@ar"; // Request ID command definition
   		console.log('ATTEMPTING ...');
   		var view = new Uint8Array(4); // View to contain the command being sent
@@ -146,7 +147,6 @@
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
   		console.log("Analog Val:");
   		console.log(analogVal);
-  		//pinData = null;
   		if(analogVal > threshold)
   		{
   			return 'black';
