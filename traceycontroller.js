@@ -134,6 +134,7 @@
   		{
   			sleep(500);
   			a = a + 1;
+  			console.log('Waiting ...');
   			console.log(a);
   		}
   		
