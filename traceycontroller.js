@@ -24,7 +24,7 @@
            var currentTime = new Date().getTime();
 
            while (currentTime + miliseconds >= new Date().getTime()) {}
-       }
+       };
 	
 	
 	/**
@@ -133,7 +133,7 @@
   		while(pinData.length != 2)
   		{
   			sleep(500);
-  			a = a + 1;
+  			++a;
   			console.log('Waiting ...');
   			console.log(a);
   		}
