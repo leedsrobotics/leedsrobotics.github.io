@@ -59,12 +59,12 @@
         		{
         			console.log('Raw Data:');
         			console.log(dataView[x]);
-        			//console.log(String.fromCharCode(dataView[x]));
-        			if(expectPinData == true && dataView.length == 2)
-        			{
-        				pinData = dataView;
-        				expectPinData = false;
-        			}
+        			//console.log(String.fromCharCode(dataView[x]))
+        		}
+        		if(expectPinData == true && dataView.length == 2)
+        		{
+        			pinData = dataView;
+        			expectPinData = false;
         		}
         	});
         	
