@@ -123,21 +123,9 @@
   		}
   		view[3] = String.charCodeAt(pin);
   		
-  		console.log(view);
-  		
   		expectPinData = true;
   		device.send(view.buffer); // Send command
   		
-  		console.log('Sent data!');
-  		
-  		console.log('ENTERING WHILE');
-  		
-  		while(pinData == null)
-  		{
-  			sleep(200);
-  		}
-  		
-	  	expectPinData = false;
   		
   		console.log('Pin Data:');
   		console.log(pinData);
