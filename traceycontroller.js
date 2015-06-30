@@ -9,7 +9,6 @@
 	var expectPinData = false;
 	var pinData = null;
 	var threshold = 550;
-	var temp_array = new Uint8Array(1);
 	
 	/**
 	 * Return status of the extension
@@ -131,7 +130,8 @@
   		console.log('Sent data!');
   		
   		console.log('ENTERING WHILE');
-  		while(pinData.length != 2)
+  		
+  		while(pinData == null)
   		{
   			sleep(200);
   		}
@@ -143,7 +143,7 @@
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
   		console.log("Analog Val:");
   		console.log(analogVal);
-  		pinData = temp_array;
+  		pinData = null;
   		if(analogVal > threshold)
   		{
   			return 'black';
