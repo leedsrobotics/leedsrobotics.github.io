@@ -361,7 +361,7 @@
 	var descriptor = {
 		blocks: [ ['r', 'Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
-			  ['r', 'Get status of pin %s', 'pinStatus'],
+			  ['R', 'Get status of pin %s', 'pinStatus'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
