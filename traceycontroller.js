@@ -9,6 +9,7 @@
 	var expectPinData = false;
 	var pinData = null;
 	var threshold = 550;
+	//var storedData = {buffer: new Uint8Array(4096), read: function(){} }
 	
 	/**
 	 * Return status of the extension
