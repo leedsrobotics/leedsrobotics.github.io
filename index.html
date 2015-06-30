@@ -257,7 +257,7 @@ hr {
   overflow: hidden;
   border: none;
   background: transparent;
-  border-bottom: 4px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 0;
 }
 
@@ -294,31 +294,168 @@ img {
 <body>
 <h2>ScratchX Extension Documentation</h2>
 <p>ScratchX is a web based GUI that offers easy to use programming blocks that make it ideal in a classroom setting for the teaching of programming. Unlike its Scratch counterpart, ScratchX supports experimental extensions, which allows users to load their own extensions into the GUI. These extensions are written in JavaScript and can be loaded into the GUI by inserting a Github hosted JavaScript link (e.g. <a href="http://leedsrobotics.github.io/practiseblocks.js">http://leedsrobotics.github.io/practiseblocks.js</a>) into the home page of the ScratchX site (<a href="http://scratchx.org">http://scratchx.org</a>).</p>
+<hr />
 <h4>Platform Compatibility</h4>
 <p>Since the ScratchX GUI is web based, it can be accessed via any computer and operating system with an internet connection and a recent version of Adobe Flash installed. However, in order to interface with hardware, a hardware plugin must be downloaded from:</p>
 <p><a href="https://scratch.mit.edu/info/ext_download/">https://scratch.mit.edu/info/ext_download/</a></p>
 <p>This hardware plugin is NOT available on Linux. The official plugins are currently only available for download on Windows and Mac.</p>
+<hr />
 <h4>Browser Compatibility</h4>
 <p>Though the plugin is available on multiple browsers, Mozilla Firefox is recommended as it comes with the least issues, especially when it comes to getting the hardware plugin to be detected. Before starting the extensions, you should disable the cache beforehand as Firefox repeatedly caches versions of the JavaScript files hosted on the site. This can be done by following these steps:</p>
 <ul>
 <li>type in the address bar about:config </li>
-<li>then press the button i'l be careful i promise </li>
+<li>then press the button I'll be careful I promise </li>
 <li>then type in the bar browser.cache.disk.enable </li>
 <li>then double click on it, to make it false </li>
 <li>exit firefox and restart-it. </li>
 <li>do the same with browser.cache.memory.enable </li>
 </ul>
 <p>Alternatively, you can hit (<code>Ctrl + F5</code>) to update the cache with a new version of the page.</p>
-<h4>Tutorials</h4>
-<p>The ScratchX wiki page is particularly useful for learning how to extend Scratch:</p>
-<p><a href="https://github.com/LLK/scratchx/wiki">https://github.com/LLK/scratchx/wiki</a></p>
-<p>It covers how to create various block types and how to setup the Github page in order to host JavaScript files that can be loaded into ScratchX. It also briefly covers to how to ScratchX supports USB and serial hardware. 
-In addition, examples of other extensions can be found here:</p>
-<p><a href="https://github.com/LLK/scratchx/wiki/Example-Extensions">https://github.com/LLK/scratchx/wiki/Example-Extensions</a></p>
+<hr />
+<h4>Setting up your computer</h4>
+<p>Before starting the setup process, be aware that interfacing with hardware via ScratchX is only possible on Windows and Mac. This is because of there not being a offical Linux Hardware plugin release for ScratchX that allows hardware to be controlled via JavaScript running on the ScratchX site.</p>
+<hr />
+<h6>Adobe Flash Player</h6>
+<p>Since the ScratchX GUI is web based, it can be accessed via any computer and operating system with an internet connection and a recent version of Adobe Flash Player installed. If you are unsure whether your version of Adobe Flash Player is recent enough, quickly visit the ScratchX site (<a href="http://scratchx.org/">http://scratchx.org/</a>) and open the editor via the link at the bottom of the page. If the editor loads without error, your Adobe Flash Player version is compatible, otherwise you will need to download the latest version of Adobe Flash Player:</p>
+<p><a href="https://get.adobe.com/flashplayer/">https://get.adobe.com/flashplayer/</a></p>
+<hr />
+<h6>Github</h6>
+<p>In order to use JavaScript code on the ScratchX website, you will need a Github page. If you do not already have one, you will need to set one up. If this is the case, follow this simple tutorial that goes through setting up a Github page:</p>
+<p><a href="https://pages.github.com">https://pages.github.com</a></p>
+<p>By the end of the tutorial, you should have a Github page that can be accessed via the format <code>myusername.github.io</code>.</p>
+<p>In addition, you will also need a <code>crossdomain.xml</code> file that gives Flash permission to access public repositories on your github page. Here is an example that is suitable for use in ScratchX:</p>
+<pre><code>&lt;cross-domain-policy xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://www.adobe.com/xml/schemas/PolicyFile.xsd&quot;&gt;
+  &lt;site-control permitted-cross-domain-policies=&quot;master-only&quot;/&gt;
+  &lt;allow-access-from domain=&quot;scratchx.org&quot;/&gt;
+  &lt;allow-access-from domain=&quot;llk.github.io&quot;/&gt;
+&lt;/cross-domain-policy&gt;
+</code></pre>
+
+<p>This file should be placed in the root of the host, meaning that it should be accessible via the format <code>myusername.github.io/crossdomain.xml</code>.</p>
+<hr />
+<h4>Loading JavaScript files into ScratchX</h4>
+<p>In order to load a JavaScript extension, follow these steps:</p>
+<ol>
+<li>Copy the link the JavaScript file hosted on a Github page (e.g. <code>myusername.github.io/practiseblocks.js</code>)</li>
+<li>Go to <a href="http://scratchx.org/">http://scratchx.org/</a></li>
+<li>Under the section labelled 'Open an Extension URL', paste the JavaScript link and click open (your browser may not respond for a few seconds)</li>
+<li>The ScratchX editor should now be loaded with your extension. If the editor loaded and any of your blocks are missing from the 'More Blocks' section, open the browser console to check if any errors occured.</li>
+</ol>
+<hr />
+<h4>Hardware Interfacing</h4>
+<p>In order for ScratchX to be able to interface with USB and Serial devices, you must install the hardware plugin offered by ScratchX. This hardware plugin is only available on Windows and Mac, so Linux users can not interface with hardware using the official ScratchX plugin. In addition, this plugin often has issues being detected on certain browsers, so the use of Mozilla Firefox is recommended. The main versions of the plugin are hosted here:</p>
+<p><a href="https://scratch.mit.edu/info/ext_download/">https://scratch.mit.edu/info/ext_download/</a></p>
+<p>If the versions hosted there don't work, there is a Beta version of the plugin here:</p>
+<p>Windows: <a href="https://www.mediafire.com/?d99e82e7w8k7x8l">https://www.mediafire.com/?d99e82e7w8k7x8l</a></p>
+<p>Once installed, check that the plugin is enabled in your browser settings. Once its enabled, you can check if its working by loading a hardware extension (e.g. <a href="http://khanning.github.io/scratch-arduino-extension/arduino_extension.js">http://khanning.github.io/scratch-arduino-extension/arduino_extension.js</a> ). Once the extension is loaded, there should be a coloured circle next to the extension title in the 'More Blocks' section. By hovering over it, it will tell you the state of the extension. The states include:</p>
+<p>Red: Missing Browser Plugin. If you receive this error, try reinstalling the plugin or install the beta version.</p>
+<p>Yellow: Plugin is working but no device is detected. Ensure your device connected to the computer.</p>
+<p>Green: No errors detected. Extension is ready.</p>
+<hr />
+<h4>Starting a new extension</h4>
+<p>Here is the template in which you can create and add new blocks:</p>
+<pre><code>(function(ext) {
+    // Cleanup function when the extension is unloaded
+    ext._shutdown = function() {};
+
+    // Status reporting code
+    // Use this to report missing hardware, plugin or unsupported browser
+    ext._getStatus = function() {
+        return {status: 2, msg: 'Ready'};
+    };
+
+    // Block and block menu descriptions
+    var descriptor = {
+            blocks: [
+                    ]
+    };
+
+    // Register the extension
+    ScratchExtensions.register('Sample extension', descriptor, ext);
+})({});
+</code></pre>
+
+<p>The above template will open in ScratchX without error but won't do anything since the array of blocks inside the descriptor is empty. In order to create a block, we need to insert an array into the block array. The elements of the array will vary in format depending on the type of block you wish to create. Here is a break down of how to declare different types of blocks</p>
+<hr />
+<h4>Creating Blocks</h4>
+<h6>Block Types</h6>
+<pre><code>var descriptor = {
+    blocks: [
+        ['', 'The Text On the Block', 'function_name'],
+    ]
+};
+</code></pre>
+
+<p>To create a block, you first need to create an array inside the blocks array. This array must consist of 3 elements. The first is a character that refers to the type of block you wish to create, the second is the text that appears on the block itself (should be used to describe what the block does) and the third is the name of the function that will run when the block is run. In addition, you can add additional elements to the array which will be passed in as parameters to the function. For example, <code>['', 'The Text On the Block', 'function_name', 2, 3]</code> will pass in 2 and 3 in as parameters to the function <code>function_name</code> in that order.</p>
+<p>Here is a list of the available blocks types that you can create by the declaring the corresponding character as the first element in a new blocks array:</p>
+<p><code>''</code> or <code>' '</code> : Synchronous Command Block</p>
+<p><code>'w'</code> : Asynchronous Command Block (useful if you want to wait before finishing)</p>
+<p><code>'r'</code> : Synchronous Reporter Block</p>
+<p><code>'R'</code> : Asynchronous Reporter Block (useful if you want to wait before finishing)</p>
+<p><code>'h'</code> : Synchronous Hat Block (Must return true or false)(If true, runs  stack)</p>
+<hr />
+<h6>Fields</h6>
+<p>In addition, you can also add fields to blocks so users can pass in values to the function. There are 3 different types of fields:</p>
+<p><code>%s</code> : String Field</p>
+<p><code>%n</code> : Number Field</p>
+<p><code>%m.menuname</code> : Menu Field</p>
+<p>Note the <code>.menuname</code> at the end of the menu field. This refers to a optional, second element in that can be added to the descriptor if you wish to use menus. The menu should be declared as a object and contain the property name that corresponds to the name specified in one of your fields (e.g. <code>menuname</code>), followed by an array of values as the property value. These values will be the options of the menu. It should also be noted that if you specify parameters in the array of a block that uses fields, these parameters will fill the fields as default values.</p>
+<p>Here is an example that makes use of all the field types:</p>
+<pre><code>var descriptor = {
+    blocks: [
+        ['', 'Say %s , %n times %m.direction', 'function_name', 'hello', '5', 'backwards'],
+    ],
+    menus: {
+        direction: ['forwards', 'backwards']
+    }
+};
+</code></pre>
+
+<p>The default appearance of this block will be a command block that says <code>'Say [hello], [5] times [backwards]'</code></p>
+<p><em>Note: Blocks are rendered in order of their positions as a element, so if you wish to order your blocks in a certain way, simply move the elements inside the blocks array.</em></p>
+<hr />
+<h4>Functions</h4>
+<h6>Declaring Functions</h6>
+<p>Creating functions for an extension is not much different that creating an ordinary function. The main difference is in how they are declared.</p>
+<pre><code>(function(ext) {
+    // Cleanup function when the extension is unloaded
+    ext._shutdown = function() {};
+
+    // Status reporting code
+    // Use this to report missing hardware, plugin or unsupported browser
+    ext._getStatus = function() {
+        return {status: 2, msg: 'Ready'};
+    };
+
+    // Block and block menu descriptions
+    var descriptor = {
+            blocks: [
+                    ]
+    };
+
+    // Register the extension
+    ScratchExtensions.register('Sample extension', descriptor, ext);
+})({});
+</code></pre>
+
+<p>Looking back at the template, note the parameter <code>ext</code> mentioned at the beginning of the function. This object is used to contain all the functions that are used by the blocks in the descriptor by declaring them as properties or methods of the object. So a an example of a function declaration could be:</p>
+<pre><code>ext.myFunction = function() {
+    // Insert Code here
+}
+</code></pre>
+
+<hr />
+<h6>Built-in Functions</h6>
+<p>There are several built in functions that run on certain events that you may find useful. Here are few of the commonly used functions:</p>
+<p><code>ext._deviceConnected</code>: This function runs whenever a new device is connected. Often used for creating initial connections.</p>
+<p><code>ext._deviceRemoved</code>: This function runs whenever a device is removed (serial devices may not be detected when removed). Often used for closing connections.</p>
+<p><code>ext._shutdown</code>: This function runs when the extension is closed. Often used to close connections if a device is still plugged in when the extension closes.</p>
+<p><code>ext._getStatus</code>: Required to provide error reporting.</p>
+<hr />
 <h4>Serial Support</h4>
 <p>If the examples for serial support on the ScratchX wiki don’t work, here is an example of a barebones serial extension that connects to the first available serial device, printing out data it receives:</p>
 <pre><code>(function(ext) 
-    {
+{
     var device; // Declares undefined device
     var dataView = null; // View to contain received data
 
@@ -337,12 +474,12 @@ In addition, examples of other extensions can be found here:</p>
      */
     var potentialDevices = [];
     ext._deviceConnected = function(dev) {
-    potentialDevices.push(dev); // Add new device to the list of potential devices
+        potentialDevices.push(dev); // Add new device to the list of potential devices
 
         // If no device is currently set, try another device
-    if (!device) {
-    tryNextDevice();
-    }
+        if (!device) {
+            tryNextDevice();
+        }
     }
 
 
@@ -353,18 +490,18 @@ In addition, examples of other extensions can be found here:</p>
     function tryNextDevice() 
     {
         device = potentialDevices.shift(); // Set device to the next available device
-    if (!device) return; // If there was no device available, return
+        if (!device) return; // If there was no device available, return
 
-    device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 }); // Opens connection
+        device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 }); // Opens connection
 
-    // When data is received from device, convert the data to a readable format and print to console
-    device.set_receive_handler(function(data) {
-        dataView = new Uint8Array(data);
-        for(var x = 0; x &lt; dataView.length; x++)
-        {
-            console.log(String.fromCharCode(dataView[x]));  
-        }
-    });
+        // When data is received from device, convert the data to a readable format and print to console
+        device.set_receive_handler(function(data) {
+            dataView = new Uint8Array(data);
+            for(var x = 0; x &lt; dataView.length; x++)
+            {
+                console.log(String.fromCharCode(dataView[x]));  
+            }
+        });
     };
 
 
@@ -386,6 +523,7 @@ In addition, examples of other extensions can be found here:</p>
 })({});
 </code></pre>
 
+<p><em>Note the additional parameter inside the</em> <code>ScratchExtension.register</code> <em>method. This parameter is required if you are using serial devices but is otherwise optional.</em></p>
 <p>Data sent to a serial device in this way must be stored in an ArrayBuffer.  However, it must be contained within a TypedArray, such as the Uint8Array for unsigned 8-bit integers seen above. A list of available TypedArrays can be found here:</p>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays</a></p>
 <p>The data can then be sent by getting the ‘buffer’ attribute of the TypedArray object inside the parameters of the send method of the device object (e.g.  <code>device.send(yourTypedArray.buffer);</code>  ).
@@ -405,33 +543,36 @@ Here is an example of a function that sends the command “@id” to a connected
 }
 </code></pre>
 
-<h4>Useful Code</h4>
+<hr />
 <pre><code>device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
 </code></pre>
 
-<p>‘.open’ is called on serialDevice objects and opens a connection with a device. Default values for each field can be found on the wiki page.</p>
+<p>‘.open’ is called on serialDevice objects and opens a connection with a device. The default values for all the available fields can be found here:</p>
+<p><a href="https://github.com/LLK/scratchx/wiki#serial-device-support">https://github.com/LLK/scratchx/wiki#serial-device-support</a></p>
+<hr />
 <pre><code>device.set_receive_handler(function(data) { 
   // Insert code here 
 });
 </code></pre>
 
 <p>‘.set<em>receive</em>handler’ is called on serialDevice objects and accepts a function as its parameter. After this method runs, whenever data is received from the serial device, the specified function will run to handle the data. The function definition must accept a single parameter, which will contain the raw data (stored in a ArrayBuffer) that the device sends back.</p>
+<hr />
 <pre><code>console.log(device.constructor.name);
 </code></pre>
 
-<p>Use ‘.constructor.name’ on a device object to check that it is indeed a serialDevice object.</p>
-
-<br/>
-<hr/>
-<br/>
+<p>Use ‘.constructor.name’ on a device object to check that it is indeed a <code>serialDevice</code> object.</p>
+<hr />
+<h4>Additional Tutorials</h4>
+<p>The ScratchX wiki page is particularly useful for learning how to extend Scratch:</p>
+<p><a href="https://github.com/LLK/scratchx/wiki">https://github.com/LLK/scratchx/wiki</a></p>
+<p>It covers how to create various block types and how to setup the Github page in order to host JavaScript files that can be loaded into ScratchX. It also briefly covers to how to ScratchX supports USB and serial hardware. 
+In addition, examples of other extensions can be found here:</p>
+<p><a href="https://github.com/LLK/scratchx/wiki/Example-Extensions">https://github.com/LLK/scratchx/wiki/Example-Extensions</a></p>
 <h4>More Examples</h4>
-<p><a href="http://leedsrobotics.github.io/practiseblocks.js"><strong>Download practiseblocks.js</strong></a></p>
-<p><a href="http://leedsrobotics.github.io/usbblocks.js"><strong>Download usbblocks.js</strong></a></p>
-<p><a href="http://leedsrobotics.github.io/serialblocks.js"><strong>Download serialblocks.js</strong></a></p>
-<p><a href="http://leedsrobotics.github.io/controllerblock.js"><strong>Download controllerblock.js</strong></a></p>
-<p><a href="http://leedsrobotics.github.io/traceycontroller.js"><strong>Download traceycontroller.js</strong></a></p>
-<br/>
-                        
+<ul>
+<li><a href="http://leedsrobotics.github.io/traceycontroller.js">http://leedsrobotics.github.io/traceycontroller.js</a></li>
+<li><a href="http://leedsrobotics.github.io/practiseblocks.js">http://leedsrobotics.github.io/practiseblocks.js</a></li>
+</ul>
 
 </body>
 </html>
