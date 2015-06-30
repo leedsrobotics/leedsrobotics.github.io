@@ -142,7 +142,7 @@
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
   		console.log("Analog Val:");
   		console.log(analogVal);
-  		pinData = new Uint8Array(1);
+  		pinData = new null;
   		if(analogVal > threshold)
   		{
   			return 'black';
