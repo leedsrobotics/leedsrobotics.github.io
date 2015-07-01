@@ -150,9 +150,9 @@
         	
         	// When data is received from device, convert the data to a readable format and print to console
         	device.set_receive_handler(function(data) {
-        		dataReceived = true;
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
+        		dataReceived = true;
         		console.log('Data received at:');
         		console.log(new Date().getTime());
         		console.log(storedData.expectedLength == storedData.latestElement);
@@ -226,6 +226,7 @@
   		{
   			sleep(10);
   		}
+  		dataReceived = false;
   		
   		var pinColour = processPinData();
   		
