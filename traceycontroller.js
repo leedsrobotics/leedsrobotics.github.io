@@ -218,19 +218,23 @@
   	 */
   	ext.pinStatus = function(pin)
   	{
-  		sendPinCommand(pin);
-  		
-  		console.log('Data requested at:');
-  		console.log(new Date().getTime());
-  		while(dataReceived == false)
-  		{
-  			sleep(10);
-  		}
-  		dataReceived = false;
-  		
-  		var pinColour = processPinData();
-  		
-  		return pinColour;
+  		var q = new Queue(false).add(function () {
+	    		sendPinCommand(pin);
+		}).add(function () {
+			while(dataReceived == false)
+  			{
+  				sleep(10);
+  			}
+  			dataReceived = false;
+		}).add(function () {
+	    		var pinColour = processPinData();
+	    		return pinColour;
+		});
+
+		setTimeout(function () {
+    		// start the queue
+    		q.next();
+		}, 2000);
   		
   	}
 
