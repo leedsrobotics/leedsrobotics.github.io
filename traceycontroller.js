@@ -12,6 +12,7 @@
 	var storedData = { 
 		buffer: [0], 
 		latestElement: 0,
+		expectedLength: 0,
 		read: function(num){
 			var readData= [];
 			console.log('Entered read function');
@@ -52,6 +53,57 @@
 		}
 
 	}
+	
+	
+	var Queue = (function () {
+
+		Queue.prototype.autorun = true;
+		Queue.prototype.running = false;
+		Queue.prototype.queue = [];
+
+		function Queue(autorun) {
+			if (typeof autorun !== "undefined") {
+				this.autorun = autorun;
+			}
+			this.queue = []; //initialize the queue
+		};
+
+		Queue.prototype.add = function (callback) {
+			var _this = this;
+			//add callback to the queue
+			this.queue.push(function () {
+				var finished = callback();
+				if (typeof finished === "undefined" || finished) {
+					//  if callback returns `false`, then you have to 
+					//  call `next` somewhere in the callback
+					_this.dequeue();
+				}
+			});
+
+			if (this.autorun && !this.running) {
+				// if nothing is running, then start the engines!
+				this.dequeue();
+			}
+
+			return this; // for chaining fun!
+		};
+
+		Queue.prototype.dequeue = function () {
+			this.running = false;
+			//get the first element off the queue
+			var shift = this.queue.shift();
+			if (shift) {
+				this.running = true;
+				shift();
+			}
+			return shift;
+		};
+
+		Queue.prototype.next = Queue.prototype.dequeue;
+
+		return Queue;
+
+	})();
 	
 	/**
 	 * Return status of the extension
@@ -110,7 +162,62 @@
    	};
   	
   	
+  	function sendPinCommand(pin)
+  	{
+  		var pinCommand = "@ar"; // Request ID command definition
+  		var view = new Uint8Array(4); // View to contain the command being sent
+  		
+  		// Fill view with the commands individual bytes
+  		for(var x = 0; x < pinCommand.length; x++)
+  		{
+  			view[x] = pinCommand.charCodeAt(x);
+  		}
+  		view[3] = String.charCodeAt(pin);
+  		
+  		device.send(view.buffer); // Send command
+  	}
+  	
+  	
+  	function processPinData()
+  	{
+  		console.log('ATTEMPTING ...');
+  		pinData = storedData.read(2);
+  		
+  		console.log('pinData:');
+  		console.log(pinData);
+  		
+  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
+  		
+  		console.log("Analog Val:");
+  		console.log(analogVal);
+  		
+  		pinData = null;
+  		
+  		if(analogVal > threshold)
+  		{
+  			return 'black';
+  		}
+  		else
+  		{
+  			return 'white';
+  		}
+  	}
+  	
+  	
   	/**
+  	 * Sends ID request to the device
+  	 */
+  	ext.pinStatus = function(pin)
+  	{
+  		sendPinCommand(pin);
+  		
+  		var pinColour = processPinData();
+  		
+  		return pinColour;
+  	}
+
+
+	/**
   	 * Declares whether a device is connected, printing out the port its connected through if it is and
   	 * its constructor name.
   	 */
@@ -143,47 +250,6 @@
   		}
   		
   		device.send(view.buffer); // Send command
-  	}
-  	
-  	
-  	/**
-  	 * Sends ID request to the device
-  	 */
-  	ext.pinStatus = function(pin)
-  	{
-  		var pinCommand = "@ar"; // Request ID command definition
-  		var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  		// Fill view with the commands individual bytes
-  		for(var x = 0; x < pinCommand.length; x++)
-  		{
-  			view[x] = pinCommand.charCodeAt(x);
-  		}
-  		view[3] = String.charCodeAt(pin);
-  		
-  		device.send(view.buffer); // Send command
-  		
-  		console.log('ATTEMPTING ...');
-  		pinData = storedData.read(2);
-  		
-  		console.log('pinData:');
-  		console.log(pinData);
-  		
-  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
-  		
-  		console.log("Analog Val:");
-  		console.log(analogVal);
-  		
-  		pinData = null;
-  		
-  		if(analogVal > threshold)
-  		{
-  			return 'black';
-  		}
-  		else
-  		{
-  			return 'white';
-  		}
   	}
 
   	
