@@ -14,7 +14,8 @@
 		latestElement: 0,
 		read: function(num){
 			var readData= [];
-			if(latestElement - num - 1 < 0)
+			console.log('Entered read function');
+			if(latestElement + 1 - num < 0)
 			{
 				console.log('Not enough data');
 				return 0;
