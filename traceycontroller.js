@@ -174,8 +174,12 @@
   		}
   		view[3] = String.charCodeAt(pin);
   		
+  		storedData.expectedLength = storedData.latestElement + 2;
+  		console.log('Updated Expected Length');
   		device.send(view.buffer); // Send command
+  		
   	}
+  	
   	
   	
   	function processPinData()
@@ -211,9 +215,18 @@
   	{
   		sendPinCommand(pin);
   		
+  		while(storedData.expectedLength == storedData.latestElement)
+  		{
+  			device.set_receive_handler(function(data) {
+        			dataView = new Uint8Array(data);
+        			storedData.write(dataView);
+        		});
+  		}
+  		
   		var pinColour = processPinData();
   		
   		return pinColour;
+  		
   	}
 
 
