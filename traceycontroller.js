@@ -14,7 +14,7 @@
 		latestElement: 0,
 		read: function(num){
 			var readData= [];
-			console.log('Entered read function');
+			//console.log('Entered read function');
 			if(this.latestElement + 1 - num < 0)
 			{
 				console.log('Not enough data');
@@ -44,7 +44,7 @@
 			}
 				
 			this.buffer[this.latestElement] = data;
-			
+			console.log(this.buffer);
 		}
 
 	}
@@ -162,6 +162,8 @@
   		
   		
   		pinData = storedData.read(2);
+  		console.log('pinData:');
+  		console.log(pinData);
   		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
   		console.log("Analog Val:");
   		console.log(analogVal);
