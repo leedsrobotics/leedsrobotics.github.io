@@ -153,6 +153,7 @@
         		storedData.write(dataView);
         		console.log('Data received at:');
         		console.log(new Date().getTime());
+        		console.log(storedData.expectedLength == storedData.latestElement);
         		//for(var x = 0; x < dataView.length; x++)
         		//{
         			//console.log('Raw Data:');
