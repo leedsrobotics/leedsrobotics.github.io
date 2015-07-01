@@ -34,16 +34,18 @@
 		},
 		write: function(data){
 			console.log('writing ...');
-			if(this.latestElement >= 4096)
+			for(var x = 0; x < data.length; ++x)
 			{
-				this.latestElement = 0;
-			}
-			else
-			{
-				++this.latestElement;
-			}
-				
-			this.buffer[this.latestElement] = data;
+				if(this.latestElement >= 4096)
+				{
+					this.latestElement = 0;
+				}
+				else
+				{
+					++this.latestElement;
+				}
+				this.buffer[this.latestElement] = data[x];
+			}	
 			console.log(this.buffer);
 		}
 
