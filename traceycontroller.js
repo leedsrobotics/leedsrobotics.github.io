@@ -15,7 +15,7 @@
 		read: function(num){
 			var readData= [];
 			console.log('Entered read function');
-			if(latestElement + 1 - num < 0)
+			if(this.latestElement + 1 - num < 0)
 			{
 				console.log('Not enough data');
 				return 0;
@@ -32,16 +32,16 @@
 			return readData;
 		},
 		write: function(data){
-			if(latestElement >= 4096)
+			if(this.latestElement >= 4096)
 			{
-				latestElement = 0;
+				this.latestElement = 0;
 			}
 			else
 			{
-				++latestElement;
+				++this.latestElement;
 			}
 				
-			buffer[latestElement] = data;
+			this.buffer[this.latestElement] = data;
 			
 		}
 
