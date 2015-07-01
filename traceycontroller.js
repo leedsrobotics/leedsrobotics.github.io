@@ -9,7 +9,42 @@
 	var expectPinData = false;
 	var pinData = null;
 	var threshold = 550;
-	//var storedData = {buffer: new Uint8Array(4096), read: function(){} }
+	var storedData = { 
+		buffer: [0], 
+		latestElement: 0,
+		read: function(num){
+			var readData= [];
+			if(latestElement - num - 1 < 0)
+			{
+				console.log('Not enough data');
+				return 0;
+			}
+			else
+			{
+				for(var x = 0; x < num; ++x)
+				{
+					readData.push(buffer[latestElement - x]);
+				}
+			}
+			
+			console.log('Returning data read ...');
+			return readData;
+		},
+		write: function(data){
+			if(latestElement >= 4096)
+			{
+				latestElement = 0;
+			}
+			else
+			{
+				++latestElement;
+			}
+				
+			buffer[latestElement] = data;
+			
+		}
+
+	}
 	
 	/**
 	 * Return status of the extension
@@ -62,11 +97,7 @@
         			console.log(dataView[x]);
         			//console.log(String.fromCharCode(dataView[x]))
         		}
-        		if(dataView.length == 2)
-        		{
-        			pinData = dataView;
-        			expectPinData = false;
-        		}
+        		storedData.write(dataView);
         	});
         	
    	};
@@ -124,13 +155,11 @@
   		}
   		view[3] = String.charCodeAt(pin);
   		
-  		expectPinData = true;
   		device.send(view.buffer); // Send command
   		
   		
-  		console.log('Pin Data:');
-  		console.log(pinData);
-  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
+  		pinData = storedData.read(2);
+  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
   		console.log("Analog Val:");
   		console.log(analogVal);
   		pinData = null;
