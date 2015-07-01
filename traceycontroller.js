@@ -215,7 +215,7 @@
   	{
   		sendPinCommand(pin);
   		
-  		while(storedData.expectedLength == storedData.latestElement)
+  		while(storedData.expectedLength != storedData.latestElement)
   		{
   			device.set_receive_handler(function(data) {
         			dataView = new Uint8Array(data);
