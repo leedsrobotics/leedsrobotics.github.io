@@ -9,7 +9,7 @@
 	var expectPinData = false;
 	var pinData = null;
 	var threshold = 550;
-	var dataReceived = false;
+	var dataRequested = new Date().getTime();
 	var storedData = { 
 		buffer: [0], 
 		latestElement: 0,
@@ -153,8 +153,8 @@
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
         		dataReceived = true;
-        		console.log('Data received at:');
-        		console.log(new Date().getTime());
+        		console.log('Latency:');
+        		console.log(new Date().getTime() - dataRequested);
         		console.log(storedData.expectedLength == storedData.latestElement);
         		//for(var x = 0; x < dataView.length; x++)
         		//{
@@ -218,20 +218,18 @@
   	 */
   	ext.pinStatus = function(pin)
   	{
-  		var q = new Queue(false).add(function () {
-	    		sendPinCommand(pin);
-		}).add(function () {
-			while(dataReceived == false){}
-  			dataReceived = false;
-		}).add(function () {
-	    		var pinColour = processPinData();
-	    		return pinColour;
-		});
-
-		setTimeout(function () {
-    		// start the queue
-    		q.next();
-		}, 2000);
+  		sendPinCommand(pin);
+  		
+  		dataRequested = new Date().getTime();
+  		//while(dataReceived == false)
+  		//{
+  			//sleep(10);
+  		//}
+  		//dataReceived = false;
+  		
+  		var pinColour = processPinData();
+  		
+  		return pinColour;
   		
   	}
 
