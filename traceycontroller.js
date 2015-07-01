@@ -15,6 +15,7 @@
 		read: function(num){
 			var readData= [];
 			console.log('Entered read function');
+			console.log(num);
 			if(this.latestElement + 1 - num < 0)
 			{
 				console.log('Not enough data');
@@ -22,9 +23,10 @@
 			}
 			else
 			{
+				//console.log('Viable number of ')
 				for(var x = 0; x < num; ++x)
 				{
-					readData.push(buffer[latestElement - x]);
+					readData.push(this.buffer[this.latestElement - x]);
 					console.log('Just read a byte');
 				}
 			}
