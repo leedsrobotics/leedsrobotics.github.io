@@ -221,10 +221,7 @@
   		var q = new Queue(false).add(function () {
 	    		sendPinCommand(pin);
 		}).add(function () {
-			while(dataReceived == false)
-  			{
-  				sleep(10);
-  			}
+			while(dataReceived == false){}
   			dataReceived = false;
 		}).add(function () {
 	    		var pinColour = processPinData();
