@@ -151,7 +151,8 @@
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
-        		console.log(Date().getTime());
+        		console.log('Data received at:');
+        		console.log(new Date().getTime());
         		//for(var x = 0; x < dataView.length; x++)
         		//{
         			//console.log('Raw Data:');
@@ -216,7 +217,8 @@
   	{
   		sendPinCommand(pin);
   		
-  		console.log(Date().getTime());
+  		console.log('Data requested at:');
+  		console.log(new Date().getTime());
   		
   		var pinColour = processPinData();
   		
