@@ -9,6 +9,7 @@
 	var expectPinData = false;
 	var pinData = null;
 	var threshold = 550;
+	var dataReceived = false;
 	var storedData = { 
 		buffer: [0], 
 		latestElement: 0,
@@ -149,6 +150,7 @@
         	
         	// When data is received from device, convert the data to a readable format and print to console
         	device.set_receive_handler(function(data) {
+        		dataReceived = true;
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
         		console.log('Data received at:');
@@ -220,6 +222,10 @@
   		
   		console.log('Data requested at:');
   		console.log(new Date().getTime());
+  		while(dataReceived == false)
+  		{
+  			sleep(10);
+  		}
   		
   		var pinColour = processPinData();
   		
