@@ -25,6 +25,7 @@
 				for(var x = 0; x < num; ++x)
 				{
 					readData.push(buffer[latestElement - x]);
+					console.log('Just read a byte');
 				}
 			}
 			
@@ -32,6 +33,7 @@
 			return readData;
 		},
 		write: function(data){
+			console.log('writing ...');
 			if(this.latestElement >= 4096)
 			{
 				this.latestElement = 0;
@@ -92,13 +94,13 @@
         	// When data is received from device, convert the data to a readable format and print to console
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
-        		for(var x = 0; x < dataView.length; x++)
-        		{
-        			console.log('Raw Data:');
-        			console.log(dataView[x]);
-        			//console.log(String.fromCharCode(dataView[x]))
-        		}
         		storedData.write(dataView);
+        		//for(var x = 0; x < dataView.length; x++)
+        		//{
+        			//console.log('Raw Data:');
+        			//console.log(dataView[x]);
+        			//console.log(String.fromCharCode(dataView[x]))
+        		//}
         	});
         	
    	};
