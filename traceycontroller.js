@@ -469,7 +469,7 @@
 	 */
 	ext._shutdown = function(){};
 
-	setInterval(sendPinCommand(1),30);
+	setTimeout(setInterval(sendPinCommand(1),30), 1000);
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
