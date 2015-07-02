@@ -10,6 +10,7 @@
 	var pinData = null;
 	var threshold = 550;
 	var dataRequested = new Date().getTime();
+	var pinVal = 0;
 	var storedData = { 
 		buffer: [0], 
 		latestElement: 0,
@@ -174,8 +175,7 @@
   	
   		var pinColour = processPinData();
   		
-  		sleep(120);
-	  	return pinColour; 
+  		return pinColour; 
   		
   	}
 
@@ -410,43 +410,6 @@
   			previousCommand = view;
   		}
   	}
-	
-	ext.updatePinVals = function(pin)
-	{
-  		var pinCommand = "@ar"; // Request ID command definition
-  		var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  		// Fill view with the commands individual bytes
-  		for(var x = 0; x < pinCommand.length; x++)
-  		{
-  			view[x] = pinCommand.charCodeAt(x);
-  		}
-  		view[3] = String.charCodeAt(pin);
-  		
-  		console.log(view);
-  		
-  		expectPinData = true;
-  		device.send(view.buffer); // Send command
-  	}
-  	
-  	
-  	ext.getPinVal = function(pin)
-  	{
-  		console.log('Pin Data:');
-  		console.log(pinData);
-  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
-  		console.log("Analog Val:");
-  		console.log(analogVal);
-  		pinData = null;
-  		if(analogVal > threshold)
-  		{
-  			return 'black';
-  		}
-  		else
-  		{
-  			return 'white';
-  		}
-  	}
   	
   	
 	
@@ -466,8 +429,8 @@
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
-			  ['', 'Update Pin Values %s', 'updatePinVals', 1],
-			  ['r', 'Request Pin Value %s', 'getPinVal', 1]
+			  ['', 'Request Pin Data For Pin %s', 'sendPinCommand', 1],
+			  ['r', 'Read Pin Data', 'processPinData', 1]
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
