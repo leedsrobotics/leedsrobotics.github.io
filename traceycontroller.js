@@ -155,31 +155,6 @@
   	}
   	
   	
-  	ext.processPinData = function()
-  	{
-  		console.log('ATTEMPTING ...');
-  		pinData = storedData.read(2);
-  		
-  		console.log('pinData:');
-  		console.log(pinData);
-  		
-  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
-  		
-  		console.log("Analog Val:");
-  		console.log(analogVal);
-  		
-  		pinData = null;
-  		
-  		if(analogVal > threshold)
-  		{
-  			return 'black';
-  		}
-  		else
-  		{
-  			return 'white';
-  		}
-  	}
-  	
   	
   	function processPinData()
   	{
@@ -205,6 +180,13 @@
   			return 'white';
   		}
   	}
+  	
+  	
+  	ext.processPinData = function()
+  	{
+  		setTimeout(function(){ return processPinData(); }, 120);
+  	}
+  	
   	
   	
   	/**
