@@ -184,7 +184,27 @@
   	
   	ext.processPinData = function()
   	{
-  		setTimeout(function(){ return processPinData(); }, 120);
+  		console.log('ATTEMPTING ...');
+  		pinData = storedData.read(2);
+  		
+  		console.log('pinData:');
+  		console.log(pinData);
+  		
+  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
+  		
+  		console.log("Analog Val:");
+  		console.log(analogVal);
+  		
+  		pinData = null;
+  		
+  		if(analogVal > threshold)
+  		{
+  			return 'black';
+  		}
+  		else
+  		{
+  			return 'white';
+  		}
   	}
   	
   	
@@ -194,10 +214,16 @@
   	 */
   	ext.pinStatus = function(pin)
   	{
+  		
   		sendPinCommand(pin);
   		
   		dataRequested = new Date().getTime();
-  	
+  		
+  		for(var x = 0; x < 12; ++x)
+  		{
+  			sleep(10);
+  		}
+  		
   		var pinColour = processPinData();
   		
   		return pinColour; 
