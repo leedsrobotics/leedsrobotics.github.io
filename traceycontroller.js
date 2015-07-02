@@ -215,14 +215,9 @@
   	ext.pinStatus = function(pin)
   	{
   		
-  		sendPinCommand(pin);
+  		//sendPinCommand(pin);
   		
-  		dataRequested = new Date().getTime();
-  		
-  		for(var x = 0; x < 12; ++x)
-  		{
-  			sleep(10);
-  		}
+  		//dataRequested = new Date().getTime();
   		
   		var pinColour = processPinData();
   		
