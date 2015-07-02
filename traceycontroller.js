@@ -430,7 +430,7 @@
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
 			  ['', 'Request Pin Data For Pin %s', 'sendPinCommand', 1],
-			  ['r', 'Read Pin Data', 'processPinData', 1]
+			  ['r', 'Read Pin Data', 'processPinData']
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
