@@ -221,15 +221,11 @@
   		sendPinCommand(pin);
   		
   		dataRequested = new Date().getTime();
-  		//while(dataReceived == false)
-  		//{
-  			//sleep(10);
-  		//}
-  		//dataReceived = false;
-  		
-  		var pinColour = processPinData();
-  		
-  		return pinColour;
+  	
+  		setTimeout(function(){
+  			var pinColour = processPinData();
+	  		return pinColour; 
+	  		}, 120);
   		
   	}
 
