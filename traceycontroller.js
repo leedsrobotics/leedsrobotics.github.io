@@ -229,6 +229,8 @@
   		return pinColour; 
   		
   	}
+  	
+  	
 
 
 	/**
@@ -474,7 +476,7 @@
 		{
 			sendPinCommand(1);
 		}
-	}, 30), 1000);
+	}, 120), 1000);
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
