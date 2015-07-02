@@ -469,7 +469,12 @@
 	 */
 	ext._shutdown = function(){};
 
-	setTimeout(setInterval(sendPinCommand(1),30), 1000);
+	setTimeout(setInterval(function(){
+		if(device)
+		{
+			sendPinCommand(1);
+		}
+	}, 30), 1000);
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
