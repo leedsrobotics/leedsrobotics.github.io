@@ -8,7 +8,7 @@
 	var previousLeftSpeed = 0;
 	var expectPinData = false;
 	var pinData = null;
-	var threshold = 550;
+	var threshold = 700;
 	var dataRequested = new Date().getTime();
 	var pinVal = 0;
 	var storedData = { 
