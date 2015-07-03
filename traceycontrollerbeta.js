@@ -107,7 +107,7 @@
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
         		dataReceived = true;
-        		console.log(dataView);
+        		//console.log(dataView);
         		//console.log('Latency:');
         		//console.log(new Date().getTime() - dataRequested);
         		//console.log(storedData.expectedLength == storedData.latestElement);
@@ -168,7 +168,8 @@
   		
   		//console.log('pinData:');
   		//console.log(pinData);
-  		
+  		console.log(pin);
+  		console.log(pinData);
   		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
   		
   		console.log("Analog Val:");
