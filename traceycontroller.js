@@ -8,7 +8,8 @@
 	var previousLeftSpeed = 0;
 	var expectPinData = false;
 	var pinData = null;
-	var threshold = 700;
+	var threshold = 650;
+	var analogLimit = 1000;
 	var dataRequested = new Date().getTime();
 	var pinVal = 0;
 	var storedData = { 
@@ -171,6 +172,10 @@
   		
   		pinData = null;
   		
+  		if(analogVal > analogLimit)
+  		{
+  			return 'white';
+  		}
   		if(analogVal > threshold)
   		{
   			return 'black';
