@@ -17,8 +17,8 @@
 		expectedLength: 0,
 		read: function(num){
 			var readData= [];
-			console.log('Entered read function');
-			console.log(num);
+			//console.log('Entered read function');
+			//console.log(num);
 			if(this.latestElement + 1 - num < 0)
 			{
 				console.log('Not enough data');
@@ -34,11 +34,11 @@
 				}
 			}
 			
-			console.log('Returning data read ...');
+			//console.log('Returning data read ...');
 			return readData;
 		},
 		write: function(data){
-			console.log('writing ...');
+			//console.log('writing ...');
 			for(var x = 0; x < data.length; ++x)
 			{
 				if(this.latestElement >= 4096)
@@ -51,7 +51,7 @@
 				}
 				this.buffer[this.latestElement] = data[x];
 			}	
-			console.log(this.buffer);
+			//console.log(this.buffer);
 		}
 
 	}
@@ -104,9 +104,9 @@
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
         		dataReceived = true;
-        		console.log('Latency:');
-        		console.log(new Date().getTime() - dataRequested);
-        		console.log(storedData.expectedLength == storedData.latestElement);
+        		//console.log('Latency:');
+        		//console.log(new Date().getTime() - dataRequested);
+        		//console.log(storedData.expectedLength == storedData.latestElement);
         		//for(var x = 0; x < dataView.length; x++)
         		//{
         			//console.log('Raw Data:');
@@ -131,7 +131,7 @@
   		view[3] = String.charCodeAt(pin);
   		
   		storedData.expectedLength = storedData.latestElement + 2;
-  		console.log('Updated Expected Length');
+  		//console.log('Updated Expected Length');
   		device.send(view.buffer); // Send command
   		
   	}
@@ -149,7 +149,7 @@
   		view[3] = String.charCodeAt(pin);
   		
   		storedData.expectedLength = storedData.latestElement + 2;
-  		console.log('Updated Expected Length');
+  		//console.log('Updated Expected Length');
   		device.send(view.buffer); // Send command
   		
   	}
@@ -158,11 +158,11 @@
   	
   	function processPinData()
   	{
-  		console.log('ATTEMPTING ...');
+  		//console.log('ATTEMPTING ...');
   		pinData = storedData.read(2);
   		
-  		console.log('pinData:');
-  		console.log(pinData);
+  		//console.log('pinData:');
+  		//console.log(pinData);
   		
   		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
   		
@@ -184,11 +184,11 @@
   	
   	ext.processPinData = function()
   	{
-  		console.log('ATTEMPTING ...');
+  		//console.log('ATTEMPTING ...');
   		pinData = storedData.read(2);
   		
-  		console.log('pinData:');
-  		console.log(pinData);
+  		//console.log('pinData:');
+  		//console.log(pinData);
   		
   		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
   		
