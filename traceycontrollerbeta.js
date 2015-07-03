@@ -11,13 +11,14 @@
 	var expectedPinData = 1;
 	var threshold = 465;
 	var analogLimit = 1000;
+	var currentPinRequest = 1;
 	var dataRequested = new Date().getTime();
 	var pinVal = 0;
 	var storedData = { 
 		buffer: [0], 
 		latestElement: 0,
 		expectedLength: 0,
-		read: function(num, dataSince){
+		read: function(num){
 			var readData= [];
 			//console.log('Entered read function');
 			//console.log(num);
@@ -29,8 +30,7 @@
 			else
 			{
 				//console.log('Viable number of ')
-				var startingPoint = dataSince * num;
-				for(var x = startingPoint; x < num + startingPoint; ++x)
+				for(var x = 0; x < num; ++x)
 				{
 					readData.push(this.buffer[this.latestElement - x]);
 					//console.log('Just read a byte');
@@ -107,7 +107,7 @@
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
         		dataReceived = true;
-        		console.log(dataView);
+        		//console.log(dataView);
         		//console.log('Latency:');
         		//console.log(new Date().getTime() - dataRequested);
         		//console.log(storedData.expectedLength == storedData.latestElement);
@@ -162,14 +162,12 @@
   	
   	function processPinData(pin)
   	{
-  		pinData = storedData.read(2, 0);
+  		pinData = storedData.read(2);
   		//console.log('ATTEMPTING ...');
   		//pinData = storedData.read(2);
   		
   		//console.log('pinData:');
   		//console.log(pinData);
-  		console.log(pin);
-  		console.log(pinData);
   		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
   		
   		console.log("Analog Val:");
@@ -228,6 +226,7 @@
   		//sendPinCommand(pin);
   		
   		//dataRequested = new Date().getTime();
+  		currentPinRequest = pin;
   		
   		var pinColour = processPinData(pin);
   		
@@ -479,10 +478,9 @@
 	setTimeout(setInterval(function(){
 		if(device)
 		{
-			sendPinCommand(1);
-			sendPinCommand(2);
+			sendPinCommand(currentPinRequest);
 		}
-	}, 120), 1000);
+	}, 60), 1000);
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
