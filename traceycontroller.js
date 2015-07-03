@@ -169,6 +169,7 @@
   		}
   		else
   		{
+  			console.log('...');
   			pinData = storedData.read(2, 0);
   		}
   		//console.log('pinData:');
@@ -488,13 +489,13 @@
 		}
 	}, 120), 1000);
 	
-	setTimeout(setInterval(function(){
-		if(device)
-		{
-			sendPinCommand(2);
-			expectedPinData = 2;
-		}
-	}, 120), 1060);
+	//setTimeout(setInterval(function(){
+		//if(device)
+		//{
+			//sendPinCommand(2);
+			//expectedPinData = 2;
+		//}
+	//}, 120), 1060);
 	
 
   	// Registers block types, names and corresponding procedures
