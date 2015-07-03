@@ -8,6 +8,7 @@
 	var previousLeftSpeed = 0;
 	var expectPinData = false;
 	var pinData = null;
+	var expectedPinData = 1;
 	var threshold = 465;
 	var analogLimit = 1000;
 	var dataRequested = new Date().getTime();
@@ -16,7 +17,7 @@
 		buffer: [0], 
 		latestElement: 0,
 		expectedLength: 0,
-		read: function(num){
+		read: function(num, dataSince){
 			var readData= [];
 			//console.log('Entered read function');
 			//console.log(num);
@@ -28,7 +29,8 @@
 			else
 			{
 				//console.log('Viable number of ')
-				for(var x = 0; x < num; ++x)
+				var startingPoint = dataSince * num;
+				for(var x = startingPoint; x < num + startingPoint; ++x)
 				{
 					readData.push(this.buffer[this.latestElement - x]);
 					console.log('Just read a byte');
@@ -157,10 +159,11 @@
   	
   	
   	
-  	function processPinData()
+  	function processPinData(pin)
   	{
+  		pinData = storedData.read(2, Math.abs(expectedPinData - pin));
   		//console.log('ATTEMPTING ...');
-  		pinData = storedData.read(2);
+  		//pinData = storedData.read(2);
   		
   		//console.log('pinData:');
   		//console.log(pinData);
@@ -190,7 +193,7 @@
   	ext.processPinData = function()
   	{
   		//console.log('ATTEMPTING ...');
-  		pinData = storedData.read(2);
+  		//pinData = storedData.read(2);
   		
   		//console.log('pinData:');
   		//console.log(pinData);
@@ -224,7 +227,7 @@
   		
   		//dataRequested = new Date().getTime();
   		
-  		var pinColour = processPinData();
+  		var pinColour = processPinData(pin);
   		
   		return pinColour; 
   		
@@ -475,8 +478,16 @@
 		if(device)
 		{
 			sendPinCommand(1);
+			expectedPinData = 1;
 		}
 	}, 120), 1000);
+	setTimeout(setInterval(function(){
+		if(device)
+		{
+			sendPinCommand(2);
+			expectedPinData = 2;
+		}
+	}, 120), 1060);
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
