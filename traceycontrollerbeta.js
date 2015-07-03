@@ -33,7 +33,7 @@
 				for(var x = startingPoint; x < num + startingPoint; ++x)
 				{
 					readData.push(this.buffer[this.latestElement - x]);
-					console.log('Just read a byte');
+					//console.log('Just read a byte');
 				}
 			}
 			
@@ -107,6 +107,7 @@
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
         		dataReceived = true;
+        		console.log(dataView);
         		//console.log('Latency:');
         		//console.log(new Date().getTime() - dataRequested);
         		//console.log(storedData.expectedLength == storedData.latestElement);
