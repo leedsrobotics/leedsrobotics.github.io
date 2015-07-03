@@ -8,7 +8,7 @@
 	var previousLeftSpeed = 0;
 	var expectPinData = false;
 	var pinData = null;
-	var threshold = 650;
+	var threshold = 585;
 	var analogLimit = 1000;
 	var dataRequested = new Date().getTime();
 	var pinVal = 0;
