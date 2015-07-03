@@ -179,6 +179,7 @@
   		{
   			return 'white';
   		}
+  		
   		if(analogVal > threshold)
   		{
   			return 'black';
@@ -226,7 +227,7 @@
   		//sendPinCommand(pin);
   		
   		//dataRequested = new Date().getTime();
-  		currentPinRequest = pin;
+  		//currentPinRequest = 1;
   		
   		var pinColour = processPinData(pin);
   		
@@ -478,7 +479,7 @@
 	setTimeout(setInterval(function(){
 		if(device)
 		{
-			sendPinCommand(currentPinRequest);
+			sendPinCommand(1);
 		}
 	}, 60), 1000);
 
