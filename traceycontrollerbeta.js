@@ -107,19 +107,32 @@
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
         		dataReceived = true;
-        		//console.log(dataView);
+        		console.log(dataView);
         		//console.log('Latency:');
-        		//console.log(new Date().getTime() - dataRequested);
-        		//console.log(storedData.expectedLength == storedData.latestElement);
-        		//for(var x = 0; x < dataView.length; x++)
-        		//{
-        			//console.log('Raw Data:');
-        			//console.log(dataView[x]);
-        			//console.log(String.fromCharCode(dataView[x]))
-        		//}
         	});
         	
    	};
+  	
+  	
+  	ext.sendPinCommand = function(pin)
+  	{
+  		var pinCommand = "@ar"; // Request ID command definition
+  		var view = new Uint8Array(4); // View to contain the command being sent
+  		
+  		// Fill view with the commands individual bytes
+  		for(var x = 0; x < pinCommand.length; x++)
+  		{
+  			view[x] = pinCommand.charCodeAt(x);
+  		}
+  		view[3] = String.charCodeAt(pin);
+  		
+  		storedData.expectedLength = storedData.latestElement + 2;
+  		//console.log('Updated Expected Length');
+  		device.send(view.buffer); // Send command
+  		
+  	}
+  	
+  	
   	
   	
   	function sendPinCommand(pin)
@@ -139,24 +152,7 @@
   		device.send(view.buffer); // Send command
   		
   	}
-  	
-  	ext.sendPinCommand = function(pin)
-  	{
-  		var pinCommand = "@ar"; // Request ID command definition
-  		var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  		// Fill view with the commands individual bytes
-  		for(var x = 0; x < pinCommand.length; x++)
-  		{
-  			view[x] = pinCommand.charCodeAt(x);
-  		}
-  		view[3] = String.charCodeAt(pin);
-  		
-  		storedData.expectedLength = storedData.latestElement + 2;
-  		//console.log('Updated Expected Length');
-  		device.send(view.buffer); // Send command
-  		
-  	}
+  
   	
   	
   	
@@ -189,33 +185,6 @@
   			return 'white';
   		}
   	}
-  	
-  	
-  	ext.processPinData = function()
-  	{
-  		//console.log('ATTEMPTING ...');
-  		//pinData = storedData.read(2);
-  		
-  		//console.log('pinData:');
-  		//console.log(pinData);
-  		
-  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
-  		
-  		console.log("Analog Val:");
-  		console.log(analogVal);
-  		
-  		pinData = null;
-  		
-  		if(analogVal > threshold)
-  		{
-  			return 'black';
-  		}
-  		else
-  		{
-  			return 'white';
-  		}
-  	}
-  	
   	
   	
   	/**
@@ -479,7 +448,7 @@
 	setTimeout(setInterval(function(){
 		if(device)
 		{
-			sendPinCommand(2);
+			sendPinCommand(1);
 		}
 	}, 60), 1000);
 
