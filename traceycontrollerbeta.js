@@ -451,10 +451,10 @@
 	setTimeout(setInterval(function(){
 		if(device)
 		{
-			sendPinCommand(1);
-			//sendPinCommand(2);
+			sendPinCommand(currentPinRequest % 2);
+			++currentPinRequest;
 		}
-	}, 60), 1000);
+	}, 120), 1000);
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
