@@ -105,9 +105,12 @@
         	// When data is received from device, convert the data to a readable format and print to console
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
-        		storedData.write(dataView);
-        		dataReceived = true;
-        		console.log(dataView);
+        		if (dataView.length == 2)
+        		{
+        			storedData.write(dataView);
+        			dataReceived = true;
+        			console.log(dataView);
+        		}
         		//console.log('Latency:');
         	});
         	
