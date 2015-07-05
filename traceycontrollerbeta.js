@@ -452,7 +452,7 @@
 		if(device)
 		{
 			sendPinCommand(1);
-			sendPinCommand(2);
+			//sendPinCommand(2);
 		}
 	}, 60), 1000);
 
