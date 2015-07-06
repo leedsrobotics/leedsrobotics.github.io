@@ -551,7 +551,7 @@
 			  ['r', 'Bitwise AND: %n & %n', 'bitwiseAnd', 0, 0],
 			  ['r', 'Bitwise OR: %n | %n', 'bitwiseOr', 0, 0],
 			  ['r', 'Bitwise XOR: %n ^ %n', 'bitwiseXOr', 0, 0],
-			  ['r', 'Bitwise NOT: ~ %n', 'bitwiseNot', 0, 0],
+			  ['r', 'Bitwise NOT: ~ %n', 'bitwiseNot', 0],
 			  ['r', 'Left Shift: %n << %n', 'leftShift', 0, 0],
 			  ['r', 'Sign-propagating right shift: %n >> %n', 'rightShift', 0, 0],
 			  ['r', 'Zero-fill right shift: %n >>> %n', 'zeroFillRightShift', 0, 0],
