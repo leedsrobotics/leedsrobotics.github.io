@@ -472,6 +472,40 @@
   		return storedData.buffer[index];
   	}
   	
+  	ext.bitwiseAnd = function(num1, num2)
+  	{
+  		return num1 & num2;
+  	}
+  	
+  	ext.bitwiseOr = function(num1, num2)
+  	{
+  		return num1 | num2;
+  	}
+  	
+  	ext.bitwiseXOr = function(num1, num2)
+  	{
+  		return num1 ^ num2;
+  	}
+  	
+  	ext.bitwiseNot = function(num)
+  	{
+  		return ~ num1;
+  	}
+  	
+  	ext.leftShift = function(num1, num2)
+  	{
+  		return num1 << num2;
+  	}
+  	
+  	ext.rightShift = function(num1, num2)
+  	{
+  		return num1 >> num2;
+  	}
+  	
+  	ext.zeroFillRightShift = function(num1, num2)
+  	{
+  		return num1 >>> num2;
+  	}
   	
 	
 	/**
@@ -513,7 +547,15 @@
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
-			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0]
+			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
+			  ['r', 'Bitwise AND: %n & %n', 'bitwiseAnd', 0, 0],
+			  ['r', 'Bitwise OR: %n | %n', 'bitwiseOr', 0, 0],
+			  ['r', 'Bitwise XOR: %n ^ %n', 'bitwiseXOr', 0, 0],
+			  ['r', 'Bitwise NOT: ~ %n', 'bitwiseNot', 0, 0],
+			  ['r', 'Left Shift: %n << %n', 'leftShift', 0, 0],
+			  ['r', 'Sign-propagating right shift: %n >> %n', 'rightShift', 0, 0],
+			  ['r', 'Zero-fill right shift: %n >>> %n', 'zeroFillRightShift', 0, 0],
+			  
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
