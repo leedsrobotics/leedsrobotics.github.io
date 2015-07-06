@@ -442,6 +442,12 @@
   	}
   	
   	
+  	ext.changePinRequest = function(num)
+  	{
+  		currentPinRequest = num;
+  	}
+  	
+  	
 	
 	/**
 	 * Processes that run on extension shutdown
@@ -451,10 +457,11 @@
 	setTimeout(setInterval(function(){
 		if(device)
 		{
-			sendPinCommand(0);
-			++currentPinRequest;
+			sendPinCommand(currentPinRequest);
+			//++currentPinRequest;
 		}
 	}, 120), 1000);
+
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
@@ -466,7 +473,8 @@
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
-			  ['', 'Request Pin Data For Pin %s', 'sendPinCommand', 1]
+			  ['', 'Request Pin Data For Pin %s', 'sendPinCommand', 1],
+			  ['', 'Change pin request to %n', 'changePinRequest']
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
