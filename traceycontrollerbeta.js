@@ -409,7 +409,7 @@
   	}
   	
   	
-  	ext.TogglePinStream = function()
+  	ext.togglePinStream = function()
   	{
   		if(pinStream = true)
   		{
@@ -567,7 +567,7 @@
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
-			  ['r', 'Disable Pin Stream', 'disablePinStream'],
+			  ['r', 'Disable Pin Stream', 'togglePinStream'],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
 			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
 			  ['r', 'Bitwise AND: %n & %n', 'bitwiseAnd', 0, 0],
