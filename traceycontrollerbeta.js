@@ -469,7 +469,7 @@
   		{
   			index = 4096;
   		}
-  		return storedData[index];
+  		return storedData.buffer[index];
   	}
   	
   	
