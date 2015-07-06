@@ -123,7 +123,7 @@
         		if(dataView.length == 2)
         		{
         			dataReceived = true;
-        			storedData.writePin(currentPinRequest % 2);
+        			storedData.writePin(currentPinRequest % 2, dataView);
         			console.log(storedData.pinA0);
         			console.log(storedData.pinA1);
         		}
