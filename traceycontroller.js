@@ -21,7 +21,7 @@
 	var currentPinRequest = 1; // Current pin being requested
 	var deviceState = 'No data received'; // The current state of the device
 	var pollers = [0, 0]; // Poller values for checking the devices data receival
-	var pinStream = true;
+	var pinStream = true; // Flag to enable/disable the constant pin requests
 	
 	/**
 	 * A Cyclic buffer to contain received data
