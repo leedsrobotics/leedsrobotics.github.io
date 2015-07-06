@@ -451,7 +451,7 @@
 	setTimeout(setInterval(function(){
 		if(device)
 		{
-			sendPinCommand(0);
+			sendPinCommand('0');
 			++currentPinRequest;
 		}
 	}, 120), 1000);
