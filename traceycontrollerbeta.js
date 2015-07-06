@@ -127,7 +127,7 @@
   		{
   			view[x] = pinCommand.charCodeAt(x);
   		}
-  		view[3] = String.charCodeAt(pin);
+  		view[3] = pin;
   		
   		storedData.expectedLength = storedData.latestElement + 2;
   		//console.log('Updated Expected Length');
@@ -451,7 +451,7 @@
 	setTimeout(setInterval(function(){
 		if(device)
 		{
-			sendPinCommand('0');
+			sendPinCommand(1);
 			++currentPinRequest;
 		}
 	}, 120), 1000);
@@ -460,14 +460,13 @@
 	var descriptor = {
 		blocks: [ ['r', 'Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
-			  ['r', 'Get status of pin %s', 'pinStatus'],
+			  ['r', 'Get status of pin %n', 'pinStatus'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
-			  ['', 'Request Pin Data For Pin %s', 'sendPinCommand', 1],
-			  ['r', 'Read Pin Data', 'processPinData']
+			  ['', 'Request Pin Data For Pin %s', 'sendPinCommand', 1]
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
