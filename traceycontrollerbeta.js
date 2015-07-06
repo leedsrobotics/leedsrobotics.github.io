@@ -21,6 +21,7 @@
 	var currentPinRequest = 1; // Current pin being requested
 	var deviceState = 'No data received'; // The current state of the device
 	var pollers = [0, 0]; // Poller values for checking the devices data receival
+	var pinStream = true;
 	
 	/**
 	 * A Cyclic buffer to contain received data
@@ -408,6 +409,21 @@
   	}
   	
   	
+  	ext.TogglePinStream = function()
+  	{
+  		if(pinStream = true)
+  		{
+  			pinStream = false;
+  		}
+  		else
+  		{
+  			pinStream = true;
+  		}
+  		return pinStream;
+  	}
+  	
+  	
+  	
   	/**
   	 * Sends a custom command with custom parameters
   	 */
@@ -521,7 +537,7 @@
 
 	// Creates new thread, repeated polling the pins A0 and A1 for values
 	setTimeout(setInterval(function(){
-		if(device)
+		if(device && pinStream)
 		{
 			sendPinCommand(currentPinRequest % 2);
 			++currentPinRequest;
@@ -546,11 +562,12 @@
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
 		blocks: [ ['r', 'Device State', 'checkDeviceResponds'],
-			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
+			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
+			  ['r', 'Disable Pin Stream', 'disablePinStream'],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
 			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
 			  ['r', 'Bitwise AND: %n & %n', 'bitwiseAnd', 0, 0],
