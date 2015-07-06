@@ -21,7 +21,6 @@
 	var currentPinRequest = 1; // Current pin being requested
 	var deviceState = 'No data received'; // The current state of the device
 	var pollers = [0, 0]; // Poller values for checking the devices data receival
-	var noDeviceFound = 0;
 	
 	/**
 	 * A Cyclic buffer to contain received data
@@ -444,6 +443,9 @@
   	}
   	
   	
+  	/**
+  	 * Reads a byte from the buffer that arrived a specified number of bytes ago
+  	 */
   	ext.readFromBuffer = function(num)
   	{
   		var index = storedData.latestElement - num;
@@ -454,36 +456,57 @@
   		return storedData.buffer[index];
   	}
   	
+  	/**
+  	 * Bitwise AND operator
+  	 */
   	ext.bitwiseAnd = function(num1, num2)
   	{
   		return num1 & num2;
   	}
   	
+  	/**
+  	 * Bitwise OR operator
+  	 */
   	ext.bitwiseOr = function(num1, num2)
   	{
   		return num1 | num2;
   	}
   	
+  	/**
+  	 * Bitwise XOR operator
+  	 */
   	ext.bitwiseXOr = function(num1, num2)
   	{
   		return num1 ^ num2;
   	}
   	
+  	/**
+  	 * Bitwise NOT operator
+  	 */
   	ext.bitwiseNot = function(num)
   	{
   		return ~ num1;
   	}
   	
+  	/**
+  	 * Bitwise left shift operator
+  	 */
   	ext.leftShift = function(num1, num2)
   	{
   		return num1 << num2;
   	}
   	
+  	/**
+  	 * Bitwise sign-propagating right shift operator
+  	 */
   	ext.rightShift = function(num1, num2)
   	{
   		return num1 >> num2;
   	}
   	
+  	/**
+  	 * Bitwise zero-fill right shift operator
+  	 */
   	ext.zeroFillRightShift = function(num1, num2)
   	{
   		return num1 >>> num2;
@@ -516,17 +539,6 @@
 		else
 		{
 			deviceState =  'No data received';
-			++noDeviceFound;
-			if(noDeviceFound >= 15)
-			{
-				noDeviceFound = 0;
-				if(device)
-				{
-					device.close();
-					device = null;
-					tryNextDevice;
-				}
-			}
 		}
 	}, 120), 1060);
 
