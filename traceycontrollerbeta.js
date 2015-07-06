@@ -44,7 +44,7 @@
 			{
 				for(var x = 0; x < num; ++x)
 				{
-					readData.push(this.buffer[this.latestElement - x]);
+					readData.push(this.buffer[this.latestElement + 1 - num + x]);
 				}
 			}
 			
