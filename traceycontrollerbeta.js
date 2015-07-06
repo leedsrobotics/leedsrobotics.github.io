@@ -19,8 +19,8 @@
 	var threshold = 800; // Threshold of the analog values for white and black
 	var analogLimit = 1200; // Limit of valid analog value
 	var currentPinRequest = 1; // Current pin being requested
-	var deviceState = 'No data received';
-	var pollers = [0, 0];
+	var deviceState = 'No data received'; // The current state of the device
+	var pollers = [0, 0]; // Poller values for checking the devices data receival
 	
 	/**
 	 * A Cyclic buffer to contain received data
@@ -476,6 +476,8 @@
 		}
 	}, 120), 1000);
 
+
+	// Checks if data is being received from device
 	setTimeout(setInterval(function(){
 		pollers[currentPinRequest % 2] = storedData.latestElement;
 		if(pollers[0] != pollers[1])
@@ -488,11 +490,10 @@
 		}
 	}, 120), 1060);
 
+
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
-		blocks: [ ['r', 'Serial State', 'serialState'],
-			  ['', 'Request ID', 'idRequest'],
-			  ['r', 'Device State', 'checkDeviceResponds'],
+		blocks: [ ['r', 'Device State', 'checkDeviceResponds'],
 			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
