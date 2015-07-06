@@ -9,7 +9,8 @@
 	var expectPinData = false;
 	var pinData = null;
 	var expectedPinData = 1;
-	var threshold = 660;
+	var A0threshold = 800;
+	var A1threshold = 660;
 	var analogLimit = 1200;
 	var currentPinRequest = 1;
 	var dataRequested = new Date().getTime();
@@ -178,13 +179,20 @@
   	
   	function processPinData(pin)
   	{
-  		pinData = storedData.read(2);
+  		if(pin == 0)
+  		{
+  			pinData = storedData.pinA0;
+  		}
+  		else if(pin == 1)
+  		{
+  			pinData = storedData.pinA1;
+  		}
   		//console.log('ATTEMPTING ...');
   		//pinData = storedData.read(2);
   		
   		//console.log('pinData:');
   		//console.log(pinData);
-  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
+  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
   		
   		console.log("Analog Val:");
   		console.log(analogVal);
@@ -196,13 +204,27 @@
   			return 'white';
   		}
   		
-  		if(analogVal > threshold)
+  		if(pin == 0)
   		{
-  			return 'black';
+  			if(analogVal > A0threshold)
+  			{
+  				return 'black';
+  			}
+  			else
+  			{
+  				return 'white';
+  			}
   		}
-  		else
+  		else if(pin == 1)
   		{
-  			return 'white';
+  			if(analogVal > A1threshold)
+  			{
+  				return 'black';
+  			}
+  			else
+  			{
+  				return 'white';
+  			}
   		}
   	}
   	
