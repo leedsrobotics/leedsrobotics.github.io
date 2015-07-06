@@ -19,6 +19,7 @@
 	var threshold = 800; // Threshold of the analog values for white and black
 	var analogLimit = 1200; // Limit of valid analog value
 	var currentPinRequest = 1; // Current pin being requested
+	var deviceState = 'No data received';
 	
 	/**
 	 * A Cyclic buffer to contain received data
@@ -251,17 +252,7 @@
 
 	
 	ext.checkDeviceResponds = function(){
-		var firstPoll = storedData.latestElement;
-		sleep(300);
-		var secondPoll = storedData.latestElement;
-		if(firstPoll != secondPoll)
-		{
-			return 'Receiving data ...';
-		}
-		else
-		{
-			return 'No data received';
-		}
+		return deviceState;
 	}
 
   	
@@ -484,6 +475,19 @@
 		}
 	}, 120), 1000);
 
+	setTimeout(setInterval(function(){
+		firstPoll = storedData.latestElement;
+		sleep(300);
+		secondPoll = storedData.latestElement;
+		if(firstPoll != secondPoll)
+		{
+			deviceState = 'Receiving data ...';
+		}
+		else
+		{
+			deviceState =  'No data received';
+		}
+	}, 120), 1060);
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
