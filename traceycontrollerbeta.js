@@ -21,6 +21,7 @@
 	var currentPinRequest = 1; // Current pin being requested
 	var deviceState = 'No data received'; // The current state of the device
 	var pollers = [0, 0]; // Poller values for checking the devices data receival
+	var noDeviceFound = 0;
 	
 	/**
 	 * A Cyclic buffer to contain received data
@@ -515,6 +516,17 @@
 		else
 		{
 			deviceState =  'No data received';
+			++noDeviceFound;
+			if(noDeviceFound >= 3)
+			{
+				noDeviceFound = 0;
+				if(device)
+				{
+					device.close();
+					device = null;
+					tryNextDevice;
+				}
+			}
 		}
 	}, 120), 1060);
 
