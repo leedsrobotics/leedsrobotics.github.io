@@ -411,7 +411,7 @@
   	
   	ext.togglePinStream = function()
   	{
-  		if(pinStream = true)
+  		if(pinStream == true)
   		{
   			pinStream = false;
   		}
@@ -419,6 +419,7 @@
   		{
   			pinStream = true;
   		}
+  		
   		return pinStream;
   	}
   	
