@@ -2,10 +2,10 @@
  * Author: Kevin Hodgson
  * 
  * Description: A Extension for ScratchX which can be used to control the robot Tracey
- * 		and other similar devices. Available blocks include setting the speed
- * 		of both motors, turning left or right at a specified speed, setting 
- * 		individual motor speeds, stopping the motors and reading values from
- * 		the infrared sensors.
+ * 		and other similar devices. Available Tracey specific blocks include 
+ * 		setting the speed of both motors, turning left or right at a specified 
+ * 		speed, setting individual motor speeds, stopping the motors and reading 
+ * 		values from the infrared sensors.
  */
 
 (function(ext) 
