@@ -9,8 +9,8 @@
 	var expectPinData = false;
 	var pinData = null;
 	var expectedPinData = 1;
-	var A0threshold = 800;
-	var A1threshold = 660;
+	var threshold = 800;
+	//var A1threshold = 660;
 	var analogLimit = 1200;
 	var currentPinRequest = 1;
 	var dataRequested = new Date().getTime();
@@ -204,28 +204,16 @@
   			return 'white';
   		}
   		
-  		if(pin == 0)
+  		
+  		if(analogVal > threshold)
   		{
-  			if(analogVal > A0threshold)
-  			{
-  				return 'black';
-  			}
-  			else
-  			{
-  				return 'white';
-  			}
+  			return 'black';
   		}
-  		else if(pin == 1)
+  		else
   		{
-  			if(analogVal > A1threshold)
-  			{
-  				return 'black';
-  			}
-  			else
-  			{
-  				return 'white';
-  			}
+  			return 'white';
   		}
+  		
   	}
   	
   	
