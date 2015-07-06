@@ -249,6 +249,21 @@
   		device.send(view.buffer); // Send command
   	}
 
+	
+	ext.checkDeviceResponds = function(){
+		var firstPoll = storedData.latestElement;
+		sleep(300);
+		var secondPoll = storedData.latestElement;
+		if(firstPoll != secondPoll)
+		{
+			return 'Receiving data ...';
+		}
+		else
+		{
+			return 'No data received';
+		}
+	}
+
   	
   	/**
   	 * Turns the device on the spot in a specified direction
@@ -474,6 +489,7 @@
 	var descriptor = {
 		blocks: [ ['r', 'Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
+			  ['r', 'Device State', 'checkDeviceResponds'],
 			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
