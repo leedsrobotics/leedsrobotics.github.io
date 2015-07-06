@@ -409,11 +409,17 @@
   	}
   	
   	
+  	/**
+  	 * Disables the stream of data between the pins and extension
+  	 */
   	ext.disablePinStream = function()
   	{
 	  	pinStream = false;
   	}
   	
+  	/**
+  	 * Enables the stream of data between the pins and extension
+  	 */
   	ext.enablePinStream = function()
   	{
 	  	pinStream = true;
