@@ -556,7 +556,7 @@
 			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
 			  ['', 'Enable Pin Stream', 'enablePinStream'],
 			  ['', 'Disable Pin Stream', 'disablePinStream'],
-			  ['', 'Send Command %s with parameters %n', 'sendCustomCommand'],
+			  ['', 'Send Command %s with parameters %n', 'sendCustomCommand', '', ''],
 			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
 			  ['r', 'Bitwise AND: %n & %n', 'bitwiseAnd', 0, 0],
 			  ['r', 'Bitwise OR: %n | %n', 'bitwiseOr', 0, 0],
