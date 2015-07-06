@@ -517,7 +517,7 @@
 		{
 			deviceState =  'No data received';
 			++noDeviceFound;
-			if(noDeviceFound >= 3)
+			if(noDeviceFound >= 15)
 			{
 				noDeviceFound = 0;
 				if(device)
