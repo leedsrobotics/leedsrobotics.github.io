@@ -10,7 +10,7 @@
 	var pinData = null;
 	var expectedPinData = 1;
 	var threshold = 660;
-	var analogLimit = 1000;
+	var analogLimit = 1200;
 	var currentPinRequest = 1;
 	var dataRequested = new Date().getTime();
 	var pinVal = 0;
