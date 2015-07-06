@@ -462,7 +462,12 @@
   	
   	ext.readFromBuffer = function(num)
   	{
-  		return storedData.read(num);
+  		var index = storedData.latestElement - num;
+  		if(index < 0)
+  		{
+  			index = 4096;
+  		}
+  		return storedData[index];
   	}
   	
   	
@@ -506,7 +511,7 @@
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
-			  ['r', 'Read %n bytes from buffer', 'readFromBuffer', 2]
+			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0]
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
