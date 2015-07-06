@@ -215,28 +215,12 @@
   		
   		return pinColour; 
   	}
-  	
-  	
-  	
-  	/**
-  	 * Sends ID request to the device
-  	 */
-  	ext.idRequest = function()
-  	{
-  		var idCommand = "@id"; // Request ID command definition
-  		var view = new Uint8Array(3); // View to contain the command being sent
-  		
-  		// Fill view with the commands individual bytes
-  		for(var x = 0; x < idCommand.length; x++)
-  		{
-  			view[x] = idCommand.charCodeAt(x);
-  		}
-  		
-  		device.send(view.buffer); // Send command
-  	}
 
-	
-	ext.checkDeviceResponds = function(){
+	/**
+	 * Returns current state of device (i.e. whether or not it is receiving data)
+	 */
+	ext.checkDeviceResponds = function()
+	{
 		return deviceState;
 	}
 
@@ -417,6 +401,7 @@
 	  	pinStream = false;
   	}
   	
+  	
   	/**
   	 * Enables the stream of data between the pins and extension
   	 */
@@ -424,7 +409,6 @@
   	{
 	  	pinStream = true;
   	}
-  	
   	
   	
   	/**
@@ -572,7 +556,7 @@
 			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
 			  ['', 'Enable Pin Stream', 'enablePinStream'],
 			  ['', 'Disable Pin Stream', 'disablePinStream'],
-			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
+			  ['', 'Send Command %s with parameters %n', 'sendCustomCommand'],
 			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
 			  ['r', 'Bitwise AND: %n & %n', 'bitwiseAnd', 0, 0],
 			  ['r', 'Bitwise OR: %n | %n', 'bitwiseOr', 0, 0],
