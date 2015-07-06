@@ -148,7 +148,7 @@
   		{
   			view[x] = pinCommand.charCodeAt(x);
   		}
-  		view[3] = String.charCodeAt(pin);
+  		view[3] = pin;
   		
   		storedData.expectedLength = storedData.latestElement + 2;
   		//console.log('Updated Expected Length');
