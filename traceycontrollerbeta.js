@@ -20,6 +20,7 @@
 	var analogLimit = 1200; // Limit of valid analog value
 	var currentPinRequest = 1; // Current pin being requested
 	var deviceState = 'No data received';
+	var pollers = [0, 0];
 	
 	/**
 	 * A Cyclic buffer to contain received data
@@ -476,10 +477,8 @@
 	}, 120), 1000);
 
 	setTimeout(setInterval(function(){
-		firstPoll = storedData.latestElement;
-		sleep(300);
-		secondPoll = storedData.latestElement;
-		if(firstPoll != secondPoll)
+		pollers[currentPinRequest % 2] = storedData.latestElement;
+		if(pollers[0] != pollers[1])
 		{
 			deviceState = 'Receiving data ...';
 		}
