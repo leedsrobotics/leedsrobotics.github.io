@@ -9,8 +9,8 @@
 	var expectPinData = false;
 	var pinData = null;
 	var expectedPinData = 1;
-	var A0threshold = 800;
-	var A1threshold = 660;
+	var A1threshold = 800;
+	var A0threshold = 660;
 	var analogLimit = 1200;
 	var currentPinRequest = 1;
 	var dataRequested = new Date().getTime();
