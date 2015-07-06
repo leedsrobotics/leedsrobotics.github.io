@@ -459,6 +459,24 @@
   		return storedData.buffer[index];
   	}
   	
+  	ext.convertToCharCode = function(char)
+  	{
+  		if(char.length != 1)
+  		{
+  			return 0;
+  		}
+  		else
+  		{
+  			return char.charCodeAt(0);
+  		}
+  	}
+  	
+  	ext.convertFromCharCode = function(num)
+  	{
+  		return String.fromCharCode(num);
+  	}
+  	
+  	
   	/**
   	 * Bitwise AND operator
   	 */
@@ -558,6 +576,8 @@
 			  ['', 'Disable Pin Stream', 'disablePinStream'],
 			  ['', 'Send Command %s with parameters %n', 'sendCustomCommand', '', ''],
 			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
+			  ['r', 'Convert to Char Code %s', 'convertToCharCode', ''],
+			  ['r', 'Convert from Char Code %n', 'convertFromCharCode', ''],
 			  ['r', 'Bitwise AND: %n & %n', 'bitwiseAnd', 0, 0],
 			  ['r', 'Bitwise OR: %n | %n', 'bitwiseOr', 0, 0],
 			  ['r', 'Bitwise XOR: %n ^ %n', 'bitwiseXOr', 0, 0],
