@@ -171,11 +171,11 @@
   		var pinData = null;
   		
   		// Reads the specified pin data from buffer
-  		if(pin == 0)
+  		if(pin == 'A0')
   		{
   			pinData = storedData.pinA0;
   		}
-  		else if(pin == 1)
+  		else if(pin == 'A1')
   		{
   			pinData = storedData.pinA1;
   		}
@@ -474,7 +474,7 @@
 	var descriptor = {
 		blocks: [ ['r', 'Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
-			  ['r', 'Get status of pin %n', 'pinStatus', 0],
+			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
