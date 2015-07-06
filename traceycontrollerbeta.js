@@ -18,6 +18,8 @@
 		buffer: [0], 
 		latestElement: 0,
 		expectedLength: 0,
+		pinA1: [0, 0],
+		pinA0: [0, 0],
 		read: function(num){
 			var readData= [];
 			//console.log('Entered read function');
@@ -55,6 +57,16 @@
 				this.buffer[this.latestElement] = data[x];
 			}	
 			//console.log(this.buffer);
+		},
+		writePin: function(pin, data){
+			if(pin == 0)
+			{
+				this.pinA0 = data;
+			}
+			else
+			{
+				this.pinA1 = data;
+			}
 		}
 
 	}
@@ -108,8 +120,13 @@
         		//if (dataView.length == 2)
         		//{
         		storedData.write(dataView);
-        		dataReceived = true;
-        		console.log(dataView);
+        		if(dataView.length == 2)
+        		{
+        			dataReceived = true;
+        			storedData.writePin(currentPinRequest % 2);
+        			console.log(storedData.pinA0);
+        			console.log(storedData.pinA1);
+        		}
         		//}
         		//console.log('Latency:');
         	});
