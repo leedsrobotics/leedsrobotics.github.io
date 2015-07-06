@@ -216,25 +216,6 @@
   	}
   	
   	
-
-
-	/**
-  	 * Declares whether a device is connected, printing out the port its connected through if it is and
-  	 * its constructor name.
-  	 */
-  	ext.serialState = function()
-  	{
-  		if(!device)
-  		{
-  			return "No Serial Device Connected";
-  		}
-  		else
-  		{
-  	  		var message = device.constructor.name + " connected via " + device.id.toString();
-  	  		return message;
-  		}
-  	};
-  	
   	
   	/**
   	 * Sends ID request to the device
@@ -529,7 +510,7 @@
 		pollers[currentPinRequest % 2] = storedData.latestElement;
 		if(pollers[0] != pollers[1])
 		{
-			deviceState = 'Receiving data ...';
+			deviceState = 'Receiving data from ' + device.constructor.name + ' via ' + device.id.toString();
 		}
 		else
 		{
