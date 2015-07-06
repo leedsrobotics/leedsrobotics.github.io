@@ -42,9 +42,11 @@
 			}
 			else
 			{
+				var index = 0;
 				for(var x = 0; x < num; ++x)
 				{
-					readData.push(this.buffer[this.latestElement + 1 - num + x]);
+					index = this.latestElement + 1 - num + x;
+					readData.push(this.buffer[index]);
 				}
 			}
 			
