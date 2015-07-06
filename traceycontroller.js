@@ -1,47 +1,63 @@
+/**
+ * Author: Kevin Hodgson
+ * 
+ * Description: A Extension for ScratchX which can be used to control the robot Tracey
+ * 		and other similar devices. Available Tracey specific blocks include 
+ * 		setting the speed of both motors, turning left or right at a specified 
+ * 		speed, setting individual motor speeds, stopping the motors and reading 
+ * 		values from the infrared sensors.
+ */
+
 (function(ext) 
 {
 	var device; // Declares undefined device
 	var dataView = null; // View to contain received data
 	var state = 'still'; // Current state of device
-	var previousCommand = null;
-	var previousRightSpeed = 0;
-	var previousLeftSpeed = 0;
-	var expectPinData = false;
-	var pinData = null;
-	var threshold = 500;
-	var expectedPinData = 1;
-	var analogLimit = 1000;
-	var dataRequested = new Date().getTime();
-	var pinVal = 0;
+	var previousCommand = null; // Previous command sent
+	var previousRightSpeed = 0; // Previous speed of right motor
+	var previousLeftSpeed = 0; // Previous speed of left motor
+	var threshold = 800; // Threshold of the analog values for white and black
+	var analogLimit = 1200; // Limit of valid analog value
+	var currentPinRequest = 1; // Current pin being requested
+	var deviceState = 'No data received'; // The current state of the device
+	var pollers = [0, 0]; // Poller values for checking the devices data receival
+	var pinStream = true;
+	
+	/**
+	 * A Cyclic buffer to contain received data
+	 */
 	var storedData = { 
-		buffer: [0], 
-		latestElement: 0,
-		expectedLength: 0,
-		read: function(num, requestsSince){
+		buffer: [0], // Contains all incoming data
+		latestElement: 0, // Pointer to te latest element
+		pinA1: [0, 0], // Array to contain latest pinA1 data
+		pinA0: [0, 0], // Array to contain latest pinA0 data
+		
+		/**
+		 * Reads a specified number of elements from buffer
+		 */
+		read: function(num){
 			var readData= [];
-			//console.log('Entered read function');
-			//console.log(num);
 			if(this.latestElement + 1 - num < 0)
 			{
-				console.log('Not enough data');
 				return 0;
 			}
 			else
 			{
-				//console.log('Viable number of ')
-				var startingPoint = 0 + requestsSince * num;
-				for(var x = startingPoint; x < num + startingPoint; ++x)
+				var index = 0;
+				for(var x = 0; x < num; ++x)
 				{
-					readData.push(this.buffer[this.latestElement - x]);
+					index = this.latestElement + 1 - num + x;
+					readData.push(this.buffer[index]);
 				}
 			}
-		
 			
-			//console.log('Returning data read ...');
 			return readData;
 		},
+		
+		/**
+		 * Writes data into buffer
+		 */
 		write: function(data){
-			//console.log('writing ...');
 			for(var x = 0; x < data.length; ++x)
 			{
 				if(this.latestElement >= 4096)
@@ -53,8 +69,21 @@
 					++this.latestElement;
 				}
 				this.buffer[this.latestElement] = data[x];
-			}	
-			//console.log(this.buffer);
+			}
+		},
+		
+		/**
+		 * Writes new pin values into corresponding variables
+		 */
+		writePin: function(pin, data){
+			if(pin == 0)
+			{
+				this.pinA0 = data;
+			}
+			else
+			{
+				this.pinA1 = data;
+			}
 		}
 
 	}
@@ -69,6 +98,9 @@
   	};
   	
   	
+  	/**
+  	 * Waits a specified number of miliseconds
+  	 */
   	function sleep(miliseconds) 
   	{
            var currentTime = new Date().getTime();
@@ -84,8 +116,7 @@
     	ext._deviceConnected = function(dev) {
         	potentialDevices.push(dev); // Add new device to the list of potential devices
 
-		// If no device is currently set, try another device
-        	if (!device) {
+		if (!device) {
             	tryNextDevice();
         	}
    	}
@@ -93,7 +124,7 @@
    	
    	/**
    	 * Checks if a compatible device is connected, opening a connection if it is and specifies data received
-   	 * should be printed in a readable format
+   	 * should be stored in the buffer
    	 */
    	function tryNextDevice() 
    	{
@@ -102,26 +133,23 @@
 
         	device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 }); // Opens connection
         	
-        	// When data is received from device, convert the data to a readable format and print to console
+        	// When data is received from device, store the data in the buffer object
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
-        		dataReceived = true;
-        		//console.log(dataView);
-        		//console.log('Latency:');
-        		//console.log(new Date().getTime() - dataRequested);
-        		//console.log(storedData.expectedLength == storedData.latestElement);
-        		//for(var x = 0; x < dataView.length; x++)
-        		//{
-        			//console.log('Raw Data:');
-        			//console.log(dataView[x]);
-        			//console.log(String.fromCharCode(dataView[x]))
-        		//}
+        		if(dataView.length == 2)
+        		{
+        			dataReceived = true;
+        			storedData.writePin(currentPinRequest % 2, dataView);
+        		}
         	});
         	
    	};
+
   	
-  	
+  	/**
+  	 * Sends a read request for a specified pin
+  	 */
   	function sendPinCommand(pin)
   	{
   		var pinCommand = "@ar"; // Request ID command definition
@@ -132,60 +160,40 @@
   		{
   			view[x] = pinCommand.charCodeAt(x);
   		}
-  		view[3] = String.charCodeAt(pin);
   		
-  		storedData.expectedLength = storedData.latestElement + 2;
-  		//console.log('Updated Expected Length');
+  		view[3] = pin;
+  		
   		device.send(view.buffer); // Send command
-  		
   	}
+  
   	
-  	ext.sendPinCommand = function(pin)
-  	{
-  		var pinCommand = "@ar"; // Request ID command definition
-  		var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  		// Fill view with the commands individual bytes
-  		for(var x = 0; x < pinCommand.length; x++)
-  		{
-  			view[x] = pinCommand.charCodeAt(x);
-  		}
-  		view[3] = String.charCodeAt(pin);
-  		
-  		storedData.expectedLength = storedData.latestElement + 2;
-  		//console.log('Updated Expected Length');
-  		device.send(view.buffer); // Send command
-  		
-  	}
-  	
-  	
-  	
+  	/**
+  	 * Processes the high and low data received from a specified pin, turning it into 
+  	 * a analog value
+  	 */
   	function processPinData(pin)
   	{
-  		//console.log('ATTEMPTING ...');
-  		if(expectedPinData != pin)
+  		var pinData = null;
+  		
+  		// Reads the specified pin data from buffer
+  		if(pin == 'A0')
   		{
-  			pinData = storedData.read(2, 1);
+  			pinData = storedData.pinA0;
   		}
-  		else
+  		else if(pin == 'A1')
   		{
-  			console.log('...');
-  			pinData = storedData.read(2, 0);
+  			pinData = storedData.pinA1;
   		}
-  		//console.log('pinData:');
-  		//console.log(pinData);
   		
-  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
+  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
   		
-  		console.log("Analog Val:");
-  		console.log(analogVal);
-  		
-  		pinData = null;
-  		
+  		// Ignores abnormal analog values
   		if(analogVal > analogLimit)
   		{
   			return 'white';
   		}
+  		
+  		// Checks the analog value against the threshold, returning the result
   		if(analogVal > threshold)
   		{
   			return 'black';
@@ -194,89 +202,27 @@
   		{
   			return 'white';
   		}
+  		
   	}
-  	
-  	
-  	ext.processPinData = function()
-  	{
-  		//console.log('ATTEMPTING ...');
-  		pinData = storedData.read(2);
-  		
-  		//console.log('pinData:');
-  		//console.log(pinData);
-  		
-  		var analogVal = ((pinData[1] & 0xFF) << 8) | (pinData[0] & 0xFF);
-  		
-  		console.log("Analog Val:");
-  		console.log(analogVal);
-  		
-  		pinData = null;
-  		
-  		if(analogVal > threshold)
-  		{
-  			return 'black';
-  		}
-  		else
-  		{
-  			return 'white';
-  		}
-  	}
-  	
   	
   	
   	/**
-  	 * Sends ID request to the device
+  	 * Processes data from a specified pin, returning its current colour
   	 */
   	ext.pinStatus = function(pin)
   	{
-  		
-  		//sendPinCommand(pin);
-  		
-  		//dataRequested = new Date().getTime();
-  		
   		var pinColour = processPinData(pin);
   		
   		return pinColour; 
-  		
   	}
-  	
-  	
-
 
 	/**
-  	 * Declares whether a device is connected, printing out the port its connected through if it is and
-  	 * its constructor name.
-  	 */
-  	ext.serialState = function()
-  	{
-  		if(!device)
-  		{
-  			return "No Serial Device Connected";
-  		}
-  		else
-  		{
-  	  		var message = device.constructor.name + " connected via " + device.id.toString();
-  	  		return message;
-  		}
-  	};
-  	
-  	
-  	/**
-  	 * Sends ID request to the device
-  	 */
-  	ext.idRequest = function()
-  	{
-  		var idCommand = "@id"; // Request ID command definition
-  		var view = new Uint8Array(3); // View to contain the command being sent
-  		
-  		// Fill view with the commands individual bytes
-  		for(var x = 0; x < idCommand.length; x++)
-  		{
-  			view[x] = idCommand.charCodeAt(x);
-  		}
-  		
-  		device.send(view.buffer); // Send command
-  	}
+	 * Returns current state of device (i.e. whether or not it is receiving data)
+	 */
+	ext.checkDeviceResponds = function()
+	{
+		return deviceState;
+	}
 
   	
   	/**
@@ -309,6 +255,7 @@
   				previousLeftSpeed = speed;
   			}
   		
+  			// Prevents repeated commands
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
@@ -324,7 +271,6 @@
   	 */
   	ext.stopMotors = function()
   	{
-  		console.log(state);
   		if(state != 'still')
   		{
   			var directionCommand = '@m'; // Motor command definition
@@ -339,6 +285,7 @@
   			previousLeftSpeed = 0;
   			previousRightSpeed = 0;
   			
+  			// Prevents repeated commands
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
@@ -378,6 +325,7 @@
   				state =  'backwards';
   			}
   			
+  			// Prevents repeated commands
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
@@ -387,9 +335,11 @@
   	}
   	
   	
+  	/**
+  	 * Sets a specified motor to a specified speed for a specified duration
+  	 */
   	ext.setIndivMotor = function(motor, speed, duration)
   	{
-  		console.log('Running ...');
   		if(speed <= 100 && speed >= 0 && duration > 0)
   		{
   			var directionCommand = '@m'; // Motor command definition
@@ -412,15 +362,14 @@
   				previousRightSpeed = speed;
   			}
   			
-  			console.log(view);
+  			// Prevents repeated commands
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
   				previousCommand = view;
   				
-  				console.log('About to sleep ...');
+  				// Waits the specified amount of time then stops the specified motor
   				sleep(duration * 1000);
-  				console.log('... Finished sleeping');
   				if(motor == 'left')
   				{
   					view[2] = 0; // Left motor speed (stops motor)
@@ -434,7 +383,6 @@
   					previousRightSpeed = 0;
   				}
   				
-  				console.log(view);
   				device.send(view.buffer); // Send command
   				previousCommand = view;
   				state = '';
@@ -445,6 +393,27 @@
   	}
   	
   	
+  	/**
+  	 * Disables the stream of data between the pins and extension
+  	 */
+  	ext.disablePinStream = function()
+  	{
+	  	pinStream = false;
+  	}
+  	
+  	
+  	/**
+  	 * Enables the stream of data between the pins and extension
+  	 */
+  	ext.enablePinStream = function()
+  	{
+	  	pinStream = true;
+  	}
+  	
+  	
+  	/**
+  	 * Sends a custom command with custom parameters
+  	 */
   	ext.sendCustomCommand = function(command, params, typeOfParam)
   	{
   		var seper_params = params.split(" ");
@@ -455,6 +424,7 @@
   			view[x] = command.charCodeAt(x);
   		}
   		
+  		// Checks parameters, converting the negative values
   		for(var y = 0; y < seper_params.length; y++)
   		{
   			if(seper_params[y] < 0)
@@ -467,13 +437,83 @@
   			}
   		}
   		
+  		// Prevents repeated commands
   		if(view != previousCommand)
   		{
-  			device.send(view.buffer);
-  			previousCommand = view;
+  			device.send(view.buffer); // Sends command
+  			previousCommand = view; 
   		}
   	}
   	
+  	
+  	/**
+  	 * Reads a byte from the buffer that arrived a specified number of bytes ago
+  	 */
+  	ext.readFromBuffer = function(num)
+  	{
+  		var index = storedData.latestElement - num;
+  		if(index < 0)
+  		{
+  			index = 4096;
+  		}
+  		return storedData.buffer[index];
+  	}
+  	
+  	/**
+  	 * Bitwise AND operator
+  	 */
+  	ext.bitwiseAnd = function(num1, num2)
+  	{
+  		return num1 & num2;
+  	}
+  	
+  	/**
+  	 * Bitwise OR operator
+  	 */
+  	ext.bitwiseOr = function(num1, num2)
+  	{
+  		return num1 | num2;
+  	}
+  	
+  	/**
+  	 * Bitwise XOR operator
+  	 */
+  	ext.bitwiseXOr = function(num1, num2)
+  	{
+  		return num1 ^ num2;
+  	}
+  	
+  	/**
+  	 * Bitwise NOT operator
+  	 */
+  	ext.bitwiseNot = function(num)
+  	{
+  		return ~ num1;
+  	}
+  	
+  	/**
+  	 * Bitwise left shift operator
+  	 */
+  	ext.leftShift = function(num1, num2)
+  	{
+  		return num1 << num2;
+  	}
+  	
+  	/**
+  	 * Bitwise sign-propagating right shift operator
+  	 */
+  	ext.rightShift = function(num1, num2)
+  	{
+  		return num1 >> num2;
+  	}
+  	
+  	/**
+  	 * Bitwise zero-fill right shift operator
+  	 */
+  	ext.zeroFillRightShift = function(num1, num2)
+  	{
+  		return num1 >>> num2;
+  	}
   	
 	
 	/**
@@ -481,35 +521,51 @@
 	 */
 	ext._shutdown = function(){};
 
+
+	// Creates new thread, repeated polling the pins A0 and A1 for values
 	setTimeout(setInterval(function(){
-		if(device)
+		if(device && pinStream)
 		{
-			sendPinCommand(1);
-			expectedPinData = 1;
+			sendPinCommand(currentPinRequest % 2);
+			++currentPinRequest;
 		}
 	}, 120), 1000);
-	
-	//setTimeout(setInterval(function(){
-		//if(device)
-		//{
-			//sendPinCommand(2);
-			//expectedPinData = 2;
-		//}
-	//}, 120), 1060);
-	
+
+
+	// Checks if data is being received from device
+	setTimeout(setInterval(function(){
+		pollers[currentPinRequest % 2] = storedData.latestElement;
+		if(pollers[0] != pollers[1])
+		{
+			deviceState = 'Receiving data from ' + device.constructor.name + ' via ' + device.id.toString();
+		}
+		else
+		{
+			deviceState =  'No data received';
+		}
+	}, 120), 1060);
+
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
-		blocks: [ ['r', 'Serial State', 'serialState'],
-			  ['', 'Request ID', 'idRequest'],
-			  ['r', 'Get status of pin %s', 'pinStatus'],
+		blocks: [ ['r', 'Device State', 'checkDeviceResponds'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
-			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
-			  ['', 'Request Pin Data For Pin %s', 'sendPinCommand', 1],
-			  ['r', 'Read Pin Data', 'processPinData']
+			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
+			  ['', 'Enable Pin Stream', 'enablePinStream'],
+			  ['', 'Disable Pin Stream', 'disablePinStream'],
+			  ['', 'Send Command %s with parameters %n', 'sendCustomCommand', '', ''],
+			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
+			  ['r', 'Bitwise AND: %n & %n', 'bitwiseAnd', 0, 0],
+			  ['r', 'Bitwise OR: %n | %n', 'bitwiseOr', 0, 0],
+			  ['r', 'Bitwise XOR: %n ^ %n', 'bitwiseXOr', 0, 0],
+			  ['r', 'Bitwise NOT: ~ %n', 'bitwiseNot', 0],
+			  ['r', 'Left Shift: %n << %n', 'leftShift', 0, 0],
+			  ['r', 'Sign-propagating right shift: %n >> %n', 'rightShift', 0, 0],
+			  ['r', 'Zero-fill right shift: %n >>> %n', 'zeroFillRightShift', 0, 0],
+			  
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
