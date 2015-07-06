@@ -460,6 +460,12 @@
   	}
   	
   	
+  	ext.readFromBuffer = function(num)
+  	{
+  		return storedData.read(num);
+  	}
+  	
+  	
 	
 	/**
 	 * Processes that run on extension shutdown
@@ -500,6 +506,7 @@
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
+			  ['r', 'Read %n bytes from buffer', 'readFromBuffer', 2]
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
