@@ -1,50 +1,58 @@
+/**
+ * Author: Kevin Hodgson
+ * 
+ * Description: A Extension for ScratchX which can be used to control the robot Tracey
+ * 		and other similar devices. Available blocks include setting the speed
+ * 		of both motors, turning left or right at a specified speed, setting 
+ * 		individual motor speeds, stopping the motors and reading values from
+ * 		the infrared sensors.
+ */
+
 (function(ext) 
 {
 	var device; // Declares undefined device
 	var dataView = null; // View to contain received data
 	var state = 'still'; // Current state of device
-	var previousCommand = null;
-	var previousRightSpeed = 0;
-	var previousLeftSpeed = 0;
-	var expectPinData = false;
-	var pinData = null;
-	var expectedPinData = 1;
-	var threshold = 800;
-	//var A1threshold = 660;
-	var analogLimit = 1200;
-	var currentPinRequest = 1;
-	var dataRequested = new Date().getTime();
-	var pinVal = 0;
+	var previousCommand = null; // Previous command sent
+	var previousRightSpeed = 0; // Previous speed of right motor
+	var previousLeftSpeed = 0; // Previous speed of left motor
+	var threshold = 800; // Threshold of the analog values for white and black
+	var analogLimit = 1200; // Limit of valid analog value
+	var currentPinRequest = 1; // Current pin being requested
+	
+	/**
+	 * A Cyclic buffer to contain received data
+	 */
 	var storedData = { 
-		buffer: [0], 
-		latestElement: 0,
-		expectedLength: 0,
-		pinA1: [0, 0],
-		pinA0: [0, 0],
+		buffer: [0], // Contains all incoming data
+		latestElement: 0, // Pointer to te latest element
+		pinA1: [0, 0], // Array to contain latest pinA1 data
+		pinA0: [0, 0], // Array to contain latest pinA0 data
+		
+		/**
+		 * Reads a specified number of elements from buffer
+		 */
 		read: function(num){
 			var readData= [];
-			//console.log('Entered read function');
-			//console.log(num);
 			if(this.latestElement + 1 - num < 0)
 			{
-				console.log('Not enough data');
 				return 0;
 			}
 			else
 			{
-				//console.log('Viable number of ')
 				for(var x = 0; x < num; ++x)
 				{
 					readData.push(this.buffer[this.latestElement - x]);
-					//console.log('Just read a byte');
 				}
 			}
 			
-			//console.log('Returning data read ...');
 			return readData;
 		},
+		
+		/**
+		 * Writes data into buffer
+		 */
 		write: function(data){
-			//console.log('writing ...');
 			for(var x = 0; x < data.length; ++x)
 			{
 				if(this.latestElement >= 4096)
@@ -56,9 +64,12 @@
 					++this.latestElement;
 				}
 				this.buffer[this.latestElement] = data[x];
-			}	
-			//console.log(this.buffer);
+			}
 		},
+		
+		/**
+		 * Writes new pin values into corresponding variables
+		 */
 		writePin: function(pin, data){
 			if(pin == 0)
 			{
@@ -82,6 +93,9 @@
   	};
   	
   	
+  	/**
+  	 * Waits a specified number of miliseconds
+  	 */
   	function sleep(miliseconds) 
   	{
            var currentTime = new Date().getTime();
@@ -97,8 +111,7 @@
     	ext._deviceConnected = function(dev) {
         	potentialDevices.push(dev); // Add new device to the list of potential devices
 
-		// If no device is currently set, try another device
-        	if (!device) {
+		if (!device) {
             	tryNextDevice();
         	}
    	}
@@ -106,7 +119,7 @@
    	
    	/**
    	 * Checks if a compatible device is connected, opening a connection if it is and specifies data received
-   	 * should be printed in a readable format
+   	 * should be stored in the buffer
    	 */
    	function tryNextDevice() 
    	{
@@ -115,47 +128,23 @@
 
         	device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 }); // Opens connection
         	
-        	// When data is received from device, convert the data to a readable format and print to console
+        	// When data is received from device, store the data in the buffer object
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
-        		//if (dataView.length == 2)
-        		//{
         		storedData.write(dataView);
         		if(dataView.length == 2)
         		{
         			dataReceived = true;
         			storedData.writePin(currentPinRequest % 2, dataView);
-        			console.log(storedData.pinA0);
-        			console.log(storedData.pinA1);
         		}
-        		//}
-        		//console.log('Latency:');
         	});
         	
    	};
+
   	
-  	
-  	ext.sendPinCommand = function(pin)
-  	{
-  		var pinCommand = "@ar"; // Request ID command definition
-  		var view = new Uint8Array(4); // View to contain the command being sent
-  		
-  		// Fill view with the commands individual bytes
-  		for(var x = 0; x < pinCommand.length; x++)
-  		{
-  			view[x] = pinCommand.charCodeAt(x);
-  		}
-  		view[3] = pin;
-  		
-  		storedData.expectedLength = storedData.latestElement + 2;
-  		//console.log('Updated Expected Length');
-  		device.send(view.buffer); // Send command
-  		
-  	}
-  	
-  	
-  	
-  	
+  	/**
+  	 * Sends a read request for a specified pin
+  	 */
   	function sendPinCommand(pin)
   	{
   		var pinCommand = "@ar"; // Request ID command definition
@@ -166,19 +155,22 @@
   		{
   			view[x] = pinCommand.charCodeAt(x);
   		}
+  		
   		view[3] = pin;
   		
-  		storedData.expectedLength = storedData.latestElement + 2;
-  		//console.log('Updated Expected Length');
   		device.send(view.buffer); // Send command
-  		
   	}
   
   	
-  	
-  	
+  	/**
+  	 * Processes the high and low data received from a specified pin, turning it into 
+  	 * a analog value
+  	 */
   	function processPinData(pin)
   	{
+  		var pinData = null;
+  		
+  		// Reads the specified pin data from buffer
   		if(pin == 0)
   		{
   			pinData = storedData.pinA0;
@@ -187,24 +179,16 @@
   		{
   			pinData = storedData.pinA1;
   		}
-  		//console.log('ATTEMPTING ...');
-  		//pinData = storedData.read(2);
   		
-  		//console.log('pinData:');
-  		//console.log(pinData);
-  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF);
+  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
   		
-  		console.log("Analog Val:");
-  		console.log(analogVal);
-  		
-  		pinData = null;
-  		
+  		// Ignores abnormal analog values
   		if(analogVal > analogLimit)
   		{
   			return 'white';
   		}
   		
-  		
+  		// Checks the analog value against the threshold, returning the result
   		if(analogVal > threshold)
   		{
   			return 'black';
@@ -218,20 +202,13 @@
   	
   	
   	/**
-  	 * Sends ID request to the device
+  	 * Processes data from a specified pin, returning its current colour
   	 */
   	ext.pinStatus = function(pin)
   	{
-  		
-  		//sendPinCommand(pin);
-  		
-  		//dataRequested = new Date().getTime();
-  		//currentPinRequest = 1;
-  		
   		var pinColour = processPinData(pin);
   		
   		return pinColour; 
-  		
   	}
   	
   	
@@ -303,6 +280,7 @@
   				previousLeftSpeed = speed;
   			}
   		
+  			// Prevents repeated commands
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
@@ -318,7 +296,6 @@
   	 */
   	ext.stopMotors = function()
   	{
-  		console.log(state);
   		if(state != 'still')
   		{
   			var directionCommand = '@m'; // Motor command definition
@@ -333,6 +310,7 @@
   			previousLeftSpeed = 0;
   			previousRightSpeed = 0;
   			
+  			// Prevents repeated commands
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
@@ -372,6 +350,7 @@
   				state =  'backwards';
   			}
   			
+  			// Prevents repeated commands
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
@@ -381,9 +360,11 @@
   	}
   	
   	
+  	/**
+  	 * Sets a specified motor to a specified speed for a specified duration
+  	 */
   	ext.setIndivMotor = function(motor, speed, duration)
   	{
-  		console.log('Running ...');
   		if(speed <= 100 && speed >= 0 && duration > 0)
   		{
   			var directionCommand = '@m'; // Motor command definition
@@ -406,15 +387,14 @@
   				previousRightSpeed = speed;
   			}
   			
-  			console.log(view);
+  			// Prevents repeated commands
   			if(view != previousCommand)
   			{
   				device.send(view.buffer); // Send command
   				previousCommand = view;
   				
-  				console.log('About to sleep ...');
+  				// Waits the specified amount of time then stops the specified motor
   				sleep(duration * 1000);
-  				console.log('... Finished sleeping');
   				if(motor == 'left')
   				{
   					view[2] = 0; // Left motor speed (stops motor)
@@ -428,7 +408,6 @@
   					previousRightSpeed = 0;
   				}
   				
-  				console.log(view);
   				device.send(view.buffer); // Send command
   				previousCommand = view;
   				state = '';
@@ -439,6 +418,9 @@
   	}
   	
   	
+  	/**
+  	 * Sends a custom command with custom parameters
+  	 */
   	ext.sendCustomCommand = function(command, params, typeOfParam)
   	{
   		var seper_params = params.split(" ");
@@ -449,6 +431,7 @@
   			view[x] = command.charCodeAt(x);
   		}
   		
+  		// Checks parameters, converting the negative values
   		for(var y = 0; y < seper_params.length; y++)
   		{
   			if(seper_params[y] < 0)
@@ -461,17 +444,12 @@
   			}
   		}
   		
+  		// Prevents repeated commands
   		if(view != previousCommand)
   		{
-  			device.send(view.buffer);
-  			previousCommand = view;
+  			device.send(view.buffer); // Sends command
+  			previousCommand = view; 
   		}
-  	}
-  	
-  	
-  	ext.changePinRequest = function(num)
-  	{
-  		currentPinRequest = num;
   	}
   	
   	
@@ -481,6 +459,8 @@
 	 */
 	ext._shutdown = function(){};
 
+
+	// Creates new thread, repeated polling the pins A0 and A1 for values
 	setTimeout(setInterval(function(){
 		if(device)
 		{
@@ -494,14 +474,12 @@
 	var descriptor = {
 		blocks: [ ['r', 'Serial State', 'serialState'],
 			  ['', 'Request ID', 'idRequest'],
-			  ['r', 'Get status of pin %n', 'pinStatus'],
+			  ['r', 'Get status of pin %n', 'pinStatus', 0],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand'],
-			  ['', 'Request Pin Data For Pin %s', 'sendPinCommand', 1],
-			  ['', 'Change pin request to %n', 'changePinRequest']
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
