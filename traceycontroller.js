@@ -216,6 +216,24 @@
   		return pinColour; 
   	}
 
+	
+	/**
+  	 * Declares whether a serial device is connected, printing out the port its connected through if it is and
+  	 * its constructor name.
+  	 */
+  	ext.serialState = function()
+  	{
+  		if(!device)
+  		{
+  			return "No Serial Device Connected";
+  		}
+  		else
+  		{
+  	  		var message = device.constructor.name + " connected via " + device.id.toString();
+  	  		return message;
+  		}
+  	};
+
 	/**
 	 * Returns current state of device (i.e. whether or not it is receiving data)
 	 */
@@ -555,7 +573,7 @@
 		pollers[currentPinRequest % 2] = storedData.latestElement;
 		if(pollers[0] != pollers[1])
 		{
-			deviceState = 'Receiving data from ' + device.constructor.name + ' via ' + device.id.toString();
+			deviceState = 'Receiving data from connection via ' + device.id.toString();
 		}
 		else
 		{
@@ -566,7 +584,8 @@
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
-		blocks: [ ['r', 'Device State', 'checkDeviceResponds'],
+		blocks: [ ['r', 'Serial State', 'serialState']
+			  ['r', 'Device State', 'checkDeviceResponds'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
