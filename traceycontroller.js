@@ -584,7 +584,7 @@
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
-		blocks: [ ['r', 'Serial State', 'serialState']
+		blocks: [ ['r', 'Serial State', 'serialState'],
 			  ['r', 'Device State', 'checkDeviceResponds'],
 			  ['', 'Go %m.directions1 at speed %n', 'goForwardsOrBackwards', 'forwards', 100],
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
