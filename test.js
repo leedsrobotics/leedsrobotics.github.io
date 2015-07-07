@@ -83,6 +83,7 @@
   		}
   		else
   		{
+  			console.log(device.id);
   	  		var message = device.constructor.name + " connected via " + device.id.toString();
   	  		return message;
   		}
