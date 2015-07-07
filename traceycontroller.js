@@ -538,31 +538,7 @@
 	 * Processes that run on extension shutdown
 	 */
 	ext._shutdown = function(){};
-
-
-	// Creates new thread, repeated polling the pins A0 and A1 for values
-	setTimeout(setInterval(function(){
-		if(device && pinStream)
-		{
-			sendPinCommand(currentPinRequest % 2);
-			++currentPinRequest;
-		}
-	}, 120), 1000);
-
-
-	// Checks if data is being received from device
-	setTimeout(setInterval(function(){
-		pollers[currentPinRequest % 2] = storedData.latestElement;
-		if(pollers[0] != pollers[1])
-		{
-			deviceState = 'Receiving data from ' + device.constructor.name + ' via ' + device.id.toString();
-		}
-		else
-		{
-			deviceState =  'No data received';
-		}
-	}, 120), 1060);
-
+	
 
   	// Registers block types, names and corresponding procedures
 	var descriptor = {
