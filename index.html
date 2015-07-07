@@ -293,6 +293,22 @@ img {
 </head>
 <body>
 <h2>ScratchX Extension Documentation</h2>
+<h3>Contents</h3>
+<ul>
+<li>Introduction</li>
+<li>Platform Compatibility</li>
+<li>Browser Compatibility</li>
+<li>Setting Up Your Computer</li>
+<li>Starting A New Extension</li>
+<li>Creating Blocks</li>
+<li>Functions</li>
+<li>Serial Support</li>
+<li>Pseudo Multi-Threading</li>
+<li>Additional Tutorials</li>
+<li>More Examples</li>
+</ul>
+<hr />
+<h4>Introduction</h4>
 <p>ScratchX is a web based GUI that offers easy to use programming blocks that make it ideal in a classroom setting for the teaching of programming. Unlike its Scratch counterpart, ScratchX supports experimental extensions, which allows users to load their own extensions into the GUI. These extensions are written in JavaScript and can be loaded into the GUI by inserting a Github hosted JavaScript link (e.g. <a href="http://leedsrobotics.github.io/practiseblocks.js">http://leedsrobotics.github.io/practiseblocks.js</a>) into the home page of the ScratchX site (<a href="http://scratchx.org">http://scratchx.org</a>).</p>
 <hr />
 <h4>Platform Compatibility</h4>
@@ -333,16 +349,16 @@ img {
 
 <p>This file should be placed in the root of the host, meaning that it should be accessible via the format <code>myusername.github.io/crossdomain.xml</code>.</p>
 <hr />
-<h4>Loading JavaScript files into ScratchX</h4>
+<h6>Loading JavaScript files into ScratchX</h6>
 <p>In order to load a JavaScript extension, follow these steps:</p>
 <ol>
 <li>Copy the link the JavaScript file hosted on a Github page (e.g. <code>myusername.github.io/practiseblocks.js</code>)</li>
 <li>Go to <a href="http://scratchx.org/">http://scratchx.org/</a></li>
 <li>Under the section labelled 'Open an Extension URL', paste the JavaScript link and click open (your browser may not respond for a few seconds)</li>
-<li>The ScratchX editor should now be loaded with your extension. If the editor loaded and any of your blocks are missing from the 'More Blocks' section, open the browser console to check if any errors occured.</li>
+<li>The ScratchX editor should now be loaded with your extension. If the editor loaded and any of your blocks are missing from the 'More Blocks' section, open the browser console to check if any errors occurred.</li>
 </ol>
 <hr />
-<h4>Hardware Interfacing</h4>
+<h6>Hardware Interfacing</h6>
 <p>In order for ScratchX to be able to interface with USB and Serial devices, you must install the hardware plugin offered by ScratchX. This hardware plugin is only available on Windows and Mac, so Linux users can not interface with hardware using the official ScratchX plugin. In addition, this plugin often has issues being detected on certain browsers, so the use of Mozilla Firefox is recommended. The main versions of the plugin are hosted here:</p>
 <p><a href="https://scratch.mit.edu/info/ext_download/">https://scratch.mit.edu/info/ext_download/</a></p>
 <p>If the versions hosted there don't work, there is a Beta version of the plugin here:</p>
@@ -562,6 +578,20 @@ Here is an example of a function that sends the command “@id” to a connected
 
 <p>Use ‘.constructor.name’ on a device object to check that it is indeed a <code>serialDevice</code> object.</p>
 <hr />
+<h4>Pseudo Multi-Threading</h4>
+<p>This is a uncommon issue in JavaScript since JavaScript is not often required to run multiple threads at the same time. In addition, JavaScript is, for the most part, a single-threaded language, so an attempt at using multi-threaded processes should not be undertaken lightly as it can become very complicated and very messy. </p>
+<p>An example of such a situation where it was required would be the Tracey robot. In order to send a read request for the infra-red sensors and then interpret the 2 bytes that were send back, multiple threads were required. This was because the receive handler in the JavaScript code for the device could not be called, and only ever ran on receival of data, however, the event was added to the queue of functions in its scope (i.e. after the function that sent a read request and interpreted the data), meaning data was either not read at all or was old. Multiple threads fixed this issue by having a separate thread that repeatedly sent the read requests, the data of which was then stored in a buffer object which could then be read at any point.</p>
+<p>If you encounter such a situation, the simplest solution could be the use of the JavaScript command setTimout (e.g. <code>setTimeout(function(){ alert(&quot;Hello&quot;); }, 3000);</code>). The setTimeout behaves in a similar way to multiple threads, waiting a specified number of milliseconds before running the code. In addition, setInterval also can be used in multiple threads to have a process continuously running in seperate thread (e.g. <code>setInterval(function(){ alert(&quot;Hello&quot;); }, 3000);</code>). It works in a similar way to setTimeout but differs in that instead of a delay before running, it runs the code on every interval, specified by the number of milliseconds as its second parameter.</p>
+<p>Here is an example which repeatedly calls a function in the background every 120 milliseconds after a 1 second delay:</p>
+<pre><code>setTimeout(setInterval(function(){
+        if(device)
+        {
+            sendPinCommand(1);
+        }
+    }, 120), 1000);
+</code></pre>
+
+<hr />
 <h4>Additional Tutorials</h4>
 <p>The ScratchX wiki page is particularly useful for learning how to extend Scratch:</p>
 <p><a href="https://github.com/LLK/scratchx/wiki">https://github.com/LLK/scratchx/wiki</a></p>
@@ -570,8 +600,8 @@ In addition, examples of other extensions can be found here:</p>
 <p><a href="https://github.com/LLK/scratchx/wiki/Example-Extensions">https://github.com/LLK/scratchx/wiki/Example-Extensions</a></p>
 <h4>More Examples</h4>
 <ul>
-<li><a href="http://leedsrobotics.github.io/traceycontroller.js">http://leedsrobotics.github.io/traceycontroller.js</a></li>
-<li><a href="http://leedsrobotics.github.io/practiseblocks.js">http://leedsrobotics.github.io/practiseblocks.js</a></li>
+<li><a href="http://leedsrobotics.github.io/traceycontroller.js">Tracey Controller</a></li>
+<li><a href="http://leedsrobotics.github.io/practiseblocks.js">Practise Blocks</a></li>
 </ul>
 
 </body>
