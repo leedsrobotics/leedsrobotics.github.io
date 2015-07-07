@@ -83,7 +83,7 @@
   		}
   		else
   		{
-  			device.id("COM3");
+  			device.id = "COM3";
   	  		var message = device.constructor.name + " connected via " + device.id.toString();
   	  		return message;
   		}
