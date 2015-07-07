@@ -295,28 +295,28 @@ img {
 <h2>ScratchX Extension Documentation</h2>
 <h3>Contents</h3>
 <ul>
-<li>Introduction</li>
-<li>Platform Compatibility</li>
-<li>Browser Compatibility</li>
-<li>Setting Up Your Computer</li>
-<li>Starting A New Extension</li>
-<li>Creating Blocks</li>
-<li>Functions</li>
-<li>Serial Support</li>
-<li>Pseudo Multi-Threading</li>
-<li>Additional Tutorials</li>
-<li>More Examples</li>
+<li><a href="http://leedsrobotics.github.io/#intro">Introduction</a></li>
+<li><a href="http://leedsrobotics.github.io/#platform">Platform Compatibility</a></li>
+<li><a href="http://leedsrobotics.github.io/#browser">Browser Compatibility</a></li>
+<li><a href="http://leedsrobotics.github.io/#setup">Setting Up Your Computer</a></li>
+<li><a href="http://leedsrobotics.github.io/#new_ext">Starting A New Extension</a></li>
+<li><a href="http://leedsrobotics.github.io/#blocks">Creating Blocks</a></li>
+<li><a href="http://leedsrobotics.github.io/#functions">Functions</a></li>
+<li><a href="http://leedsrobotics.github.io/#serial">Serial Support</a></li>
+<li><a href="http://leedsrobotics.github.io/#threads">Pseudo Multi-Threading</a></li>
+<li><a href="http://leedsrobotics.github.io/#tutorials">Additional Tutorials</a></li>
+<li><a href="http://leedsrobotics.github.io/#examples">More Examples</a></li>
 </ul>
 <hr />
-<h4>Introduction</h4>
+<h4 id="intro">Introduction</h4>
 <p>ScratchX is a web based GUI that offers easy to use programming blocks that make it ideal in a classroom setting for the teaching of programming. Unlike its Scratch counterpart, ScratchX supports experimental extensions, which allows users to load their own extensions into the GUI. These extensions are written in JavaScript and can be loaded into the GUI by inserting a Github hosted JavaScript link (e.g. <a href="http://leedsrobotics.github.io/practiseblocks.js">http://leedsrobotics.github.io/practiseblocks.js</a>) into the home page of the ScratchX site (<a href="http://scratchx.org">http://scratchx.org</a>).</p>
 <hr />
-<h4>Platform Compatibility</h4>
+<h4 id="platform">Platform Compatibility</h4>
 <p>Since the ScratchX GUI is web based, it can be accessed via any computer and operating system with an internet connection and a recent version of Adobe Flash installed. However, in order to interface with hardware, a hardware plugin must be downloaded from:</p>
 <p><a href="https://scratch.mit.edu/info/ext_download/">https://scratch.mit.edu/info/ext_download/</a></p>
 <p>This hardware plugin is NOT available on Linux. The official plugins are currently only available for download on Windows and Mac.</p>
 <hr />
-<h4>Browser Compatibility</h4>
+<h4 id="browser">Browser Compatibility</h4>
 <p>Though the plugin is available on multiple browsers, Mozilla Firefox is recommended as it comes with the least issues, especially when it comes to getting the hardware plugin to be detected. Before starting the extensions, you should disable the cache beforehand as Firefox repeatedly caches versions of the JavaScript files hosted on the site. This can be done by following these steps:</p>
 <ul>
 <li>type in the address bar about:config </li>
@@ -328,7 +328,7 @@ img {
 </ul>
 <p>Alternatively, you can hit (<code>Ctrl + F5</code>) to update the cache with a new version of the page.</p>
 <hr />
-<h4>Setting up your computer</h4>
+<h4 id="setup">Setting up your computer</h4>
 <p>Before starting the setup process, be aware that interfacing with hardware via ScratchX is only possible on Windows and Mac. This is because of there not being a offical Linux Hardware plugin release for ScratchX that allows hardware to be controlled via JavaScript running on the ScratchX site.</p>
 <hr />
 <h6>Adobe Flash Player</h6>
@@ -368,7 +368,7 @@ img {
 <p>Yellow: Plugin is working but no device is detected. Ensure your device connected to the computer.</p>
 <p>Green: No errors detected. Extension is ready.</p>
 <hr />
-<h4>Starting a new extension</h4>
+<h4 id="new_ext">Starting a new extension</h4>
 <p>Here is the template in which you can create and add new blocks:</p>
 <pre><code>(function(ext) {
     // Cleanup function when the extension is unloaded
@@ -393,7 +393,7 @@ img {
 
 <p>The above template will open in ScratchX without error but won't do anything since the array of blocks inside the descriptor is empty. In order to create a block, we need to insert an array into the block array. The elements of the array will vary in format depending on the type of block you wish to create. Here is a break down of how to declare different types of blocks</p>
 <hr />
-<h4>Creating Blocks</h4>
+<h4 id="blocks">Creating Blocks</h4>
 <h6>Block Types</h6>
 <pre><code>var descriptor = {
     blocks: [
@@ -430,7 +430,7 @@ img {
 <p>The default appearance of this block will be a command block that says <code>'Say [hello], [5] times [backwards]'</code></p>
 <p><em>Note: Blocks are rendered in order of their positions as a element, so if you wish to order your blocks in a certain way, simply move the elements inside the blocks array.</em></p>
 <hr />
-<h4>Functions</h4>
+<h4 id="functions">Functions</h4>
 <h6>Declaring Functions</h6>
 <p>Creating functions for an extension is not much different that creating an ordinary function. The main difference is in how they are declared.</p>
 <pre><code>(function(ext) {
@@ -468,7 +468,7 @@ img {
 <p><code>ext._shutdown</code>: This function runs when the extension is closed. Often used to close connections if a device is still plugged in when the extension closes.</p>
 <p><code>ext._getStatus</code>: Required to provide error reporting.</p>
 <hr />
-<h4>Serial Support</h4>
+<h4 id="serial">Serial Support</h4>
 <p>If the examples for serial support on the ScratchX wiki don’t work, here is an example of a barebones serial extension that connects to the first available serial device, printing out data it receives:</p>
 <pre><code>(function(ext) 
 {
@@ -578,7 +578,7 @@ Here is an example of a function that sends the command “@id” to a connected
 
 <p>Use ‘.constructor.name’ on a device object to check that it is indeed a <code>serialDevice</code> object.</p>
 <hr />
-<h4>Pseudo Multi-Threading</h4>
+<h4 id="threads">Pseudo Multi-Threading</h4>
 <p>This is a uncommon issue in JavaScript since JavaScript is not often required to run multiple threads at the same time. In addition, JavaScript is, for the most part, a single-threaded language, so an attempt at using multi-threaded processes should not be undertaken lightly as it can become very complicated and very messy. </p>
 <p>An example of such a situation where it was required would be the Tracey robot. In order to send a read request for the infra-red sensors and then interpret the 2 bytes that were send back, multiple threads were required. This was because the receive handler in the JavaScript code for the device could not be called, and only ever ran on receival of data, however, the event was added to the queue of functions in its scope (i.e. after the function that sent a read request and interpreted the data), meaning data was either not read at all or was old. Multiple threads fixed this issue by having a separate thread that repeatedly sent the read requests, the data of which was then stored in a buffer object which could then be read at any point.</p>
 <p>If you encounter such a situation, the simplest solution could be the use of the JavaScript command setTimout (e.g. <code>setTimeout(function(){ alert(&quot;Hello&quot;); }, 3000);</code>). The setTimeout behaves in a similar way to multiple threads, waiting a specified number of milliseconds before running the code. In addition, setInterval also can be used in multiple threads to have a process continuously running in seperate thread (e.g. <code>setInterval(function(){ alert(&quot;Hello&quot;); }, 3000);</code>). It works in a similar way to setTimeout but differs in that instead of a delay before running, it runs the code on every interval, specified by the number of milliseconds as its second parameter.</p>
@@ -592,13 +592,13 @@ Here is an example of a function that sends the command “@id” to a connected
 </code></pre>
 
 <hr />
-<h4>Additional Tutorials</h4>
+<h4 id="tutorials">Additional Tutorials</h4>
 <p>The ScratchX wiki page is particularly useful for learning how to extend Scratch:</p>
 <p><a href="https://github.com/LLK/scratchx/wiki">https://github.com/LLK/scratchx/wiki</a></p>
 <p>It covers how to create various block types and how to setup the Github page in order to host JavaScript files that can be loaded into ScratchX. It also briefly covers to how to ScratchX supports USB and serial hardware. 
 In addition, examples of other extensions can be found here:</p>
 <p><a href="https://github.com/LLK/scratchx/wiki/Example-Extensions">https://github.com/LLK/scratchx/wiki/Example-Extensions</a></p>
-<h4>More Examples</h4>
+<h4 id="examples">More Examples</h4>
 <ul>
 <li><a href="http://leedsrobotics.github.io/traceycontroller.js">Tracey Controller</a></li>
 <li><a href="http://leedsrobotics.github.io/practiseblocks.js">Practise Blocks</a></li>
