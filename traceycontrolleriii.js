@@ -31,6 +31,7 @@
 	var storedData = { 
 		buffer: [0], // Contains all incoming data
 		latestElement: 0, // Pointer to te latest element
+		pinA2: [0, 0], // Array to contain latest pinA1 data
 		pinA1: [0, 0], // Array to contain latest pinA1 data
 		pinA0: [0, 0], // Array to contain latest pinA0 data
 		
@@ -82,9 +83,13 @@
 			{
 				this.pinA0 = data;
 			}
-			else
+			else if(pin == 1)
 			{
 				this.pinA1 = data;
+			}
+			else if(pin == 2)
+			{
+				this.pinA2 = data;
 			}
 		}
 
@@ -142,7 +147,14 @@
         		if(dataView.length == 2)
         		{
         			dataReceived = true;
-        			storedData.writePin(currentPinRequest % 2, dataView);
+        			if(infraStream == true)
+        			{
+        				storedData.writePin(currentPinRequest % 2, dataView);
+        			}
+        			else if(proximStream == true)
+        			{
+        				storedData.writePin(2, dataView);
+        			}
         		}
         	});
         	
@@ -173,7 +185,7 @@
   	 * Processes the high and low data received from a specified pin, turning it into 
   	 * a analog value
   	 */
-  	function processPinData(pin)
+  	function processPinColourData(pin)
   	{
   		var pinData = null;
   		
@@ -211,13 +223,40 @@
   	/**
   	 * Processes data from a specified pin, returning its current colour
   	 */
-  	ext.pinStatus = function(pin)
+  	ext.pinColour = function(pin)
   	{
-  		var pinColour = processPinData(pin);
+  		var pinColour = processPinColourData(pin);
   		
   		return pinColour; 
   	}
+  	
+  	
+  	/**
+  	 * Processes the high and low data received from a specified pin, turning it into 
+  	 * a analog value
+  	 */
+  	function processPinProximData(pin)
+  	{
+  		var pinData = null;
+  		
+  		// Reads the specified pin data from buffer
+  		pinData = storedData.pinA2;
+  		
+  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
+  	
+  		
+  		return analogVal;
+  		
+  	}
 
+
+	ext.pinProxim = function()
+  	{
+  		var pinProxim = processPinProximData(pin);
+  		
+  		return pinProxim; 
+  	}
+  	
 	
 	/**
   	 * Declares whether a serial device is connected, printing out the port its connected through if it is and
@@ -626,7 +665,8 @@
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
-			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
+			  ['r', 'Get current colour of pin %s', 'pinColour', 'A0'],
+			  ['r', 'Get proximity', 'pinProxim'],
 			  ['', 'Enable Infrared/Disable Proximity', 'enableInfraDisableProxim'],
 			  ['', 'Disable Infrared/Enable Proximity', 'disableInfraEnableProxim'],
 			  ['', 'Enable Pin Stream', 'enablePinStream'],
