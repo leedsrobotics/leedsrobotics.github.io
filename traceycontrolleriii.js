@@ -638,6 +638,7 @@
 			{
 				sendPinCommand(2);
 				++currentPinRequest;
+				console.log("HIIII");
 			}
 		}
 	}, 120), 1000);
