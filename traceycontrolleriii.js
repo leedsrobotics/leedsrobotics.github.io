@@ -433,7 +433,7 @@
   	/**
   	 * Sends a custom command with custom parameters
   	 */
-  	ext.sendCustomCommand = function(command, param)
+  	ext.sendCustomCommand = function(command, params)
   	{
   		console.log("Starting ...");
   		var seper_params = params.split(" ");
