@@ -22,6 +22,8 @@
 	var deviceState = 'No data received'; // The current state of the device
 	var pollers = [0, 0]; // Poller values for checking the devices data receival
 	var pinStream = true; // Flag to enable/disable the constant pin requests
+	var infraStream = true;
+	var proximStream = false;
 	
 	/**
 	 * A Cyclic buffer to contain received data
@@ -415,6 +417,26 @@
   	/**
   	 * Disables the stream of data between the pins and extension
   	 */
+  	ext.disableInfraEnableProxim = function()
+  	{
+	  	infraStream = false;
+	  	proximStream = true;
+  	}
+  	
+  	
+  	/**
+  	 * Enables the stream of data between the pins and extension
+  	 */
+  	ext.enableInfraDisableProxim = function()
+  	{
+	  	infraStream = true;
+	  	proximStream = false;
+  	}
+  	
+  	
+  	/**
+  	 * Disables the stream of data between the pins and extension
+  	 */
   	ext.disablePinStream = function()
   	{
 	  	pinStream = false;
@@ -428,6 +450,7 @@
   	{
 	  	pinStream = true;
   	}
+  	
   	
   	
   	/**
@@ -567,8 +590,15 @@
 	setTimeout(setInterval(function(){
 		if(device && pinStream)
 		{
-			sendPinCommand(currentPinRequest % 2);
-			++currentPinRequest;
+			if(infraStream == true)
+			{
+				sendPinCommand(currentPinRequest % 2);
+				++currentPinRequest;
+			}
+			else if(proximStream == true)
+			{
+				sendPinCommand(currentPinRequest % 2);
+			}
 		}
 	}, 120), 1000);
 
@@ -596,6 +626,8 @@
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
+			  ['', 'Enable Infrared/Disable Proximity', 'enableInfraDisableProxim'],
+			  ['', 'Disable Infrared/Enable Proximity', 'disableInfraEnableProxim'],
 			  ['', 'Enable Pin Stream', 'enablePinStream'],
 			  ['', 'Disable Pin Stream', 'disablePinStream'],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand', '', ''],
