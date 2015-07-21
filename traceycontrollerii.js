@@ -343,7 +343,6 @@
   				state =  'backwards';
   			}
   			
-  			console.log(view);
   			// Prevents repeated commands
   			if(view != previousCommand)
   			{
@@ -433,9 +432,8 @@
   	/**
   	 * Sends a custom command with custom parameters
   	 */
-  	ext.sendCustomCommand = function(command, params)
+  	ext.sendCustomCommand = function(command, params, typeOfParam)
   	{
-  		console.log("Starting ...");
   		var seper_params = params.split(" ");
   		var view = new Uint8Array(command.length + seper_params.length);
   		
@@ -444,14 +442,12 @@
   			view[x] = command.charCodeAt(x);
   		}
   		
-  		console.log("Command created");
   		// Checks parameters, converting the negative values
   		for(var y = 0; y < seper_params.length; y++)
   		{
-  			seper_params[y] = parseInt(seper_params[y]);
   			if(seper_params[y] < 0)
   			{
-  				view[y + command.length] = 0x80|seper_params[y];
+  				view[y + command.length] = 0x80|parseInt(seper_params[y]) * -1;
   			}
   			else
   			{
@@ -459,7 +455,6 @@
   			}
   		}
   		
-  		console.log(view);
   		// Prevents repeated commands
   		if(view != previousCommand)
   		{
@@ -598,7 +593,7 @@
 			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
 			  ['', 'Enable Pin Stream', 'enablePinStream'],
 			  ['', 'Disable Pin Stream', 'disablePinStream'],
-			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand', '', ''],
+			  ['', 'Send Command %s with parameters %n', 'sendCustomCommand', '', ''],
 			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
 			  ['r', 'Convert To Char Code %s', 'convertToCharCode', ''],
 			  ['r', 'Convert From Char Code %n', 'convertFromCharCode', ''],
