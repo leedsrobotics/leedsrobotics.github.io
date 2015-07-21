@@ -343,6 +343,7 @@
   				state =  'backwards';
   			}
   			
+  			console.log(view.buffer);
   			// Prevents repeated commands
   			if(view != previousCommand)
   			{
@@ -456,6 +457,7 @@
   			}
   		}
   		
+  		console.log(view.buffer);
   		// Prevents repeated commands
   		if(view != previousCommand)
   		{
