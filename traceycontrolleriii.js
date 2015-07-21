@@ -343,7 +343,7 @@
   				state =  'backwards';
   			}
   			
-  			console.log(view.buffer);
+  			console.log(view);
   			// Prevents repeated commands
   			if(view != previousCommand)
   			{
@@ -435,6 +435,7 @@
   	 */
   	ext.sendCustomCommand = function(command, param)
   	{
+  		console.log("Starting ...");
   		var seper_params = params.split(" ");
   		var view = new Uint8Array(command.length + seper_params.length);
   		
@@ -443,13 +444,14 @@
   			view[x] = command.charCodeAt(x);
   		}
   		
+  		console.log("Command created");
   		// Checks parameters, converting the negative values
   		for(var y = 0; y < seper_params.length; y++)
   		{
   			seper_params[y] = parseInt(seper_params[y]);
   			if(seper_params[y] < 0)
   			{
-  				view[y + command.length] = 0x80|parseInt(seper_params[y]) * -1;
+  				view[y + command.length] = 0x80|seper_params[y];
   			}
   			else
   			{
@@ -457,7 +459,7 @@
   			}
   		}
   		
-  		console.log(view.buffer);
+  		console.log(view);
   		// Prevents repeated commands
   		if(view != previousCommand)
   		{
