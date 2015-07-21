@@ -254,7 +254,7 @@
   	{
   		var pinProxim = processPinProximData(pin);
   		
-  		return pinProxim; 
+  		return pinProxim / 2.048 / 100; 
   	}
   	
 	
