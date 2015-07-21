@@ -597,7 +597,8 @@
 			}
 			else if(proximStream == true)
 			{
-				sendPinCommand(currentPinRequest % 2);
+				sendPinCommand(2);
+				++currentPinRequest;
 			}
 		}
 	}, 120), 1000);
