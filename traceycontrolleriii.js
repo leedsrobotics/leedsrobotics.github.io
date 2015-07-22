@@ -161,7 +161,6 @@
         			{
         				if(proximStream == true)
         				{
-        					console.log('Entered');
         					storedData.writePin(2, dataView);
         				}
         			}
@@ -251,12 +250,10 @@
   		
   		// Reads the specified pin data from buffer
   		pinData = storedData.pinA2;
-  		console.log(pinData);
   		
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
-  	
   		
-  		return analogVal;
+  		return Math.round( (Math.E ** ((analogVal - 5.4734) / -1.041)) * 100) / 100;
   		
   	}
 
