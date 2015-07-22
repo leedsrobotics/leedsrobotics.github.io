@@ -256,7 +256,7 @@
   		analogVal = analogVal / 2.048 / 100;
   		if(analogVal < 3.3)
   		{
-  			var exponent = (analogVal - 5.4734) / -1.041);
+  			var exponent = (analogVal - 5.4734) / -1.041;
   			//console.log(Math.E);
   			return Math.pow(Math.E, exponent);
   		}
