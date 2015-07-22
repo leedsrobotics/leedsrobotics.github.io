@@ -235,7 +235,7 @@
   	 * Processes the high and low data received from a specified pin, turning it into 
   	 * a analog value
   	 */
-  	function processPinProximData(pin)
+  	function processPinProximData()
   	{
   		var pinData = null;
   		
@@ -253,8 +253,8 @@
 
 	ext.pinProxim = function()
   	{
-  		console.log('pinProxim');
-  		var pinProxim = processPinProximData(pin);
+  		//console.log('pinProxim');
+  		var pinProxim = processPinProximData();
   		return pinProxim / 2.048 / 100; 
   	}
   	
