@@ -241,6 +241,7 @@
   		
   		// Reads the specified pin data from buffer
   		pinData = storedData.pinA2;
+  		console.log(pinData);
   		
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
   	
@@ -253,7 +254,7 @@
 	ext.pinProxim = function()
   	{
   		var pinProxim = processPinProximData(pin);
-  		
+  		console.log(pinProxim);
   		return pinProxim / 2.048 / 100; 
   	}
   	
@@ -638,7 +639,6 @@
 			{
 				sendPinCommand(2);
 				++currentPinRequest;
-				console.log("HIIII");
 			}
 		}
 	}, 120), 1000);
