@@ -153,7 +153,7 @@
         		if(dataView.length == 2)
         		{
         			dataReceived = true;
-        			if(infraStream == true)cons
+        			if(infraStream == true)
         			{
         				storedData.writePin(currentPinRequest % 2, dataView);
         			}
