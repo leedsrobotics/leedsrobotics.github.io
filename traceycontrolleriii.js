@@ -628,6 +628,11 @@
   		return num1 >>> num2;
   	}
   	
+  	ext.callForward = function()
+  	{
+  		ext.goForwardsOrBackwards('forwards', 50);
+  	}
+  	
 	
 	/**
 	 * Processes that run on extension shutdown
@@ -691,6 +696,7 @@
 			  ['r', 'Left Shift: %n << %n', 'leftShift', 0, 0],
 			  ['r', 'Sign-propagating right shift: %n >> %n', 'rightShift', 0, 0],
 			  ['r', 'Zero-fill right shift: %n >>> %n', 'zeroFillRightShift', 0, 0],
+			  ['', 'Go Forward Now', 'callForward'],
 			  
 			],
 		menus:  {
