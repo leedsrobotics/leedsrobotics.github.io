@@ -253,7 +253,7 @@
   		
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
   		
-  		return (Math.pow(Math.E, ( (analogVal - 5.4734) / -1.041) ) );
+  		return (Math.round(Math.pow(Math.E, ( (analogVal - 5.4734) / -1.041) ) ) );
   		//return analogVal;
   		
   	}
