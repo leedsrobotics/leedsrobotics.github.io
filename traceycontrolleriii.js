@@ -272,7 +272,7 @@
   	{
   		//console.log('pinProxim');
   		var pinProxim = processPinProximData();
-  		return pinProxim; 
+  		return Math.round(pinProxim); 
   	}
   	
 	
@@ -470,23 +470,19 @@
   	}
   	
   	
-  	/**
-  	 * Disables the stream of data between the pins and extension
-  	 */
-  	ext.disableInfraEnableProxim = function()
-  	{
-	  	infraStream = false;
-	  	proximStream = true;
-  	}
   	
-  	
-  	/**
-  	 * Enables the stream of data between the pins and extension
-  	 */
-  	ext.enableInfraDisableProxim = function()
+  	ext.changeSensorStream = function(sensor)
   	{
-	  	infraStream = true;
-	  	proximStream = false;
+  		if(sensor == 'Infrared')
+  		{
+  			infraStream = true;
+	  		proximStream = false;
+  		}
+  		else if(sensor == 'Proximity')
+  		{
+  			infraStream = false;
+	  		proximStream = true;
+  		}
   	}
   	
   	
@@ -680,11 +676,10 @@
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
 			  ['r', 'Get current colour of pin %s', 'pinColour', 'A0'],
-			  ['r', 'Get proximity', 'pinProxim'],
-			  ['', 'Enable Infrared/Disable Proximity', 'enableInfraDisableProxim'],
-			  ['', 'Disable Infrared/Enable Proximity', 'disableInfraEnableProxim'],
-			  ['', 'Enable Pin Stream', 'enablePinStream'],
-			  ['', 'Disable Pin Stream', 'disablePinStream'],
+			  ['r', 'Get proximity (cm)', 'pinProxim'],
+			  ['', 'Change Sensor stream to %m.sensors', 'changeSensorStream', 'Infrared'],
+			  ['', 'Enable Sensor Stream', 'enablePinStream'],
+			  ['', 'Disable Sensor Stream', 'disablePinStream'],
 			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand', '', ''],
 			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
 			  ['r', 'Convert To Char Code %s', 'convertToCharCode', ''],
@@ -701,6 +696,7 @@
 		menus:  {
 				directions1: ['forwards', 'backwards'],
 				directions2: ['left', 'right'],
+				sensors: ['Infrared', 'Proximity'],
 		        },
 		url: 'http://leedsrobotics.github.io/'
 	};
