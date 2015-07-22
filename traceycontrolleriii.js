@@ -253,8 +253,8 @@
 
 	ext.pinProxim = function()
   	{
+  		console.log('pinProxim');
   		var pinProxim = processPinProximData(pin);
-  		console.log(pinProxim);
   		return pinProxim / 2.048 / 100; 
   	}
   	
