@@ -253,8 +253,17 @@
   		
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
   		
-  		return Math.pow(Math.E, ( (analogVal - 5.4734) / -1.041) );
-  		//return analogVal;
+  		analogVal = analogVal / 2.048 / 100
+  		if(analogVal < 3.3)
+  		{
+  			var exponent = (analogVal - 5.4734) / -1.041);
+  			//console.log(Math.E);
+  			return Math.pow(Math.E, exponent);
+  		}
+  		else
+  		{
+  			return 0;
+  		}
   		
   	}
 
@@ -263,7 +272,7 @@
   	{
   		//console.log('pinProxim');
   		var pinProxim = processPinProximData();
-  		return pinProxim / 2.048 / 100; 
+  		return pinProxim; 
   	}
   	
 	
