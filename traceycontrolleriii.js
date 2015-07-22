@@ -83,15 +83,20 @@
 			{
 				this.pinA0 = data;
 			}
-			else if(pin == 1)
+			else 
 			{
-				this.pinA1 = data;
+				if(pin == 1)
+				{
+					this.pinA1 = data;
+				}
+				else 
+				{
+					if(pin == 2)
+					{
+						this.pinA2 = data;
+					}
+				}
 			}
-			else if(pin == 2)
-			{
-				this.pinA2 = data;
-			}
-		}
 
 	}
 	
@@ -151,10 +156,13 @@
         			{
         				storedData.writePin(currentPinRequest % 2, dataView);
         			}
-        			else if(proximStream == true)
+        			else 
         			{
-        				console.log('Entered');
-        				storedData.writePin(2, dataView);
+        				if(proximStream == true)
+        				{
+        					console.log('Entered');
+        					storedData.writePin(2, dataView);
+        				}
         			}
         		}
         	});
