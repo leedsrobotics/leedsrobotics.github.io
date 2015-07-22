@@ -253,7 +253,7 @@
   		
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
   		
-  		analogVal = analogVal / 2.048 / 100
+  		analogVal = analogVal / 2.048 / 100;
   		if(analogVal < 3.3)
   		{
   			var exponent = (analogVal - 5.4734) / -1.041);
