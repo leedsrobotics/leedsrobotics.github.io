@@ -31,7 +31,7 @@
 	var storedData = { 
 		buffer: [0], // Contains all incoming data
 		latestElement: 0, // Pointer to te latest element
-		pinA2: [0, 0], // Array to contain latest pinA1 data
+		pinA2: [0, 0], // Array to contain latest pinA2 data
 		pinA1: [0, 0], // Array to contain latest pinA1 data
 		pinA0: [0, 0], // Array to contain latest pinA0 data
 		
@@ -147,12 +147,13 @@
         		if(dataView.length == 2)
         		{
         			dataReceived = true;
-        			if(infraStream == true)
+        			if(infraStream == true)cons
         			{
         				storedData.writePin(currentPinRequest % 2, dataView);
         			}
         			else if(proximStream == true)
         			{
+        				console.log('Entered');
         				storedData.writePin(2, dataView);
         			}
         		}
@@ -385,7 +386,6 @@
   				state =  'backwards';
   			}
   			
-  			console.log(view);
   			// Prevents repeated commands
   			if(view != previousCommand)
   			{
@@ -498,7 +498,6 @@
   	 */
   	ext.sendCustomCommand = function(command, params)
   	{
-  		console.log("Starting ...");
   		var seper_params = params.split(" ");
   		var view = new Uint8Array(command.length + seper_params.length);
   		
@@ -507,7 +506,6 @@
   			view[x] = command.charCodeAt(x);
   		}
   		
-  		console.log("Command created");
   		// Checks parameters, converting the negative values
   		for(var y = 0; y < seper_params.length; y++)
   		{
@@ -522,7 +520,6 @@
   			}
   		}
   		
-  		console.log(view);
   		// Prevents repeated commands
   		if(view != previousCommand)
   		{
