@@ -22,8 +22,8 @@
 	var deviceState = 'No data received'; // The current state of the device
 	var pollers = [0, 0]; // Poller values for checking the devices data receival
 	var pinStream = true; // Flag to enable/disable the constant pin requests
-	var infraStream = true;
-	var proximStream = false;
+	var infraStream = true; // Flag to enable/disable the requests for the infrared values
+	var proximStream = false; // Flag to enable/disable the requests for the proximity values
 	
 	/**
 	 * A Cyclic buffer to contain received data
@@ -150,6 +150,9 @@
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
+        		
+        		// If data received is in the format of a analog value, store in 
+        		// corresponding buffer attribute
         		if(dataView.length == 2)
         		{
         			dataReceived = true;
@@ -192,7 +195,7 @@
   	
   	/**
   	 * Processes the high and low data received from a specified pin, turning it into 
-  	 * a analog value
+  	 * a analog value and translating the value into a corresponding colour
   	 */
   	function processPinColourData(pin)
   	{
@@ -242,7 +245,7 @@
   	
   	/**
   	 * Processes the high and low data received from a specified pin, turning it into 
-  	 * a analog value
+  	 * a analog value and translating the value into a distance in cm
   	 */
   	function processPinProximData()
   	{
@@ -253,7 +256,10 @@
   		
   		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
   		
+  		// Convert analog value into the number of volts (2.048 = 0.01V)
   		analogVal = analogVal / 2.048 / 100;
+  		
+  		// If analog value is valid, calculate corresponding distance else return 0
   		if(analogVal < 3.3)
   		{
   			var exponent = (analogVal - 5.4734) / -1.041;
@@ -267,7 +273,9 @@
   		
   	}
 
-
+	/**
+	 * Processes data from the proximity sensor, returning a distance in cm
+	 */
 	ext.pinProxim = function()
   	{
   		//console.log('pinProxim');
@@ -470,7 +478,9 @@
   	}
   	
   	
-  	
+  	/**
+  	 * Changes the constant pin stream to request a specified type of sensor's data
+  	 */
   	ext.changeSensorStream = function(sensor)
   	{
   		if(sensor == 'Infrared')
@@ -554,6 +564,9 @@
   		return storedData.buffer[index];
   	}
   	
+  	/**
+  	 *Converts a character to a char code
+  	 */
   	ext.convertToCharCode = function(char)
   	{
   		if(char.length != 1)
@@ -566,6 +579,9 @@
   		}
   	}
   	
+  	/**
+  	 *Converts a char code to a character
+  	 */
   	ext.convertFromCharCode = function(num)
   	{
   		return String.fromCharCode(num);
@@ -640,7 +656,7 @@
 	ext._shutdown = function(){};
 
 
-	// Creates new thread, repeated polling the pins A0 and A1 for values
+	// Creates pseudo new thread, repeatedly requesting values from a specified sensor
 	setTimeout(setInterval(function(){
 		if(device && pinStream)
 		{
