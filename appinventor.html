@@ -28,7 +28,7 @@ body {
   color: #333;
   background-color: #fff;
   padding: 20px;
-  max-width: 960px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -293,6 +293,7 @@ img {
 </head>
 <body>
 <h2>AppInventor Tracey's App Documentation</h2>
+<a href="http://leedsrobotics.github.io">&#8656;  Homepage</a>
 <h3>Joystick</h3>
 <p><img src="https://cloud.githubusercontent.com/assets/12812066/8848732/a0b46fec-3131-11e5-994a-8fa25c6924bf.png" /></p>
 <p>The joystick works in by separating the joystick area into 5 separate areas to represent the states forward, backwards, left, right and stationary. If the user moves the ball into one of the areas, Tracey will begin to move in the corresponding direction, using the X/Y positions to calculate the speed.</p>
@@ -302,6 +303,7 @@ img {
 <p>The left area is defined as a 90° triangle with the vertices being defined in the center of the screen and the 2 corners to the left of the joystick area. If the ball is within this area, the app takes the users absolute position on X and sends it as a motor command to both motors, adding 128 to the left motor to invert the speed, turning Tracey left on the spot.</p>
 <p>The final area is the stationary area, which is defined as a small square in the center of the screen. Speeds within this area do not move Tracey (0 - 5). On the event of ball being touched, the ball returns to the center of the screen. Although counter-intuitive, the ball touched event occurs when the user lets go of the ball, so the event resets the ball to the center of the screen, sending the a motor command of @m00, stopping the motors.</p>
 <p>It should also be noted that the default coordinates for the canvas had point (0,0) located in the top left corner, so the coordinate values had to be manipulated slightly in order for them to be easier to handle, in this case, the coordinates values being handled has point (0,0) positioned in the center of the joystick area.</p>
+<hr />
 <h3>Custom Path Drawer</h3>
 <p><img src="https://cloud.githubusercontent.com/assets/12812066/8848751/bef718ec-3131-11e5-8f63-5fc7b93fd71b.png" /></p>
 <p>The custom path drawer begins by accepting a line drawn by a user. As the user draws the path, the canvas dragged event activates, supplying the coordinates of each point being drawn on the screen which are then stored in 2 separate lists, one for the X positions and one for the Y positions with each pair of X and Y values having the same element in their respective lists. The Y values are modified slightly to move the position of point (0,0) from the top left of the screen to the bottom left in order to make the numbers easier to handle. The very first coordinate does not trigger the dragged event and so is not stored in the list, so a short straight line may appear at the beginning of the path but this will not be mimicked by Tracey.</p>
@@ -315,4 +317,3 @@ img {
 </body>
 </html>
 <!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
-
