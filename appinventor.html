@@ -1,1 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AppInventor Tracey's App Documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<base href='file:\\\C:\Users\kevin\Documents\'/>
+</head>
+<body>
+<h2>AppInventor Tracey's App Documentation</h2>
+<h3>Joystick</h3>
+<p><img src="https://cloud.githubusercontent.com/assets/12812066/8848732/a0b46fec-3131-11e5-994a-8fa25c6924bf.png" /></p>
+<p>The joystick works in by separating the joystick area into 5 separate areas to represent the states forward, backwards, left, right and stationary. If the user moves the ball into one of the areas, Tracey will begin to move in the corresponding direction, using the X/Y positions to calculate the speed.</p>
+<p>The forwards area is defined as a 90° triangle with the vertices being defined in the center of the screen and the top 2 corners of the joystick area. If the ball is within this area, the app takes the users absolute position on Y and sends it as a motor command to both motors.</p>
+<p>The backwards area is defined as a 90° triangle with the vertices being defined in the center of the screen and the bottom 2 corners of the joystick area. If the ball is within this area, the app takes the users absolute position on Y and sends it as a motor command to both motors, adding 128 to invert the speed.</p>
+<p>The right area is defined as a 90° triangle with the vertices being defined in the center of the screen and the 2 corners to the right of the joystick area. If the ball is within this area, the app takes the users absolute position on X and sends it as a motor command to both motors, adding 128 to the right motor to invert the speed, turning Tracey right on the spot.</p>
+<p>The left area is defined as a 90° triangle with the vertices being defined in the center of the screen and the 2 corners to the left of the joystick area. If the ball is within this area, the app takes the users absolute position on X and sends it as a motor command to both motors, adding 128 to the left motor to invert the speed, turning Tracey left on the spot.</p>
+<p>The final area is the stationary area, which is defined as a small square in the center of the screen. Speeds within this area do not move Tracey (0 - 5). On the event of ball being touched, the ball returns to the center of the screen. Although counter-intuitive, the ball touched event occurs when the user lets go of the ball, so the event resets the ball to the center of the screen, sending the a motor command of @m00, stopping the motors.</p>
+<p>It should also be noted that the default coordinates for the canvas had point (0,0) located in the top left corner, so the coordinate values had to be manipulated slightly in order for them to be easier to handle, in this case, the coordinates values being handled has point (0,0) positioned in the center of the joystick area.</p>
+<h3>Custom Path Drawer</h3>
+<p><img src="https://cloud.githubusercontent.com/assets/12812066/8848751/bef718ec-3131-11e5-8f63-5fc7b93fd71b.png" /></p>
+<p>The custom path drawer begins by accepting a line drawn by a user. As the user draws the path, the canvas dragged event activates, supplying the coordinates of each point being drawn on the screen which are then stored in 2 separate lists, one for the X positions and one for the Y positions with each pair of X and Y values having the same element in their respective lists. The Y values are modified slightly to move the position of point (0,0) from the top left of the screen to the bottom left in order to make the numbers easier to handle. The very first coordinate does not trigger the dragged event and so is not stored in the list, so a short straight line may appear at the beginning of the path but this will not be mimicked by Tracey.</p>
+<p>The user can then hit the 'Go!' button and the app will begin to calculate the the drive and rotation durations as well as the rotation directions. </p>
+<p>It calculates the drive durations by simply using the Pythagorean theorem to calculate the distance between each of the points, converting the number of pixels into a drive duration in ms. The convertion rate used was 1000ms for every 15px.</p>
+<p>It then calculates the rotation durations using Trigonometry, taking into to account any previous angles so that any new rotations will remain relative to its current position. For example, a turn that goes from 45° to 50° will be calculated as a 45° turn followed by a 5° turn. Angles over 90° are calculated slightly differently by adding 90 onto an angle that is inverted. The inversion was needed since using Trigonometry on angles over 90° twitched their positions relative to 90° and 180° (e.g. a 91° turn was calculated as 179° and a 101° turn was calculated as 169°). The inversion simply flips the numbers around 135°. One issue with the way this was calculated was that 180° turns got converted to 90°. This was resolved by an if statement that checked the X coordinates were equal between 2 points if it was stated as a 90° turn, setting it 180° if they weren't. Finally, the angles were converted in a duration of rotation at a rate of 1000ms for every 44.29° of rotation.</p>
+<p>It then moves on to calculate the directions in which the angles of rotation should occur. It does this by using the cross product formula to determine whether the next coordinate is to the left or the right of a imaginary line drawn from the previous 2 points, which is then used to determine way the rotation should then occur.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/12812066/8851435/5af81650-3147-11e5-955f-a2be5647eaf4.png" /></p>
+<p>If everything has worked as expected, all 3 lists should be of the same length and the Tracey will then begin to mimic the drawn path. The app switches back and forth between 2 states, a drive state and a rotation state. It starts at the rotation state, sending a motor command to rotate Tracey in the direction listed specified in the corresponding element inside the rotation direction list (the first rotation of which should orientate Tracey to the direction in which the first pairs of coordinates point). After the motor command is sent, the app waits for the amount of time specified in the corresponding element of the rotation duration list. Once the time is up, the app sends a motor command to drive forward, and after the amount of time specified in the corresponding element in the drive durations list, the function iterates, starting the next rotation in the lists. It does this until every element has been read and used, at which time the app sends a stop command and resets the canvas and all variables used, ready for another path to be drawn.</p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
 
