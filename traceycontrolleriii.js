@@ -278,6 +278,7 @@
   	{
   		//console.log('pinProxim');
   		var pinProxim = processPinProximData();
+  		console.log(pinProxim);
   		return Math.round(pinProxim); 
   	}
   	
