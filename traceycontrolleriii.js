@@ -262,7 +262,7 @@
   		// If analog value is valid, calculate corresponding distance else return 0
   		if(analogVal < 3.5)
   		{
-  			return (analogVal / 15.556) ** (1/-0.832);
+  			return Math.pow((analogVal / 15.556), (1/-0.832));
   		}
   		else
   		{
