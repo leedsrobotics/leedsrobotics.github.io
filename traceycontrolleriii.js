@@ -261,7 +261,7 @@
   		
   		console.log(analogVal);
   		// If analog value is valid, calculate corresponding distance else return 0
-  		if(analogVal < 3.5)
+  		if(analogVal < 3.5 && analogVal > 0)
   		{
   			return Math.pow((analogVal / 15.556), (1/-0.832));
   		}
@@ -279,7 +279,6 @@
   	{
   		//console.log('pinProxim');
   		var pinProxim = processPinProximData();
-  		console.log(pinProxim);
   		return Math.round(pinProxim); 
   	}
   	
