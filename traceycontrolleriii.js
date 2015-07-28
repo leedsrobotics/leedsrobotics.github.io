@@ -260,11 +260,9 @@
   		analogVal = analogVal / 2.048 / 100;
   		
   		// If analog value is valid, calculate corresponding distance else return 0
-  		if(analogVal < 3.3)
+  		if(analogVal < 3.5)
   		{
-  			var exponent = (analogVal - 5.4734) / -1.041;
-  			//console.log(Math.E);
-  			return Math.pow(Math.E, exponent);
+  			return (analogVal / 15.556) ** (1/-0.832);
   		}
   		else
   		{
