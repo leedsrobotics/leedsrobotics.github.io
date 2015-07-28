@@ -22,8 +22,8 @@
 	var deviceState = 'No data received'; // The current state of the device
 	var pollers = [0, 0]; // Poller values for checking the devices data receival
 	var pinStream = true; // Flag to enable/disable the constant pin requests
-	var infraStream = true; // Flag to enable/disable the requests for the infrared values
-	var proximStream = false; // Flag to enable/disable the requests for the proximity values
+	var infraStream = false; // Flag to enable/disable the requests for the infrared values
+	var proximStream = true; // Flag to enable/disable the requests for the proximity values
 	
 	/**
 	 * A Cyclic buffer to contain received data
