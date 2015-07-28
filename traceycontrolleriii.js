@@ -259,6 +259,7 @@
   		// Convert analog value into the number of volts (2.048 = 0.01V)
   		analogVal = analogVal / 2.048 / 100;
   		
+  		console.log(analogVal);
   		// If analog value is valid, calculate corresponding distance else return 0
   		if(analogVal < 3.5)
   		{
