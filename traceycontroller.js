@@ -22,6 +22,8 @@
 	var deviceState = 'No data received'; // The current state of the device
 	var pollers = [0, 0]; // Poller values for checking the devices data receival
 	var pinStream = true; // Flag to enable/disable the constant pin requests
+	var infraStream = false; // Flag to enable/disable the requests for the infrared values
+	var proximStream = true; // Flag to enable/disable the requests for the proximity values
 	
 	/**
 	 * A Cyclic buffer to contain received data
@@ -29,6 +31,7 @@
 	var storedData = { 
 		buffer: [0], // Contains all incoming data
 		latestElement: 0, // Pointer to te latest element
+		pinA2: [0, 0], // Array to contain latest pinA2 data
 		pinA1: [0, 0], // Array to contain latest pinA1 data
 		pinA0: [0, 0], // Array to contain latest pinA0 data
 		
@@ -80,12 +83,22 @@
 			{
 				this.pinA0 = data;
 			}
-			else
+			else 
 			{
-				this.pinA1 = data;
+				if(pin == 1)
+				{
+					this.pinA1 = data;
+				}
+				else 
+				{
+					if(pin == 2)
+					{
+						this.pinA2 = data;
+					}
+				}
 			}
-		}
 
+		}
 	}
 	
 	
@@ -137,10 +150,23 @@
         	device.set_receive_handler(function(data) {
         		dataView = new Uint8Array(data);
         		storedData.write(dataView);
+        		
+        		// If data received is in the format of a analog value, store in 
+        		// corresponding buffer attribute
         		if(dataView.length == 2)
         		{
         			dataReceived = true;
-        			storedData.writePin(currentPinRequest % 2, dataView);
+        			if(infraStream == true)
+        			{
+        				storedData.writePin(currentPinRequest % 2, dataView);
+        			}
+        			else 
+        			{
+        				if(proximStream == true)
+        				{
+        					storedData.writePin(2, dataView);
+        				}
+        			}
         		}
         	});
         	
@@ -169,9 +195,9 @@
   	
   	/**
   	 * Processes the high and low data received from a specified pin, turning it into 
-  	 * a analog value
+  	 * a analog value and translating the value into a corresponding colour
   	 */
-  	function processPinData(pin)
+  	function processPinColourData(pin)
   	{
   		var pinData = null;
   		
@@ -209,13 +235,53 @@
   	/**
   	 * Processes data from a specified pin, returning its current colour
   	 */
-  	ext.pinStatus = function(pin)
+  	ext.pinColour = function(pin)
   	{
-  		var pinColour = processPinData(pin);
+  		var pinColour = processPinColourData(pin);
   		
   		return pinColour; 
   	}
+  	
+  	
+  	/**
+  	 * Processes the high and low data received from a specified pin, turning it into 
+  	 * a analog value and translating the value into a distance in cm
+  	 */
+  	function processPinProximData()
+  	{
+  		var pinData = null;
+  		
+  		// Reads the specified pin data from buffer
+  		pinData = storedData.pinA2;
+  		
+  		var analogVal = ((pinData[0] & 0xFF) << 8) | (pinData[1] & 0xFF); // Combines high and low bytes
+  		
+  		// Convert analog value into the number of volts (2.048 = 0.01V)
+  		analogVal = analogVal / 2.048 / 100;
+  		
+  		console.log(analogVal);
+  		// If analog value is valid, calculate corresponding distance else return 0
+  		if(analogVal < 3.5 && analogVal > 0)
+  		{
+  			return Math.pow((analogVal / 15.556), (1/-0.832));
+  		}
+  		else
+  		{
+  			return 0;
+  		}
+  		
+  	}
 
+	/**
+	 * Processes data from the proximity sensor, returning a distance in cm
+	 */
+	ext.pinProxim = function()
+  	{
+  		//console.log('pinProxim');
+  		var pinProxim = processPinProximData();
+  		return Math.round(pinProxim); 
+  	}
+  	
 	
 	/**
   	 * Declares whether a serial device is connected, printing out the port its connected through if it is and
@@ -412,6 +478,24 @@
   	
   	
   	/**
+  	 * Changes the constant pin stream to request a specified type of sensor's data
+  	 */
+  	ext.changeSensorStream = function(sensor)
+  	{
+  		if(sensor == 'Infrared')
+  		{
+  			infraStream = true;
+	  		proximStream = false;
+  		}
+  		else if(sensor == 'Proximity')
+  		{
+  			infraStream = false;
+	  		proximStream = true;
+  		}
+  	}
+  	
+  	
+  	/**
   	 * Disables the stream of data between the pins and extension
   	 */
   	ext.disablePinStream = function()
@@ -429,10 +513,11 @@
   	}
   	
   	
+  	
   	/**
   	 * Sends a custom command with custom parameters
   	 */
-  	ext.sendCustomCommand = function(command, params, typeOfParam)
+  	ext.sendCustomCommand = function(command, params)
   	{
   		var seper_params = params.split(" ");
   		var view = new Uint8Array(command.length + seper_params.length);
@@ -445,9 +530,10 @@
   		// Checks parameters, converting the negative values
   		for(var y = 0; y < seper_params.length; y++)
   		{
+  			seper_params[y] = parseInt(seper_params[y]);
   			if(seper_params[y] < 0)
   			{
-  				view[y + command.length] = 0x80|parseInt(seper_params[y]) * -1;
+  				view[y + command.length] = 0x80|seper_params[y];
   			}
   			else
   			{
@@ -477,6 +563,9 @@
   		return storedData.buffer[index];
   	}
   	
+  	/**
+  	 *Converts a character to a char code
+  	 */
   	ext.convertToCharCode = function(char)
   	{
   		if(char.length != 1)
@@ -489,6 +578,9 @@
   		}
   	}
   	
+  	/**
+  	 *Converts a char code to a character
+  	 */
   	ext.convertFromCharCode = function(num)
   	{
   		return String.fromCharCode(num);
@@ -551,6 +643,11 @@
   		return num1 >>> num2;
   	}
   	
+  	ext.callForward = function()
+  	{
+  		ext.goForwardsOrBackwards('forwards', 50);
+  	}
+  	
 	
 	/**
 	 * Processes that run on extension shutdown
@@ -558,12 +655,20 @@
 	ext._shutdown = function(){};
 
 
-	// Creates new thread, repeated polling the pins A0 and A1 for values
+	// Creates pseudo new thread, repeatedly requesting values from a specified sensor
 	setTimeout(setInterval(function(){
 		if(device && pinStream)
 		{
-			sendPinCommand(currentPinRequest % 2);
-			++currentPinRequest;
+			if(infraStream == true)
+			{
+				sendPinCommand(currentPinRequest % 2);
+				++currentPinRequest;
+			}
+			else if(proximStream == true)
+			{
+				sendPinCommand(2);
+				++currentPinRequest;
+			}
 		}
 	}, 120), 1000);
 
@@ -590,10 +695,12 @@
 			  ['', 'Turn %m.directions2 at speed %n', 'turning', 'left', 100],
 			  ['', 'Stop Motors', 'stopMotors'],
 			  ['', 'Set %m.directions2 motor to %n speed for %n seconds', 'setIndivMotor', 'left', 100, 1],
-			  ['r', 'Get current colour of pin %s', 'pinStatus', 'A0'],
-			  ['', 'Enable Pin Stream', 'enablePinStream'],
-			  ['', 'Disable Pin Stream', 'disablePinStream'],
-			  ['', 'Send Command %s with parameters %n', 'sendCustomCommand', '', ''],
+			  ['r', 'Get current colour of pin %s', 'pinColour', 'A0'],
+			  ['r', 'Get proximity (cm)', 'pinProxim'],
+			  ['', 'Change Sensor stream to %m.sensors', 'changeSensorStream', 'Infrared'],
+			  ['', 'Enable Sensor Stream', 'enablePinStream'],
+			  ['', 'Disable Sensor Stream', 'disablePinStream'],
+			  ['', 'Send Command %s with parameters %s', 'sendCustomCommand', '', ''],
 			  ['r', 'Read byte from buffer %n bytes old', 'readFromBuffer', 0],
 			  ['r', 'Convert To Char Code %s', 'convertToCharCode', ''],
 			  ['r', 'Convert From Char Code %n', 'convertFromCharCode', ''],
@@ -604,11 +711,13 @@
 			  ['r', 'Left Shift: %n << %n', 'leftShift', 0, 0],
 			  ['r', 'Sign-propagating right shift: %n >> %n', 'rightShift', 0, 0],
 			  ['r', 'Zero-fill right shift: %n >>> %n', 'zeroFillRightShift', 0, 0],
+			  ['', 'Go Forward Now', 'callForward'],
 			  
 			],
 		menus:  {
 				directions1: ['forwards', 'backwards'],
 				directions2: ['left', 'right'],
+				sensors: ['Infrared', 'Proximity'],
 		        },
 		url: 'http://leedsrobotics.github.io/'
 	};
